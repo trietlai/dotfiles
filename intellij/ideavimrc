@@ -1,0 +1,522 @@
+" -*- mode: vimrc -*-"
+" * Plugins:
+"     - IdeaVim
+"     - IDEA Which-Key
+"     - AceJump
+"
+" * Preset configuration: Intellimacs https://github.com/MarcoIeni/intellimacs
+
+" Selected Intellimacs modules
+source ~/.intellimacs/spacemacs.vim
+source ~/.intellimacs/extra.vim
+source ~/.intellimacs/major.vim
+source ~/.intellimacs/hybrid.vim
+source ~/.intellimacs/which-key.vim
+
+" some options
+" whick-key options
+set notimeout
+set timeoutlen=10000
+" In Windows it's important to set the font as the default = "Monospace", which doesn't exist
+let g:WhichKey_FontFamily = "JetBrains Mono, Iosevka Slab, Monospace"
+let g:WhichKey_DefaultDelay = 1000
+
+" some options
+" Silent the annoying bell sound
+set visualbell
+set noerrorbells
+
+" Let's make escape better, together.
+inoremap jj <Esc>
+
+set ignorecase
+set smartcase
+set number
+set ideajoin
+
+" Integrate with system clipboard
+set clipboard=unnamedplus,unnamed
+
+" some plugins
+set NERDTree
+set surround           " emulate vim-surround plugin: Commands: ys, cs, ds, S
+set easymotion         " need to install IdeaVim-EasyMotion and AceJump plugins.
+"set commentary         " Commands: gcc, gc + motion, v_gc
+set multiple-cursors   " Commands: <A-n>, <A-x>, <A-p>, g<A-n>
+set exchange           " Commands: cx, cxx, X, cxc
+set argtextobj         " Additional text objects: aa, ia
+set textobj-entire     " Additional text objects: ae, ie
+"set ReplaceWithRegister " Commands: gr, grr
+set highlightedyank
+
+"====
+" Improve some keybindings
+"----
+
+" Center screen when jumping to next match
+nnoremap n nzz
+nnoremap N Nzz
+vnoremap n nzz
+vnoremap N Nzz
+
+" Make Y behave like other capital commands.
+nnoremap Y y$
+
+" Quit visual mode
+vnoremap v <Esc>
+
+" Redo
+nnoremap U <C-r>
+
+" don't lose selection when indenting
+vnoremap < <gv
+vnoremap > >gv
+vnoremap = =gv
+
+"=====
+" Often used shortcuts start with 'g'
+"----
+
+" Navigate - Go/Jump
+let g:WhichKeyDesc_gf_Forward = "gf go forward"
+nnoremap gf :action Forward<CR>
+
+let g:WhichKeyDesc_gb_Backward = "gb go back"
+nnoremap gb :action Back<CR>
+
+let g:WhichKeyDesc_goto_CodeBlockStart = "g[ goto code block start"
+nnoremap g[ :action EditorCodeBlockStart<CR>
+
+let g:WhichKeyDesc_goto_CodeBlockEnd = "g] goto code block end"
+nnoremap g] :action EditorCodeBlockEnd<CR>
+
+let g:WhichKeyDesc_goto_MethodDown = "g{ goto method down"
+nnoremap g{ :action MethodDown<CR>
+
+let g:WhichKeyDesc_goto_MethodUp = "g} goto method up"
+nnoremap g} :action MethodUp<CR>
+
+" Override InsertAtPreviousInsertAction
+let g:WhichKeyDesc_gi_Implementation = "gi goto implementation"
+nnoremap gi :action GotoImplementation<CR>
+
+let g:WhichKeyDesc_gd_Declaration = "gd goto declaration"
+nnoremap gd :action GotoDeclaration<CR>
+
+let g:WhichKeyDesc_gI_QuickImplementations = "gI quick implementation"
+nnoremap gI :action QuickImplementations<CR>
+
+let g:WhichKeyDesc_gT_QuickTypeDefinition = "gT quick type definition"
+nnoremap gT :action QuickTypeDefinition<CR>
+
+" go to other Actions
+" nnoremap gA :action SearchEverywhere<CR> " the same as double shift
+
+let g:WhichKeyDesc_gC_GotoClass = "gC goto class"
+nnoremap gC :action GotoClass<CR>
+
+let g:WhichKeyDesc_gF_GotoFile = "gF goto file"
+nnoremap gF :action GotoFile<CR>
+
+let g:WhichKeyDesc_gS_GotoSymbol = "gS goto symbol"
+nnoremap gS :action GotoSymbol<CR>
+
+let g:WhichKeyDesc_gB_ShowNavBar = "gB show navigation bar"
+nnoremap gB :action ShowNavBar<CR>
+
+" Errors
+let g:WhichKeyDesc_gx_GotoNextError = "gx goto next error"
+nmap gx :action GotoNextError<CR>
+
+let g:WhichKeyDesc_gX_GotoPreviousError = "gX goto previous error"
+nmap gX :action GotoPreviousError<CR>
+
+" Show references
+" nnoremap gr :action ShowUsages<CR> " conflict; use this instead: <Leader> *
+
+let g:WhichKeyDesc_gj_ShowUsages = "gj show usages"
+nnoremap gj :action ShowUsages<CR>
+
+let g:WhichKeyDesc_gR_FindUsages = "gR find usages"
+nnoremap gR :action FindUsages<CR>
+
+let g:WhichKeyDesc_gs_FileStructurePopup = "gs show structure popup"
+nnoremap gs :action FileStructurePopup<CR>
+
+let g:WhichKeyDesc_gt_TypeHierarchy = "gt show type hierarchy"
+nnoremap gt :action TypeHierarchy<CR>
+
+let g:WhichKeyDesc_gm_MethodHierarchy = "gm show method hierarchy"
+nnoremap gm :action MethodHierarchy<CR>
+
+" 'gc' is conflict with 'gcc' -> <Plug>(CommentLine)
+let g:WhichKeyDesc_gl_CallHierarchy = "gl show call hierarchy"
+nnoremap gl :action CallHierarchy<CR>
+
+" toggle maximising editor window
+let g:WhichKeyDesc_gw_HideAllWindows = "gw maximising editor window"
+nnoremap gw :action HideAllWindows<CR>
+
+" wrap
+let g:WhichKeyDesc_gq_WrapAction = "gq wrap"
+nnoremap gq :action com.andrewbrookins.idea.wrap.WrapAction<CR>
+
+let g:WhichKeyDesc_gQ_WrapParagraphAction = "gQ wrap paragraph"
+nnoremap gQ :action com.andrewbrookins.idea.wrap.WrapParagraphAction<CR>
+
+inoremap <A-q> :action com.andrewbrookins.idea.wrap.WrapAction<CR>
+inoremap <A-Q> :action com.andrewbrookins.idea.wrap.WrapParagraphAction<CR>
+
+" Yank entire buffer with gy
+let g:WhichKeyDesc_gy_YankEntireBuffer = "gy yank entire buffer"
+nnoremap gy :%y+<cr>
+
+"====
+" Often used shortcuts start with another leader = ','
+"----
+
+" edit configuration file
+let g:WhichKeyDesc_comma_EditConfig = ",. edit configuration"
+" In Windows: nnoremap ,. :edit ~\.ideavimrc<CR>
+nnoremap ,. :edit ~/.ideavimrc<CR>
+
+" reload configuration file
+let g:WhichKeyDesc_comma_Reload = ",, reload configuration"
+" In Windows: nnoremap ,, :source ~\.ideavimrc<CR>
+nnoremap ,, :source ~/.ideavimrc<CR>
+
+" Comment
+let g:WhichKeyDesc_comma_LineComment = ",; line comment"
+nnoremap ,; :action CommentByLineComment<CR>
+
+" argument/parameter info
+let g:WhichKeyDesc_comma_ParameterInfo = ",a parameter/argument info"
+nnoremap ,a :action ParameterInfo<CR>
+
+" recent locations
+let g:WhichKeyDesc_comma_RecentLocations = ",l recent locations"
+nnoremap ,l :action RecentLocations<CR>
+
+" Yank and paste from clipboard
+let g:WhichKeyDesc_comma_CopyToClipboard = ",y copy to clipboard"
+nnoremap ,y "+y
+vnoremap ,y "+y
+
+let g:WhichKeyDesc_comma_CopyLineToClipboard = ",yy copy line to clipboard"
+nnoremap ,yy "+yy
+
+let g:WhichKeyDesc_comma_PasteFromClipboard = ",p paste from clipboard"
+nnoremap ,p "+p
+ 
+let g:WhichKeyDesc_comma_ShowBookmarks = ",b show bookmarks"
+nnoremap ,b :action ShowBookmarks<CR>
+
+let g:WhichKeyDesc_comma_PopupMene = ",m show popup menu"
+nnoremap ,m :action ShowPopupMenu<CR>
+
+" Find
+let g:WhichKeyDesc_comma_Find = ",f find"
+nnoremap ,f :action Find<CR>
+
+let g:WhichKeyDesc_comma_FindInPath = ",/ find in path"
+nnoremap ,/ :action FindInPath<CR>
+
+" Refactorings
+let g:WhichKeyDesc_comma_RefactoringPopupMenu = ",R refactoring popup menu"
+nnoremap ,R :action Refactorings.QuickListPopupAction<CR>
+
+let g:WhichKeyDesc_comma_RefactorRename = ",rr refactor: rename"
+nmap ,rr :action RenameElement<CR>
+
+let g:WhichKeyDesc_comma_RefactorGenerate = ",rg refactor: generate"
+nmap ,rg :action Generate<CR>
+
+let g:WhichKeyDesc_comma_RefactorOptimizeImports = ",ri refactor: optimise imports"
+nmap ,ri :action OptimizeImports<CR>
+" Inspection
+let g:WhichKeyDesc_comma_RefactorInspectCode = ",rc refactor: inspect code"
+nmap ,rc :action InspectCode<CR>
+
+" Git
+let g:WhichKeyDesc_comma_GitMenu = ",g Git menu"
+nmap ,g :action Git.Menu<CR>
+
+let g:WhichKeyDesc_comma_VcsMenu = ",G VCS menu"
+nmap ,G :action Vcs.QuickListPopupAction<CR>
+
+"=====
+" Often used shortcuts start with 't'
+"----
+
+" Tab operation
+" nnoremap tn gt
+" nnoremap tp gT
+
+"====
+" Emacs keybindings
+"----
+
+" Split window right
+nnoremap <c-x>3 :action SplitVertically<CR>
+vnoremap <c-x>3 <Esc>:action SplitVertically<CR>
+
+" Split window below
+nnoremap <c-x>2 :action SplitHorizontally<CR>
+vnoremap <c-x>2 <Esc>:action SplitHorizontally<CR>
+
+" Focus next window
+nnoremap <c-x>o :action NextSplitter<CR>
+vnoremap <c-x>o <Esc>:action NextSplitter<CR>
+
+" Close all windows except current
+nnoremap <c-x>1 :action Unsplit<CR><Esc><CR>
+vnoremap <c-x>1 <Esc>:action Unsplit<CR><Esc><CR>
+
+" Switch among recently opened files
+nnoremap <c-x>b     :action RecentFiles<CR>
+nnoremap <c-x><c-b> :action RecentFiles<CR>
+vnoremap <c-x>b     :action RecentFiles<CR>
+vnoremap <c-x><c-b> :action RecentFiles<CR>
+
+"====
+" Misc keybindings
+"----
+
+let g:WhichKeyDesc_leaderRM_ExecuteGoal = "<leader>RM Maven execute goal"
+nnoremap <Leader>RM :action Maven.ExecuteGoal<CR>
+
+let g:WhichKeyDesc_leaderRm_ActivateMavenToolWindow = "<leader>Rm Maven tool window"
+nnoremap <Leader>Rm :action ActivateMavenToolWindow<CR>
+
+" change font size
+nmap + :action EditorIncreaseFontSize<CR>
+nmap - :action EditorDecreaseFontSize<CR>
+nmap <leader>= :action EditorResetFontSize<CR>
+
+" save a key stroke for major mode of spacemacs
+nmap \ <Leader>m
+
+"=====
+" Documenting shortcuts
+"----
+
+"=====
+" Documenting shortcuts for window commands CTRL+w
+"----
+let g:WhichKeyDesc_ctrlw = "<C-w> +window"
+let g:WhichKeyDesc_ctrlwS_HorizontalSplit = "<C-w>S horizontal split"
+let g:WhichKeyDesc_ctrlwW_WindowPrev = "<C-w>W previous window"
+let g:WhichKeyDesc_ctrlwc_CloseWindow = "<C-w>c close window"
+let g:WhichKeyDesc_ctrlwh_WindowLeft = "<C-w>h left window"
+let g:WhichKeyDesc_ctrlwj_WindowDown = "<C-w>j below window"
+let g:WhichKeyDesc_ctrlwk_WindowUp = "<C-w>k above window"
+let g:WhichKeyDesc_ctrlwl_WindowRight = "<C-w>l right window"
+let g:WhichKeyDesc_ctrlwo_WindowOnly = "<C-w>o only this window"
+let g:WhichKeyDesc_ctrlws_HorizontalSplit = "<C-w>s horizontal split"
+let g:WhichKeyDesc_ctrlwv_VerticalSplit = "<C-w>v vertical split"
+let g:WhichKeyDesc_ctrlww_WindowNext = "<C-w>w next window"
+let g:WhichKeyDesc_ctrlwDown_WindowDown = "<C-w><Down> below window"
+let g:WhichKeyDesc_ctrlwUp_WindowUp = "<C-w><Up> above window"
+let g:WhichKeyDesc_ctrlwLeft_WindowLeft = "<C-w><Left> left window"
+let g:WhichKeyDesc_ctrlwRight_WindowRight = "<C-w><Right> right window"
+let g:WhichKeyDesc_ctrlw_ctrlh_WindowLeft = "<C-w><C-h> left window"
+let g:WhichKeyDesc_ctrlw_ctrll_WindowRight = "<C-w><C-l> right window"
+let g:WhichKeyDesc_ctrlw_ctrlk_WindowUp = "<C-w><C-k> above window"
+let g:WhichKeyDesc_ctrlw_ctrlj_WindowDown = "<C-w><C-j> below window"
+let g:WhichKeyDesc_ctrlw_ctrlo_WindowOnly = "<C-w><C-o> only this window"
+let g:WhichKeyDesc_ctrlw_ctrls_HorizontalSplit = "<C-w><C-s> horizontal split"
+let g:WhichKeyDesc_ctrlw_ctrlv_VerticalSplit = "<C-w><C-v> vertical split"
+let g:WhichKeyDesc_ctrlw_ctrlw_WindowNext = "<C-w><C-w> next window"
+
+"=====
+" Documenting shortcuts start with 'g'
+"----
+let g:WhichKeyDesc_g_SearchWordBackward = "g# search word backward"
+let g:WhichKeyDesc_g_LastScreenColumn = "g$ goto last screen column"
+let g:WhichKeyDesc_g_ChangeLastGlobalSearchReplace = "g& change last global replace"
+let g:WhichKeyDesc_g_GotoMarkLineNoSaveJump = "g' goto mark line"
+let g:WhichKeyDesc_g_GotoMarkNoSaveJump = "g` goto mark"
+let g:WhichKeyDesc_g_SearchWordForward = "g* search word forward"
+let g:WhichKeyDesc_g_GotoNextChange = "g, goto next change"
+let g:WhichKeyDesc_g_FirstScreenColumn = "g0 goto first screen column"
+let g:WhichKeyDesc_g_GotoLastChange = "g; goto last change"
+
+"=====
+" Documenting shortcuts start with 'z'
+"----
+let g:WhichKeyDesc_z_ScrollFirstScreenLineStart = "z<Enter> scroll to first screen line start"
+let g:WhichKeyDesc_z_ScrollFirstScreenLinePageStart = "z+ scroll to first screen line page start"
+let g:WhichKeyDesc_z_ScrollLastScreenLineStart = "z- scroll to last screen line page start"
+let g:WhichKeyDesc_z_ScrollMiddleScreenLineStart = "z. scroll to middle screen line start"
+let g:WhichKeyDesc_zC_CollapseRegionRecursively = "zC collapse region recursively"
+let g:WhichKeyDesc_zH_ScrollHalfWidthLeft = "zH scroll half width left"
+let g:WhichKeyDesc_zL_ScrollHalfWidthRight = "zL scroll half width right"
+let g:WhichKeyDesc_zM_CollapseAllRegions = "zM collapse all regions"
+let g:WhichKeyDesc_zO_ExpandRegionRecursively = "zO expand region recursively"
+let g:WhichKeyDesc_zR_ExpandAllRegions = "zR expand all regions"
+let g:WhichKeyDesc_z_ScrollLastScreenLinePageStart = "z^ scroll to last screen line page start"
+let g:WhichKeyDesc_zb_ScrollLastScreenLine = "zb scroll to last screen line"
+let g:WhichKeyDesc_zc_CollapseRegion = "zc collapse region"
+let g:WhichKeyDesc_ze_ScrollLastScreenColumn = "ze scroll to last screen column"
+let g:WhichKeyDesc_zh_ScrollColumnRight = "zh scroll column right"
+let g:WhichKeyDesc_zl_ScrollColumnLeft = "zl scroll column left"
+let g:WhichKeyDesc_zo_ExpandRegion = "zo expand region"
+let g:WhichKeyDesc_zs_ScrollFirstScreenColumn = "zs scroll to first screen column"
+let g:WhichKeyDesc_zt_ScrollFirstScreenLine = "zt scroll to first screen line"
+let g:WhichKeyDesc_zz_ScrollMiddleScreenLine = "zz scroll to middle screen line"
+let g:WhichKeyDesc_z_ScrollColumnRight = "z<Right> scroll column right"
+let g:WhichKeyDesc_z_ScrollColumnLeft = "z<Left> scroll column left"
+
+"=====
+" Documenting shortcuts for square bracket commands [ or ]
+"----
+let g:WhichKeyDesc_lsb_UnmatchedParenOpen = "[( goto unmatched paren open"
+let g:WhichKeyDesc_lsb_MethodPreviousEnd = "[M goto end of previous method"
+let g:WhichKeyDesc_lsb_SectionBackwardStart = "[[ go backward to start of section"
+let g:WhichKeyDesc_lsb_SectionBackwardEnd = "[] go backward to end of section"
+let g:WhichKeyDesc_lsb_SectionBackwardEnd = "[] go backward to end of section"
+let g:WhichKeyDesc_lsb_MethodPreviousStart = "[m go to start of previous method"
+let g:WhichKeyDesc_lsb_UnmatchedBraceOpen = "[{ goto unmatched brace open"
+
+let g:WhichKeyDesc_rsb_UnmatchedParenClose = "]) goto unmatched paren close"
+let g:WhichKeyDesc_rsb_MethodNextEnd = "]M goto end of next method
+let g:WhichKeyDesc_rsb_SectionForwardStart = "][ go forward to start of section"
+let g:WhichKeyDesc_rsb_SectionForwardEnd = "]] go forward to end of section"
+let g:WhichKeyDesc_rsb_MethodNextStart = "]m goto start of next method"
+let g:WhichKeyDesc_rsb_UnmatchedBraceClose = "]} goto unmatched brace close"
+
+"=====
+" Cheatsheets
+"----
+let g:WhichKeyDesc_help = ",h +help"
+" NOTE: the argument of ':command' in IdeaVim neither uses variable substitution,
+" nor it uses Shell and Environment expansion. Thus, we'd better to use relative
+" path to HOME (i.e. ~/).
+" TIP: In Windows, replace 'cat' command with: 'cmd.exe /d /c type'
+
+:command !HelpAll !cat doc/vim/all.txt
+let g:WhichKeyDesc_help_All = ",ha all"
+nmap ,ha :HelpAll
+
+" Edit
+let g:WhichKeyDesc_help_Edit = ",he +edit"
+
+:command !HelpEditGeneral !cat doc/vim/edit.txt
+let g:WhichKeyDesc_help_EditGeneral = ",hee edit"
+nmap ,hee :HelpEditGeneral
+
+:command !HelpEditCutPaste !cat doc/vim/edit-cut-paste.txt
+let g:WhichKeyDesc_help_EditCutPaste = ",hec cut-paste"
+nmap ,hec :HelpEditCutPaste
+
+:command !HelpEditMultipleFiles !cat doc/vim/edit-multiple-files.txt
+let g:WhichKeyDesc_help_EditCutPaste = ",hef multiple-files"
+nmap ,hef :HelpEditMultipleFiles
+
+" Quit
+:command !HelpQuit !cat doc/vim/exit.txt
+let g:WhichKeyDesc_help_Quit = ",hq quit"
+nmap ,hq :HelpQuit
+
+" General
+:command !HelpGeneral !cat doc/vim/general.txt
+let g:WhichKeyDesc_help_General = ",hg general"
+nmap ,hg :HelpGeneral
+
+" Insert
+:command !HelpInsert !cat doc/vim/insert-mode.txt
+let g:WhichKeyDesc_help_Insert = ",hi insert mode"
+nmap ,hi :HelpInsert
+
+" Macro
+:command !HelpMacro !cat doc/vim/macro.txt
+let g:WhichKeyDesc_help_Macro = ",hc macro"
+nmap ,hc :HelpMacro
+
+" Marks
+:command !HelpMarks !cat doc/vim/marks.txt
+let g:WhichKeyDesc_help_Marks = ",hm marks"
+nmap ,hm :HelpMarks
+
+" Navigation
+let g:WhichKeyDesc_help_Navigation = ",hn +navigation"
+
+:command !HelpNavigationBasic !cat doc/vim/motion-basic.txt
+let g:WhichKeyDesc_help_NavigationBasic = ",hne navigation-essential"
+nmap ,hne :HelpNavigationBasic
+
+:command !HelpNavigationBlock !cat doc/vim/motion-block.txt
+let g:WhichKeyDesc_help_NavigationBlock = ",hnb navigation-block"
+nmap ,hnb :HelpNavigationBlock
+
+:command !HelpNavigationCharSearch !cat doc/vim/motion-char-search.txt
+let g:WhichKeyDesc_help_NavigationCharSearch = ",hn/ char-search"
+nmap ,hn/ :HelpNavigationCharSearch
+
+:command !HelpNavigationCodeBlock !cat doc/vim/motion-code-block.txt
+let g:WhichKeyDesc_help_NavigationCodeBlock = ",hnc code-block"
+nmap ,hnc :HelpNavigationCodeBlock
+
+:command !HelpNavigationCursor !cat doc/vim/motion-cursor.txt
+let g:WhichKeyDesc_help_NavigationCursor = ",hnh cursor"
+nmap ,hnh :HelpNavigationCursor
+
+:command !HelpNavigationLine !cat doc/vim/motion-line.txt
+let g:WhichKeyDesc_help_NavigationLine = ",hnl line"
+nmap ,hnl :HelpNavigationLine
+
+:command !HelpNavigationMarker !cat doc/vim/motion-marker.txt
+let g:WhichKeyDesc_help_NavigationMarker = ",hnm marker"
+nmap ,hnm :HelpNavigationMarker
+
+:command !HelpNavigationOther !cat doc/vim/motion-other.txt
+let g:WhichKeyDesc_help_NavigationOther = ",hno other"
+nmap ,hno :HelpNavigationOther
+
+:command !HelpNavigationWord !cat doc/vim/motion-word.txt
+let g:WhichKeyDesc_help_NavigationWord = ",hnw word"
+nmap ,hnw :HelpNavigationWord
+
+" Operators
+:command !HelpOperators !cat doc/vim/operators.txt
+let g:WhichKeyDesc_help_Operators = ",ho operators"
+nmap ,ho :HelpOperators
+
+" Paging
+:command !HelpPaging !cat doc/vim/page-scrolls.txt
+let g:WhichKeyDesc_help_Paging = ",hp paging"
+nmap ,hp :HelpPaging
+
+" Search Multiple files
+:command !HelpSearchMultiFiles !cat doc/vim/search-multiple-files.txt
+let g:WhichKeyDesc_help_SearchMultiFiles = ",hs search-multiple-files"
+nmap ,hs :HelpSearchMultiFiles
+
+" Search Replace
+:command !HelpSearchReplace !cat doc/vim/search-replace.txt
+let g:WhichKeyDesc_help_SearchReplace = ",hr search-replace"
+nmap ,hr :HelpSearchReplace
+
+" Tabs
+:command !HelpTabs !cat doc/vim/tabs.txt
+let g:WhichKeyDesc_help_Tabs = ",ht tabs"
+nmap ,ht :HelpTabs
+
+" Text objects
+:command !HelpTextObjects !cat doc/vim/text-objects.txt
+let g:WhichKeyDesc_help_TextObjects = ",hx text-objects"
+nmap ,hx :HelpTextObjects
+
+" Visual mode
+:command !HelpVisualMode !cat doc/vim/visual-mode.txt
+let g:WhichKeyDesc_help_VisualMode = ",hv visual-mode"
+nmap ,hv :HelpVisualMode
+
+" Windows
+:command !HelpWindows !cat doc/vim/windows.txt
+let g:WhichKeyDesc_help_windows = ",hw Windows"
+nmap ,hw :HelpWindows
+
+:command -nargs=1 H !grep -i -F <args> doc/vim/all.txt
+:command -nargs=1 G !grep -i -F <args> .intellimacs/docs/KEYBINDINGS.org
+:command -nargs=1 S !grep -i -F \bSPC\s(<args>) .intellimacs/docs/KEYBINDINGS.org

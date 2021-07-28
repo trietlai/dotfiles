@@ -1,0 +1,625 @@
+" vim: set foldmethod=marker foldlevel=0 nomodeline:
+" ================================================================
+" common configuration for vim & neovim
+" ================================================================
+set nocompatible                " must be first line
+let mapleader = ' '
+let maplocalleader = ' '
+
+" ================================================================
+" VIM-PLUG BLOCK {{{
+" ================================================================
+call plug#begin('~/.vim/plugged')
+    Plug 'preservim/NERDTree'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+	Plug 'ryanoasis/vim-devicons'
+	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'PhilRunninger/nerdtree-visual-selection'
+    Plug 'preservim/nerdcommenter'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-unimpaired'
+    Plug 'tpope/vim-endwise'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-commentary'
+    map  gc  <Plug>Commentary
+    nmap gcc <Plug>CommentaryLine
+    " prefer manual install
+    " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'stsewd/fzf-checkout.vim'
+    Plug 'junegunn/vim-easy-align'
+    Plug 'junegunn/gv.vim'
+    Plug 'junegunn/vim-slash'
+    Plug 'mhinz/vim-signify'
+    if has('timers')
+        noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+    endif
+    Plug 'Yggdroot/indentLine'
+    Plug 'luochen1990/rainbow'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'habamax/vim-asciidoctor'
+    Plug 'easymotion/vim-easymotion'
+    Plug 'terryma/vim-expand-region'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'machakann/vim-highlightedyank'
+    Plug 'andymass/vim-matchup'
+    Plug 'ojroques/vim-oscyank'
+    Plug 'aymericbeaumet/vim-symlink'
+    Plug 'chaoren/vim-wordmotion'
+    Plug 'jreybert/vimagit'
+    Plug 'lambdalisue/gina.vim'
+    if has('nvim')
+        Plug 'neovim/nvim-lspconfig'
+        Plug 'norcalli/nvim-colorizer.lua'
+        Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+        Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
+        " Make Ranger replace netrw and be the file explorer
+        let g:rnvimr_ex_enable = 1
+        Plug 'folke/which-key.nvim'
+        Plug 'kyazdani42/nvim-tree.lua'
+        Plug 'kyazdani42/nvim-web-devicons' " for file icons
+    else
+        Plug 'liuchengxu/vim-which-key'
+    endif
+    " Color Scheme
+    Plug 'Luxed/ayu-vim'
+    Plug 'morhetz/gruvbox'
+    Plug 'NLKNguyen/papercolor-theme'
+    "Purify: install manually
+    " Syntax
+    Plug 'honza/dockerfile.vim'
+    Plug 'martinda/Jenkinsfile-vim-syntax'
+    Plug 'chr4/nginx.vim'
+    Plug 'zigford/vim-powershell'
+    Plug 'gcmt/taboo.vim'
+call plug#end()
+" VIM-PLUG BLOCK }}}
+
+" ================================================================
+" THEMES SETTINGS {{{
+" Color theme: enable only one
+
+" if has('nvim')
+"     " Example config in VimScript
+"     let g:tokyonight_style = "night"
+"     let g:tokyonight_italic_functions = 1
+"     let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
+
+"     " Load the colorscheme
+"     colorscheme tokyonight
+" else
+    " gruvbox theme
+    "let g:gruvbox_contrast_dark = 'hard'
+    "autocmd vimenter * ++nested colorscheme gruvbox
+
+    " paper-color theme
+    "colorscheme PaperColor
+
+    "let g:ayucolor='dark'   " for dark version of theme
+    "colorscheme ayu
+
+    " using packadd because it's installed manually rather than using vim-plug
+    packadd! purify
+    colorscheme purify
+    let g:airline_theme='purify'
+    let g:airline_powerline_fonts=1
+    let g:airline#extensions#tabline#enabled = 1
+" endif
+
+" THEMES SETTINGS }}}
+
+" ================================================================
+" BASIC SETTINGS {{{
+" ================================================================
+
+set hidden                              " Required to keep multiple buffers open multiple buffers
+set nowrap                              " Display long lines as just one line
+set pumheight=10                        " Makes popup menu smaller
+set ruler              			        " Show the cursor position all the time
+"set cmdheight=2                         " More space for displaying messages
+set iskeyword+=-                      	" treat dash separated words as a word text object"
+set splitbelow                          " Horizontal splits will automatically be below
+set splitright                          " Vertical splits will automatically be to the right
+set t_Co=256                            " Support 256 colors
+set conceallevel=0                      " So that I can see `` in markdown files
+set shiftwidth=2                        " Change the number of space characters inserted for indentation
+set smarttab                            " Makes tabbing smarter will realize you have 2 vs 4
+set expandtab                           " Converts tabs to spaces
+set smartindent                         " Makes indenting smart
+set autoindent                          " Good auto indent
+set laststatus=0                        " Always display the status line
+set showtabline=2                       " Always show tabs
+set noshowmode                          " We don't need to see things like -- INSERT -- anymore
+set nobackup                            " This is recommended by coc
+set nowritebackup                       " This is recommended by coc
+set updatetime=300                      " Faster completion
+set timeoutlen=500                      " By default timeoutlen is 1000 ms
+set formatoptions-=cro                  " Stop newline continution of comments
+set background=dark
+set clipboard^=unnamed,unnamedplus
+set number                      " show line numbers
+filetype plugin indent on
+set tabstop=4                   " Insert 4 spaces for a tab
+set softtabstop=4               " <Backspace> just once instead of 4
+set shiftwidth=4                " when indenting with '>', use 4 spaces width
+set cursorline                  " Highlight the Current Line
+"set cursorcolumn
+
+" mouse
+silent! set ttymouse=xterm2
+set mouse=a                     " automatically enable mouse usage
+
+set backspace=indent,eol,start  " backspace for dummys
+set linespace=0                 " No extra spaces between rows
+set showmatch                   " show matching brackets/parenthesis
+set showcmd
+set incsearch                   " find as you type search
+set hlsearch                    " highlight matching search strings
+set ignorecase                  " case insensitive search
+set smartcase                   " case sensitive when upper cases present
+set wildmenu                    " show list instead of just completing
+set wildmode=list:longest,full  " command <Tab> completion
+set whichwrap=b,s,h,l,<,>,[,]   " backspace and cursor keys wrap to
+set scrolljump=5                " lines to scroll when cursor leaves screen
+set scrolloff=3                 " minimum lines to keep above and below cursor
+set foldenable                  " auto fold code
+syntax on                       " enable syntax highlighting
+set encoding=utf-8              " the encoding displayed
+set fileencoding=utf-8          " the encoding written to file
+set showbreak=↪\
+set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+set nolist                      " turn off by default
+set autoread
+set dictionary=/usr/share/dict/words
+
+" 80 chars/line
+set textwidth=0
+if exists('&colorcolumn')
+  set colorcolumn=80
+endif
+
+" true color
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
+
+" To check if neovim-qt is running, use `exists('g:GuiLoaded')`,
+" see https://github.com/equalsraf/neovim-qt/issues/219
+if exists('g:GuiLoaded')
+  " call GuiWindowMaximized(1)
+  " GuiTabline 0
+  " GuiPopupmenu 0
+  " GuiLinespace 2
+  GuiFont! Consolas:h10
+endif
+
+" BASIC SETTINGS }}}
+
+" ================================================================
+" PLUGINS SETTINGS {{{
+" ================================================================
+
+" vim-oscyank
+autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg " | endif
+
+" Git
+function! GitStatus()
+    let [a,m,r] = GitGutterGetHunkSummary()
+    return printf('+%d ~%d -%d', a, m, r)
+endfunction
+set statusline+=%{GitStatus()}
+
+" IndentLine
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+" Rainbow
+let g:rainbow_active = 1
+
+" <Enter> | vim-easy-align
+let g:easy_align_delimiters = {
+\ '>': { 'pattern': '>>\|=>\|>' },
+\ '\': { 'pattern': '\\' },
+\ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['!Comment'] },
+\ ']': {
+\     'pattern':       '\]\zs',
+\     'left_margin':   0,
+\     'right_margin':  1,
+\     'stick_to_left': 0
+\   },
+\ ')': {
+\     'pattern':       ')\zs',
+\     'left_margin':   0,
+\     'right_margin':  1,
+\     'stick_to_left': 0
+\   },
+\ 'f': {
+\     'pattern': ' \(\S\+(\)\@=',
+\     'left_margin': 0,
+\     'right_margin': 0
+\   },
+\ 'd': {
+\     'pattern': ' \ze\S\+\s*[;=]',
+\     'left_margin': 0,
+\     'right_margin': 0
+\   }
+\ }
+
+" these settings below override the colorscheme setting
+hi CursorLine cterm=NONE ctermbg=DarkGrey ctermfg=NONE gui=NONE guifg=NONE guibg=grey18
+
+if has('nvim')
+    " kyazdani42/nvim-tree.lua
+    let g:nvim_tree_width = 30 "30 by default, can be width_in_columns or 'width_in_percent%'
+    let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
+    let g:nvim_tree_gitignore = 1 "0 by default
+    let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
+    let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
+    let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
+    let g:nvim_tree_quit_on_open = 0 "0 by default, closes the tree when you open a file
+    let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
+    let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+    let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
+    let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+    let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
+    let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
+    let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
+    let g:nvim_tree_auto_resize = 1 "1 by default, will resize the tree to its saved width when opening a file
+    let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
+    let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
+    let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+    let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
+    let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
+    let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
+    let g:nvim_tree_hijack_cursor = 1 "1 by default, when moving cursor in the tree, will position the cursor at the start of the file on the current line
+    let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
+    let g:nvim_tree_update_cwd = 1 "0 by default, will update the tree cwd when changing nvim's directory (DirChanged event). Behaves strangely with autochdir set.
+    let g:nvim_tree_window_picker_exclude = {
+                \   'filetype': [
+                    \     'packer',
+                    \     'qf'
+                    \   ],
+                    \   'buftype': [
+                        \     'terminal'
+                        \   ]
+                        \ }
+    " Dictionary of buffer option names mapped to a list of option values that
+    " indicates to the window picker that the buffer's window should not be
+    " selectable.
+    let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
+    let g:nvim_tree_show_icons = {
+                \ 'git': 1,
+                \ 'folders': 1,
+                \ 'files': 1,
+                \ 'folder_arrows': 1,
+                \ }
+    "If 0, do not show the icons for one of 'git' 'folder' and 'files'
+    "1 by default, notice that if 'files' is 1, it will only display
+    "if nvim-web-devicons is installed and on your runtimepath.
+    "if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
+    "but this will not work when you set indent_markers (because of UI conflict)
+
+    " default will show icon by default if no icon is provided
+    " default shows no icon by default
+    let g:nvim_tree_icons = {
+                \ 'default': '',
+                \ 'symlink': '',
+                \ 'git': {
+                    \   'unstaged': "✗",
+                    \   'staged': "✓",
+                    \   'unmerged': "",
+                    \   'renamed': "➜",
+                    \   'untracked': "★",
+                    \   'deleted': "",
+                    \   'ignored': "◌"
+                    \   },
+                    \ 'folder': {
+                        \   'arrow_open': "",
+                        \   'arrow_closed': "",
+                        \   'default': "",
+                        \   'open': "",
+                        \   'empty': "",
+                        \   'empty_open': "",
+                        \   'symlink': "",
+                        \   'symlink_open': "",
+                        \   },
+                        \   'lsp': {
+                            \     'hint': "",
+                            \     'info': "",
+                            \     'warning': "",
+                            \     'error': "",
+                            \   }
+                            \ }
+
+    nnoremap <F4> :NvimTreeToggle<CR>
+    nnoremap <leader>Dr :NvimTreeRefresh<CR>
+    nnoremap <leader>Dn :NvimTreeFindFile<CR>
+    " NvimTreeOpen and NvimTreeClose are also available if you need them
+
+    set termguicolors " this variable must be enabled for colors to be applied properly
+
+    " a list of groups can be found at `:help nvim_tree_highlight`
+    highlight NvimTreeFolderIcon guibg=blue
+endif
+
+" PLUGINS SETTINGS }}}
+
+" ================================================================
+" MAPPINGS {{{
+" ================================================================
+
+" ---------------------------------------------------------------
+" BASIC MAPPINGS {{{
+" ---------------------------------------------------------------
+
+" Escaping
+imap jj <Esc>
+
+" Center next Vim search matches
+noremap n nzz
+noremap N Nzz
+
+" Use U for redo
+nnoremap U <C-r>
+
+" Make Y behave like other capitals
+nnoremap Y y$
+
+" qq to record, Q to replay
+nnoremap Q @q
+
+" Easy CAPS
+inoremap <C-u> <ESC>viwUi
+nnoremap <C-u> viwU<Esc>
+
+
+" <tab> / <s-tab> | Circular windows navigation
+nnoremap <TAB>   <c-w>w
+nnoremap <S-TAB> <c-w>W
+
+" Save
+"inoremap <C-s>     <C-O>:update<cr>
+"nnoremap <C-s>     :update<cr>
+" Alternate way to save
+nnoremap <C-s> :w<CR>
+" Use control-c instead of escape
+nnoremap <C-c> <Esc>
+" <TAB>: completion.
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Insert mode completion mappings
+" complete using the project tags file
+inoremap <C-]>     <C-x><C-]>
+" language and context aware omni-completion
+inoremap <C-Space> <C-x><C-o>
+" keyword completion from the current buffer
+inoremap <C-b>     <C-x><C-p>
+" dictionary completion
+inoremap <C-d>     <C-x><C-k>
+" file path completion
+inoremap <C-f>     <C-x><C-f>
+" whole-of-line completion
+inoremap <C-l>     <C-x><C-l>
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-^> <C-o><C-^>
+
+" Last inserted text
+nnoremap g. :normal! `[v`]<cr><left>
+
+" Quickfix
+nnoremap ]q :cnext<cr>zz
+nnoremap [q :cprev<cr>zz
+nnoremap ]l :lnext<cr>zz
+nnoremap [l :lprev<cr>zz
+
+" Buffers
+nnoremap ]b :bnext<cr>
+nnoremap [b :bprev<cr>
+
+" Tabs
+nnoremap ]t :tabn<cr>
+nnoremap [t :tabp<cr>
+
+" Easier split navigations
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
+
+" Moving lines
+nnoremap <silent> <C-k> :move-2<cr>
+nnoremap <silent> <C-j> :move+<cr>
+nnoremap <silent> <C-h> <<
+nnoremap <silent> <C-l> >>
+xnoremap <silent> <C-k> :move-2<cr>gv
+xnoremap <silent> <C-j> :move'>+<cr>gv
+xnoremap <silent> <C-h> <gv
+xnoremap <silent> <C-l> >gv
+xnoremap < <gv
+xnoremap > >gv
+" visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+" Readline-style mappings for insert and command modes
+inoremap <C-a>  <C-o>^
+inoremap <C-e>  <C-o>$
+inoremap <A-b>  <C-Left>
+inoremap <A-f>  <C-Right>
+inoremap <A-BS> <C-w>
+inoremap <A-d>  <C-o>dw
+cnoremap <C-a>  <Home>
+cnoremap <C-b>  <Left>
+cnoremap <C-e>  <End>
+cnoremap <expr> <C-d> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
+cnoremap <expr> <C-f> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
+cnoremap <A-b>  <C-Left>
+cnoremap <A-f>  <C-Right>
+cnoremap <A-BS> <C-w>
+cnoremap <A-d>  <C-Right><C-w>
+
+" nerdtree
+map <F5> :NERDTreeToggle<CR>
+
+" Needed when paste from clipboard to avoid formating
+set pastetoggle=<F3>
+
+" Start interactive EasyAlign in visual mode
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign with a Vim movement
+nmap ga <Plug>(EasyAlign)
+nmap gaa ga_
+
+" BASIC MAPPINGS }}}
+
+" ---------------------------------------------------------------
+" LEADER MAPPINGS {{{
+" command to extract maps with leader key:
+" pcregrep -o1 '<[lL]eader>(.*)' vimrc | LC_COLLATE=C  sort
+" ---------------------------------------------------------------
+" goto tab
+let g:taboo_tab_format = " tab:%N%m "
+nnoremap <Leader>1 1gt
+nnoremap <Leader>2 2gt
+nnoremap <Leader>3 3gt
+nnoremap <Leader>4 4gt
+nnoremap <Leader>5 5gt
+
+" TAB in general mode will move to text buffer
+nnoremap <Leader><TAB> :bnext<CR>
+" SHIFT-TAB will go back
+nnoremap <Leader><S-TAB> :bprevious<CR>
+
+" ---------------------------------------------------------------
+" FZF {{{
+" ---------------------------------------------------------------
+nnoremap <silent> <Leader>Ff        :Files<CR>
+nnoremap <silent> <Leader>Fb        :Buffers<CR>
+nnoremap <silent> <Leader>Fc        :Commits<CR>
+nnoremap <silent> <Leader>FC        :Colors<CR>
+nnoremap <silent> <Leader>Fx        :Commands<CR>
+nnoremap <silent> <Leader>Fm        :Maps<CR>
+nnoremap <silent> <Leader>Fw        :Windows<CR>
+nnoremap <silent> <Leader>FH        :Helptags<CR>
+nnoremap <silent> <Leader>Fl        :Lines<CR>
+nnoremap <silent> <Leader>Fhh       :History<CR>
+nnoremap <silent> <Leader>Fh:       :History:<CR>
+nnoremap <silent> <Leader>Fh/       :History/<CR>
+nnoremap <silent> <Leader>Fag       :Ag <C-R><C-W><CR>
+nnoremap <silent> <Leader>FAG       :Ag <C-R><C-A><CR>
+xnoremap <silent> <Leader>Fa"      :Ag <C-R>"<CR>
+nnoremap <silent> <Leader>Frg       :Rg <C-R><C-W><CR>
+nnoremap <silent> <Leader>F`        :Marks<CR>
+" FZF }}}
+
+" ---------------------------------------------------------------
+" Git {{{
+" ---------------------------------------------------------------
+nnoremap <leader>Gs :Gstatus<CR>
+nnoremap <leader>Go :GCheckout<CR>
+nnoremap <leader>Gc :Gcommit<CR>
+nnoremap <leader>GC :Gcommit -n<CR> " commit but ignore hooks
+nnoremap <leader>GP :Gpush<CR>
+nnoremap <leader>GfP :Gpush --force-with-lease<CR>
+nnoremap <leader>Gp :Gpull<CR>
+nnoremap <leader>Gf :Gfetch<CR>
+nnoremap <leader>Gl :GV!<CR> " Git log for the current file
+nnoremap <leader>GL :GV<CR> " Full git log
+nnoremap <leader>Gd :Gvdiff<CR>
+nnoremap <leader>Gb :Gblame<CR>
+nnoremap <leader>Gm :Git checkout master<CR>
+nnoremap <leader>G- :Git checkout -<CR>
+nnoremap <leader>Grm :Grebase -i master<CR>
+" Git }}}
+
+" ---------------------------------------------------------------
+" tmux {{{
+" ---------------------------------------------------------------
+function! s:tmux_send(content, dest) range
+  let dest = empty(a:dest) ? input('To which pane? ') : a:dest
+  let tempfile = tempname()
+  call writefile(split(a:content, "\n", 1), tempfile, 'b')
+  call system(printf('tmux load-buffer -b vim-tmux %s \; paste-buffer -d -b vim-tmux -t %s',
+        \ shellescape(tempfile), shellescape(dest)))
+  call delete(tempfile)
+endfunction
+
+function! s:tmux_map(key, dest)
+  execute printf('nnoremap <silent> %s "tyy:call <SID>tmux_send(@t, "%s")<cr>', a:key, a:dest)
+  execute printf('xnoremap <silent> %s "ty:call <SID>tmux_send(@t, "%s")<cr>gv', a:key, a:dest)
+endfunction
+
+call s:tmux_map('<leader>Tt', '')
+call s:tmux_map('<leader>Th', '.left')
+call s:tmux_map('<leader>Tj', '.bottom')
+call s:tmux_map('<leader>Tk', '.top')
+call s:tmux_map('<leader>Tl', '.right')
+call s:tmux_map('<leader>Ty', '.top-left')
+call s:tmux_map('<leader>To', '.top-right')
+call s:tmux_map('<leader>Tn', '.bottom-left')
+call s:tmux_map('<leader>T.', '.bottom-right')
+" tmux }}}
+
+" Close quickfix/location window
+nnoremap <leader>c :cclose<bar>lclose<cr>
+
+" Yank, paste and delete helpers to avoid overwritten
+noremap <Leader>d "_d
+noremap <Leader>p "yp
+noremap <Leader>P "yP
+noremap <Leader>x "_x
+noremap <Leader>y "yy
+
+" g maps
+xmap <Leader>ga <Plug>(LiveEasyAlign)
+
+if has('nvim')
+    nmap <Leader>r :RnvimrToggle<CR>
+endif
+
+"initially set it to "dark" or "light" according to the default
+let s:mybg = "dark"
+function! s:BgToggle()
+    if (s:mybg ==? "light")
+        set background=dark
+        let s:mybg = "dark"
+        colorscheme purify
+    else
+        set background=light
+        let s:mybg = "light"
+        "let g:ayucolor='light'
+        colorscheme PaperColor
+    endif
+endfunction
+" TODO: change to diff key
+nnoremap <silent> <leader>t :call <sid>BgToggle()<cr>
+
+" Zoom
+function! s:zoom()
+  if winnr('$') > 1
+    tab split
+  elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
+                  \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+    tabclose
+  endif
+endfunction
+nnoremap <silent> <leader>z :call <sid>zoom()<cr>
+
+if !has('nvim')
+    " neovim uses different plugin: which-key.vim
+    source ~/.vim/vim-which-key-config.vim
+endif
+
+" LEADER MAPPINGS }}}
+
+" MAPPINGS }}}
+
