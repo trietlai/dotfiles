@@ -66,8 +66,13 @@ call plug#end()
 
 " ================================================================
 " THEMES SETTINGS {{{
-" Color theme: enable only one
 
+" status line
+let g:airline_theme='molokai'
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+
+" Color theme: enable only one
 " gruvbox theme
 "let g:gruvbox_contrast_dark = 'hard'
 "autocmd vimenter * ++nested colorscheme gruvbox
@@ -79,15 +84,11 @@ call plug#end()
 "colorscheme ayu
 
 " using packadd because it's installed manually rather than using vim-plug
-packadd! purify
 "colorscheme purify
 "let g:airline_theme='purify'
 
+let g:material_theme_style = 'ocean'
 colorscheme material
-let g:airline_theme='molokai'
-
-let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled = 1
 
 " THEMES SETTINGS }}}
 
