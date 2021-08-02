@@ -1,0 +1,31 @@
+
+# Colors (purify)
+colors:
+  # Selection colors
+  selection:
+    text:       '#FAFAFA'
+    background: '#252834'
+  # Normal colors
+  primary:
+    background: '#313440'
+    foreground: '#FAFAFA'
+  normal:
+    black:   '#282C34'
+    red:     '#FF6059'
+    green:   '#5FFF87'
+    yellow:  '#FFFF87'
+    blue:    '#5FAFFF'
+    magenta: '#AF87FF'
+    cyan:    '#5FAFFF'
+    white:   '#FAFAFA'
+  # Bright colors
+  bright:
+    black:   '#282C34'
+    red:     '#FF6059'
+    green:   '#5FFF87'
+    yellow:  '#FFFF87'
+    blue:    '#5FAFFF'
+    magenta: '#AF87FF'
+    cyan:    '#5FAFFF'
+    white:   '#FAFAFA'
+
