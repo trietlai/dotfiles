@@ -87,14 +87,15 @@ wk.register({
     ["<F4>"]    = {"<cmd>:NvimTreeToggle<CR>", "toggle NvimTree"},
     ["<F5>"]    = {"<cmd>:NERDTreeToggle<CR>", "toggle NerdTree"},
 
-    ["]q"]      = {"<cmd>:cnext<CR>zz", "next quickfix"},
-    ["[q"]      = {"<cmd>:cprev<CR>zz", "previous quickfix"},
-    ["]l"]      = {"<cmd>:lnext<CR>zz", "next location-list"},
-    ["[l"]      = {"<cmd>:lprev<CR>zz", "previous location-list"},
-    ["]b"]      = {"<cmd>:bnext<CR>",   "next buffer"},
-    ["[b"]      = {"<cmd>:bprev<CR>",   "previous buffer"},
-    ["]t"]      = {"<cmd>:tabn<CR>",    "next tab"},
-    ["[t"]      = {"<cmd>:tabp<CR>",    "previous tab"},
+    -- TODO: just provide text description for 'unimpaired' plugin
+    ["]q"]      = "next quickfix",
+    ["[q"]      = "previous quickfix",
+    ["]l"]      = "next location-list",
+    ["[l"]      = "previous location-list",
+    ["]b"]      = "next buffer",
+    ["[b"]      = "previous buffer",
+    ["]t"]      = "next tab",
+    ["[t"]      = "previous tab",
 
     -- Easier split navigations
     ["<C-j>"]   = {"<C-w><C-j>", "move to window below (horizontal split)"},
@@ -155,7 +156,7 @@ wk.register({
     c = {"<cmd>:cclose<BAR>lclose<CR>", "close quickfix/location window"},
     d = {'"_d', "delete to black-hole register"},
     f = {"<cmd>:Files<CR>", "search files"},
-    h = {"<cmd>:History<CR>", "search history"},
+    -- h = {"<cmd>:History<CR>", "search history"}, -- conflict with gitgutter
     m = {"<cmd>:Maps<CR>", "search mapping"},
     p = {'"yp', "paste from 'y' register"},
     P = {'"yP', "paste from 'y' register"},
@@ -188,6 +189,12 @@ wk.register({
         ["5"] = {"<cmd>5gt<CR>", "goto fifth tab"},
         c     = {"<cmd>:tabclose<CR>", "close current tab"},
         o     = {"<cmd>:tabonly<CR>", "close all except current tab"},
+    },
+    h = {
+        name = "git-gutter",
+        p = "preview hunk",
+        s = "stage hunk",
+        u = "undo hunk",
     },
     B = {
         name  = "Buffer",
