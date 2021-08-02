@@ -1,6 +1,6 @@
 " vim: set foldmethod=marker foldlevel=0 nomodeline:
 " ================================================================
-" common configuration for vim & neovim
+" common configuration for vim 8
 " ================================================================
 set nocompatible                " must be first line
 let mapleader = ' '
@@ -12,8 +12,8 @@ let maplocalleader = ' '
 call plug#begin('~/.vim/plugged')
     Plug 'preservim/NERDTree'
     Plug 'Xuyuanp/nerdtree-git-plugin'
-	Plug 'ryanoasis/vim-devicons'
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'PhilRunninger/nerdtree-visual-selection'
     Plug 'preservim/nerdcommenter'
     Plug 'tpope/vim-fugitive'
@@ -22,8 +22,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-endwise'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
-    map  gc  <Plug>Commentary
-    nmap gcc <Plug>CommentaryLine
     " prefer manual install
     " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
@@ -50,24 +48,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'chaoren/vim-wordmotion'
     Plug 'jreybert/vimagit'
     Plug 'lambdalisue/gina.vim'
-    if has('nvim')
-        Plug 'neovim/nvim-lspconfig'
-        Plug 'norcalli/nvim-colorizer.lua'
-        Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-        Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
-        " Make Ranger replace netrw and be the file explorer
-        let g:rnvimr_ex_enable = 1
-        Plug 'folke/which-key.nvim'
-        Plug 'kyazdani42/nvim-tree.lua'
-        Plug 'kyazdani42/nvim-web-devicons' " for file icons
-    else
-        Plug 'liuchengxu/vim-which-key'
-    endif
+    Plug 'liuchengxu/vim-which-key'
     " Color Scheme
     Plug 'Luxed/ayu-vim'
     Plug 'morhetz/gruvbox'
     Plug 'NLKNguyen/papercolor-theme'
-    "Purify: install manually
+    Plug 'kyoz/purify', { 'rtp': 'vim' }
+    Plug 'kaicataldo/material.vim', { 'branch': 'main' }
     " Syntax
     Plug 'honza/dockerfile.vim'
     Plug 'martinda/Jenkinsfile-vim-syntax'
@@ -81,32 +68,26 @@ call plug#end()
 " THEMES SETTINGS {{{
 " Color theme: enable only one
 
-" if has('nvim')
-"     " Example config in VimScript
-"     let g:tokyonight_style = "night"
-"     let g:tokyonight_italic_functions = 1
-"     let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
+" gruvbox theme
+"let g:gruvbox_contrast_dark = 'hard'
+"autocmd vimenter * ++nested colorscheme gruvbox
 
-"     " Load the colorscheme
-"     colorscheme tokyonight
-" else
-    " gruvbox theme
-    "let g:gruvbox_contrast_dark = 'hard'
-    "autocmd vimenter * ++nested colorscheme gruvbox
+" paper-color theme
+"colorscheme PaperColor
 
-    " paper-color theme
-    "colorscheme PaperColor
+"let g:ayucolor='dark'   " for dark version of theme
+"colorscheme ayu
 
-    "let g:ayucolor='dark'   " for dark version of theme
-    "colorscheme ayu
+" using packadd because it's installed manually rather than using vim-plug
+packadd! purify
+"colorscheme purify
+"let g:airline_theme='purify'
 
-    " using packadd because it's installed manually rather than using vim-plug
-    packadd! purify
-    colorscheme purify
-    let g:airline_theme='purify'
-    let g:airline_powerline_fonts=1
-    let g:airline#extensions#tabline#enabled = 1
-" endif
+colorscheme material
+let g:airline_theme='molokai'
+
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
 
 " THEMES SETTINGS }}}
 
@@ -117,14 +98,13 @@ call plug#end()
 set hidden                              " Required to keep multiple buffers open multiple buffers
 set nowrap                              " Display long lines as just one line
 set pumheight=10                        " Makes popup menu smaller
-set ruler              			        " Show the cursor position all the time
-"set cmdheight=2                         " More space for displaying messages
-set iskeyword+=-                      	" treat dash separated words as a word text object"
+set ruler                               " Show the cursor position all the time
+"set cmdheight=2                        " More space for displaying messages
+set iskeyword+=-                        " treat dash separated words as a word text object"
 set splitbelow                          " Horizontal splits will automatically be below
 set splitright                          " Vertical splits will automatically be to the right
 set t_Co=256                            " Support 256 colors
 set conceallevel=0                      " So that I can see `` in markdown files
-set shiftwidth=2                        " Change the number of space characters inserted for indentation
 set smarttab                            " Makes tabbing smarter will realize you have 2 vs 4
 set expandtab                           " Converts tabs to spaces
 set smartindent                         " Makes indenting smart
@@ -177,7 +157,7 @@ set dictionary=/usr/share/dict/words
 " 80 chars/line
 set textwidth=0
 if exists('&colorcolumn')
-  set colorcolumn=80
+    set colorcolumn=80
 endif
 
 " true color
@@ -190,11 +170,11 @@ endif
 " To check if neovim-qt is running, use `exists('g:GuiLoaded')`,
 " see https://github.com/equalsraf/neovim-qt/issues/219
 if exists('g:GuiLoaded')
-  " call GuiWindowMaximized(1)
-  " GuiTabline 0
-  " GuiPopupmenu 0
-  " GuiLinespace 2
-  GuiFont! Consolas:h10
+    " call GuiWindowMaximized(1)
+    " GuiTabline 0
+    " GuiPopupmenu 0
+    " GuiLinespace 2
+    GuiFont! Consolas:h10
 endif
 
 " BASIC SETTINGS }}}
@@ -251,100 +231,6 @@ let g:easy_align_delimiters = {
 " these settings below override the colorscheme setting
 hi CursorLine cterm=NONE ctermbg=DarkGrey ctermfg=NONE gui=NONE guifg=NONE guibg=grey18
 
-if has('nvim')
-    " kyazdani42/nvim-tree.lua
-    let g:nvim_tree_width = 30 "30 by default, can be width_in_columns or 'width_in_percent%'
-    let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
-    let g:nvim_tree_gitignore = 1 "0 by default
-    let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
-    let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
-    let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
-    let g:nvim_tree_quit_on_open = 0 "0 by default, closes the tree when you open a file
-    let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
-    let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-    let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
-    let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-    let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
-    let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-    let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
-    let g:nvim_tree_auto_resize = 1 "1 by default, will resize the tree to its saved width when opening a file
-    let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
-    let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
-    let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
-    let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
-    let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
-    let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
-    let g:nvim_tree_hijack_cursor = 1 "1 by default, when moving cursor in the tree, will position the cursor at the start of the file on the current line
-    let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
-    let g:nvim_tree_update_cwd = 1 "0 by default, will update the tree cwd when changing nvim's directory (DirChanged event). Behaves strangely with autochdir set.
-    let g:nvim_tree_window_picker_exclude = {
-                \   'filetype': [
-                    \     'packer',
-                    \     'qf'
-                    \   ],
-                    \   'buftype': [
-                        \     'terminal'
-                        \   ]
-                        \ }
-    " Dictionary of buffer option names mapped to a list of option values that
-    " indicates to the window picker that the buffer's window should not be
-    " selectable.
-    let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
-    let g:nvim_tree_show_icons = {
-                \ 'git': 1,
-                \ 'folders': 1,
-                \ 'files': 1,
-                \ 'folder_arrows': 1,
-                \ }
-    "If 0, do not show the icons for one of 'git' 'folder' and 'files'
-    "1 by default, notice that if 'files' is 1, it will only display
-    "if nvim-web-devicons is installed and on your runtimepath.
-    "if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
-    "but this will not work when you set indent_markers (because of UI conflict)
-
-    " default will show icon by default if no icon is provided
-    " default shows no icon by default
-    let g:nvim_tree_icons = {
-                \ 'default': '',
-                \ 'symlink': '',
-                \ 'git': {
-                    \   'unstaged': "✗",
-                    \   'staged': "✓",
-                    \   'unmerged': "",
-                    \   'renamed': "➜",
-                    \   'untracked': "★",
-                    \   'deleted': "",
-                    \   'ignored': "◌"
-                    \   },
-                    \ 'folder': {
-                        \   'arrow_open': "",
-                        \   'arrow_closed': "",
-                        \   'default': "",
-                        \   'open': "",
-                        \   'empty': "",
-                        \   'empty_open': "",
-                        \   'symlink': "",
-                        \   'symlink_open': "",
-                        \   },
-                        \   'lsp': {
-                            \     'hint': "",
-                            \     'info': "",
-                            \     'warning': "",
-                            \     'error': "",
-                            \   }
-                            \ }
-
-    nnoremap <F4> :NvimTreeToggle<CR>
-    nnoremap <leader>Dr :NvimTreeRefresh<CR>
-    nnoremap <leader>Dn :NvimTreeFindFile<CR>
-    " NvimTreeOpen and NvimTreeClose are also available if you need them
-
-    set termguicolors " this variable must be enabled for colors to be applied properly
-
-    " a list of groups can be found at `:help nvim_tree_highlight`
-    highlight NvimTreeFolderIcon guibg=blue
-endif
-
 " PLUGINS SETTINGS }}}
 
 " ================================================================
@@ -375,6 +261,8 @@ nnoremap Q @q
 inoremap <C-u> <ESC>viwUi
 nnoremap <C-u> viwU<Esc>
 
+map  gc  <Plug>Commentary
+nmap gcc <Plug>CommentaryLine
 
 " <tab> / <s-tab> | Circular windows navigation
 nnoremap <TAB>   <c-w>w
@@ -516,7 +404,7 @@ nnoremap <silent> <Leader>Fh:       :History:<CR>
 nnoremap <silent> <Leader>Fh/       :History/<CR>
 nnoremap <silent> <Leader>Fag       :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>FAG       :Ag <C-R><C-A><CR>
-xnoremap <silent> <Leader>Fa"      :Ag <C-R>"<CR>
+xnoremap <silent> <Leader>Fa"       :Ag <C-R>"<CR>
 nnoremap <silent> <Leader>Frg       :Rg <C-R><C-W><CR>
 nnoremap <silent> <Leader>F`        :Marks<CR>
 " FZF }}}
@@ -545,17 +433,17 @@ nnoremap <leader>Grm :Grebase -i master<CR>
 " tmux {{{
 " ---------------------------------------------------------------
 function! s:tmux_send(content, dest) range
-  let dest = empty(a:dest) ? input('To which pane? ') : a:dest
-  let tempfile = tempname()
-  call writefile(split(a:content, "\n", 1), tempfile, 'b')
-  call system(printf('tmux load-buffer -b vim-tmux %s \; paste-buffer -d -b vim-tmux -t %s',
-        \ shellescape(tempfile), shellescape(dest)))
-  call delete(tempfile)
+    let dest = empty(a:dest) ? input('To which pane? ') : a:dest
+    let tempfile = tempname()
+    call writefile(split(a:content, "\n", 1), tempfile, 'b')
+    call system(printf('tmux load-buffer -b vim-tmux %s \; paste-buffer -d -b vim-tmux -t %s',
+                \ shellescape(tempfile), shellescape(dest)))
+    call delete(tempfile)
 endfunction
 
 function! s:tmux_map(key, dest)
-  execute printf('nnoremap <silent> %s "tyy:call <SID>tmux_send(@t, "%s")<cr>', a:key, a:dest)
-  execute printf('xnoremap <silent> %s "ty:call <SID>tmux_send(@t, "%s")<cr>gv', a:key, a:dest)
+    execute printf('nnoremap <silent> %s "tyy:call <SID>tmux_send(@t, "%s")<cr>', a:key, a:dest)
+    execute printf('xnoremap <silent> %s "ty:call <SID>tmux_send(@t, "%s")<cr>gv', a:key, a:dest)
 endfunction
 
 call s:tmux_map('<leader>Tt', '')
@@ -582,10 +470,6 @@ noremap <Leader>y "yy
 " g maps
 xmap <Leader>ga <Plug>(LiveEasyAlign)
 
-if has('nvim')
-    nmap <Leader>r :RnvimrToggle<CR>
-endif
-
 "initially set it to "dark" or "light" according to the default
 let s:mybg = "dark"
 function! s:BgToggle()
@@ -605,19 +489,16 @@ nnoremap <silent> <leader>t :call <sid>BgToggle()<cr>
 
 " Zoom
 function! s:zoom()
-  if winnr('$') > 1
-    tab split
-  elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
-                  \ 'index(v:val, '.bufnr('').') >= 0')) > 1
-    tabclose
-  endif
+    if winnr('$') > 1
+        tab split
+    elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
+                \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+        tabclose
+    endif
 endfunction
 nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 
-if !has('nvim')
-    " neovim uses different plugin: which-key.vim
-    source ~/.vim/vim-which-key-config.vim
-endif
+source ~/.vim/vim-which-key-config.vim
 
 " LEADER MAPPINGS }}}
 
