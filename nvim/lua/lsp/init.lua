@@ -11,11 +11,15 @@ vim.cmd('sign define LspDiagnosticsSignInformation text=')
 vim.cmd('sign define LspDiagnosticsSignHint text=')
 vim.cmd('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 
-require'lspconfig'.tsserver.setup{
+nvim_lsp.bashls.setup{
 }
-require'lspconfig'.dockerls.setup{
+nvim_lsp.pyright.setup{
 }
-require'lspconfig'.jsonls.setup{
+nvim_lsp.tsserver.setup{
+}
+nvim_lsp.dockerls.setup{
+}
+nvim_lsp.jsonls.setup{
   commands = {
     Format = {
       function()
@@ -24,8 +28,8 @@ require'lspconfig'.jsonls.setup{
     }
   }
 }
-require'lspconfig'.yamlls.setup{
+nvim_lsp.yamlls.setup{
 }
-require'lspconfig'.vimls.setup{
+nvim_lsp.vimls.setup{
 }
 
