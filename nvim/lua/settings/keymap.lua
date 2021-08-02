@@ -1,5 +1,5 @@
 --Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -54,8 +54,9 @@ wk.setup {
 	-- your configuration comes here
     key_labels = {
         ["<space>"] = "SPC",
-        ["<CR>"] = "RET",
-        ["<tab>"] = "TAB",
+        ["<CR>"]    = "RET",
+        ["<Tab>"]   = "TAB",
+        ["<S-Tab>"] = "S-TAB",
     },
 }
 -- basic mappings
@@ -64,9 +65,9 @@ wk.register({
     U           = {"<C-r>", "redo"},
     Y           = {"y$",    "yank until the EOL"},
     -- start with 'g'
-    ga          = {"<cmd><Plug>(EasyAlign)",        "Easy align"},
-    gc          = {"<cmd><Plug>Commentary",         "Commentary"},
-    gcc         = {"<cmd><Plug>CommentaryLine",     "Commentary line"},
+    ga          = {"<Plug>(EasyAlign)",    "Easy align"},
+    gc          = {"<Plug>Commentary",     "Commentary"},
+    gcc         = {"<Plug>CommentaryLine", "Commentary line"},
     ["g."]      = {"<cmd>:normal! `[v`]<CR><LEFT>", "Last inserted text"},
     -- LSP
     ["gD"]      = {"<Cmd>lua vim.lsp.buf.declaration()<CR>",      "goto declaration"},
@@ -80,8 +81,8 @@ wk.register({
     ["<C-k>"]   = {"<cmd>lua vim.lsp.buf.signature_help()<CR>",   "signature help"},
 
     -- <tab> / <s-tab> | Circular windows navigation
-    ["<TAB>"]   = {"<C-w>w", "next window"},
-    ["<S-TAB>"] = {"<C-w>W", "previous window"},
+    ["<Tab>"]   = {"<C-w>w", "next window"},
+    ["<S-Tab>"] = {"<C-w>W", "previous window"},
 
     ["<F4>"]    = {"<cmd>:NvimTreeToggle<CR>", "toggle NvimTree"},
     ["<F5>"]    = {"<cmd>:NERDTreeToggle<CR>", "toggle NerdTree"},
@@ -109,7 +110,7 @@ wk.register({
 	["<C-u>"]     = {"<Esc>viwUi", "uppercase word"},
 
 	["<C-]>"]     = {"<C-x><C-]>", "complete using tags"},
-	["<C-Space>"] = {"<C-x><C-o>", "language aware omni-completion"},
+	["<C-space>"] = {"<C-x><C-o>", "language aware omni-completion"},
 	["<C-b>"]     = {"<C-x><C-p>", "keyword completion from the current buffer"},
 	["<C-d>"]     = {"<C-x><C-k>", "dictionary completion"},
 	["<C-f>"]     = {"<C-x><C-f>", "file path completion"},
@@ -144,7 +145,7 @@ wk.register({
 
 -- visual mode
 wk.register({
-	ga     = {"<cmd><Plug>(EasyAlign)", "Easy align"},
+	ga = {"<Plug>(EasyAlign)", "Easy align"},
 }, { mode = "x" })
 
 -- leader
@@ -167,13 +168,13 @@ wk.register({
     ["|"] = {"<C-w>v", "split window right"},
     ["/"] = {"<cmd>:Rg<CR>", "search text with Rg"},
 
-    ["<TAB>"]   = {"<cmd>:bnext<CR>", "next buffer"},
-    ["<S-TAB>"] = {"<cmd>:bprevious<CR>", "previous buffer"},
+    ["<Tab>"]   = {"<cmd>:bnext<CR>", "next buffer"},
+    ["<S-Tab>"] = {"<cmd>:bprevious<CR>", "previous buffer"},
     ["?"]       = {"<cmd>:Maps<CR>", "show keybindings"},
 }, { prefix = "<leader>" })
 
 wk.register({
-	ga          = {"<cmd><Plug>(LiveEasyAlign)", "live easy align"},
+	ga          = {"<Plug>(LiveEasyAlign)", "live easy align"},
 }, { prefix = "<leader>", mode = "x" })
 
 -- group
