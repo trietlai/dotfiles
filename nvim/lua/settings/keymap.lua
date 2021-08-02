@@ -52,8 +52,11 @@ call MyTmuxMap('<leader>T.', '.bottom-right')
 local wk = require("which-key")
 wk.setup {
 	-- your configuration comes here
-	-- or leave it empty to use the default settings
-	-- refer to the configuration section below
+    key_labels = {
+        ["<space>"] = "SPC",
+        ["<CR>"] = "RET",
+        ["<tab>"] = "TAB",
+    },
 }
 -- basic mappings
 -- normal mode
@@ -147,12 +150,12 @@ wk.register({
 -- leader
 -- single
 wk.register({
-    b = {"<cmd>:Buffers", "list buffers"},
+    b = {"<cmd>:Buffers<CR>", "list buffers"},
     c = {"<cmd>:cclose<BAR>lclose<CR>", "close quickfix/location window"},
     d = {'"_d', "delete to black-hole register"},
-    f = {"<cmd>:Files", "search files"},
-    h = {"<cmd>:History", "search history"},
-    m = {"<cmd>:Maps", "search mapping"},
+    f = {"<cmd>:Files<CR>", "search files"},
+    h = {"<cmd>:History<CR>", "search history"},
+    m = {"<cmd>:Maps<CR>", "search mapping"},
     p = {'"yp', "paste from 'y' register"},
     P = {'"yP', "paste from 'y' register"},
     r = {"<cmd>:RnvimrToggle<CR>", "toggle Ranger Vim"},
@@ -162,7 +165,7 @@ wk.register({
 
     ["-"] = {"<C-w>s", "split window below"},
     ["|"] = {"<C-w>v", "split window right"},
-    ["/"] = {"<cmd>:Rg", "search text with Rg"},
+    ["/"] = {"<cmd>:Rg<CR>", "search text with Rg"},
 
     ["<TAB>"]   = {"<cmd>:bnext<CR>", "next buffer"},
     ["<S-TAB>"] = {"<cmd>:bprevious<CR>", "previous buffer"},
@@ -187,12 +190,12 @@ wk.register({
     },
     B = {
         name  = "Buffer",
-        d     = {"<cmd>:bdelete", "delete buffer"},
-        f     = {"<cmd>:bfirst", "first buffer"},
-        l     = {"<cmd>:blast", "last buffer"},
-        n     = {"<cmd>:bnext", "next buffer"},
-        p     = {"<cmd>:bprevious", "previous buffer"},
-        ["?"] = {"<cmd>:Buffers", "fzf buffer"}
+        d     = {"<cmd>:bdelete<CR>", "delete buffer"},
+        f     = {"<cmd>:bfirst<CR>", "first buffer"},
+        l     = {"<cmd>:blast<CR>", "last buffer"},
+        n     = {"<cmd>:bnext<CR>", "next buffer"},
+        p     = {"<cmd>:bprevious<CR>", "previous buffer"},
+        ["?"] = {"<cmd>:Buffers<CR>", "fzf buffer"}
     },
     F = {
         name   = "FZF",
@@ -247,30 +250,30 @@ wk.register({
     },
     S = {
         name  = "Search",
-        a     = {"<cmd>:Ag", "text Ag"},
-        b     = {"<cmd>:BLines", "current buffer"},
-        B     = {"<cmd>:Buffers", "open buffers"},
-        c     = {"<cmd>:Commits", "commits"},
-        C     = {"<cmd>:BCommits", "buffer commits"},
-        f     = {"<cmd>:Files", "files"},
-        g     = {"<cmd>:GFiles", "git files"},
-        G     = {"<cmd>:GFiles?", "modified git files"},
-        h     = {"<cmd>:History", "file history"},
-        H     = {"<cmd>:History:", "command history"},
-        l     = {"<cmd>:Lines", "lines"},
-        m     = {"<cmd>:Marks", "marks"},
-        M     = {"<cmd>:Maps", "normal maps"},
-        p     = {"<cmd>:Helptags", "help tags"},
-        P     = {"<cmd>:Tags", "project tags"},
-        s     = {"<cmd>:Snippets", "snippets"},
-        S     = {"<cmd>:Colors", "color schemes"},
-        t     = {"<cmd>:Rg", "text Rg"},
-        T     = {"<cmd>:BTags", "buffer tags"},
-        w     = {"<cmd>:Windows", "search windows"},
-        y     = {"<cmd>:Filetypes", "file types"},
-        z     = {"<cmd>:FZF", "FZF"},
-        ["/"] = {"<cmd>:History/", "history"},
-        [";"] = {"<cmd>:Commands", "commands"},
+        a     = {"<cmd>:Ag<CR>", "text Ag"},
+        b     = {"<cmd>:BLines<CR>", "current buffer"},
+        B     = {"<cmd>:Buffers<CR>", "open buffers"},
+        c     = {"<cmd>:Commits<CR>", "commits"},
+        C     = {"<cmd>:BCommits<CR>", "buffer commits"},
+        f     = {"<cmd>:Files<CR>", "files"},
+        g     = {"<cmd>:GFiles<CR>", "git files"},
+        G     = {"<cmd>:GFiles?<CR>", "modified git files"},
+        h     = {"<cmd>:History<CR>", "file history"},
+        H     = {"<cmd>:History:<CR>", "command history"},
+        l     = {"<cmd>:Lines<CR>", "lines"},
+        m     = {"<cmd>:Marks<CR>", "marks"},
+        M     = {"<cmd>:Maps<CR>", "normal maps"},
+        p     = {"<cmd>:Helptags<CR>", "help tags"},
+        P     = {"<cmd>:Tags<CR>", "project tags"},
+        s     = {"<cmd>:Snippets<CR>", "snippets"},
+        S     = {"<cmd>:Colors<CR>", "color schemes"},
+        t     = {"<cmd>:Rg<CR>", "text Rg"},
+        T     = {"<cmd>:BTags<CR>", "buffer tags"},
+        w     = {"<cmd>:Windows<CR>", "search windows"},
+        y     = {"<cmd>:Filetypes<CR>", "file types"},
+        z     = {"<cmd>:FZF<CR>", "FZF"},
+        ["/"] = {"<cmd>:History/<CR>", "history"},
+        [";"] = {"<cmd>:Commands<CR>", "commands"},
     },
     T = { -- description only
         name  = "Tmux",
@@ -293,9 +296,9 @@ wk.register({
         l = {"<C-W>l", "window right"},
         k = {"<C-W>k", "window up"},
         H = {"<C-W>5<", "expand window left"},
-        J = {"<cmd>:resize +5", "expand window below"},
+        J = {"<cmd>:resize +5<CR>", "expand window below"},
         L = {"<C-W>5>", "expand window right"},
-        K = {"<cmd>:resize -5", "expand window up"},
+        K = {"<cmd>:resize -5<CR>", "expand window up"},
         s = {"<C-W>s", "split window below"},
         v = {"<C-W>v", "split window below"},
 
@@ -303,7 +306,7 @@ wk.register({
         ["|"] = {"<C-W>v", "split window right"},
         ["2"] = {"<C-W>v", "layout double columns"},
         ["="] = {"<C-W>=", "balance window"},
-        ["?"] = {"<cmd>:Windows", "fzf window"},
+        ["?"] = {"<cmd>:Windows<CR>", "fzf window"},
     },
 }, { prefix = "<leader>" })
 
