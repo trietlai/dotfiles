@@ -87,6 +87,7 @@ return require('packer').startup(function(use)
     use 'easymotion/vim-easymotion'
     use 'terryma/vim-expand-region'
     use 'chaoren/vim-wordmotion'
+    use 'rhysd/clever-f.vim'
 
     -- copy & paste
     use 'machakann/vim-highlightedyank'
