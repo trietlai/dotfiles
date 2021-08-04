@@ -18,6 +18,7 @@ require('plugins.lightspeed')
 require('plugins.lspkind')
 require('plugins.neoscroll')
 require('plugins.diffview')
+require('plugins.oscyank')
 -- Keymap
 require('settings.keymap')
 
