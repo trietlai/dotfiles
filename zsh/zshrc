@@ -86,7 +86,26 @@ fpath=($ZSH_CUSTOM/completions $fpath)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+export MC_SKIN=gotar
+#export MC_SKIN=modarin256-defbg
+test -s /usr/lib/mc/mc.sh && . /usr/lib/mc/mc.sh || true
+export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-4'
 
+# Set colors for less. Borrowed from https://wiki.archlinux.org/index.php/Color_output_in_console#less
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+# Setup location for NPM global packages
+NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="$PATH:$NPM_PACKAGES/bin"
+# Preserve MANPATH if you already defined it somewhere in your config.
+# Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
+export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
