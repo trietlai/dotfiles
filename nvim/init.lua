@@ -19,6 +19,8 @@ require('plugins.lspkind')
 require('plugins.neoscroll')
 require('plugins.diffview')
 require('plugins.oscyank')
+require('plugins.gitgutter')
+require('plugins.fterm')
 -- Keymap
 require('settings.keymap')
 

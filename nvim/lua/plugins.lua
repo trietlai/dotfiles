@@ -96,6 +96,9 @@ return require('packer').startup(function(use)
     use 'machakann/vim-highlightedyank'
     use 'ojroques/vim-oscyank'
 
+    -- misc
+    use 'numtostr/FTerm.nvim'
+
     -- Icons
     use 'kyazdani42/nvim-web-devicons'
     use 'ryanoasis/vim-devicons'
