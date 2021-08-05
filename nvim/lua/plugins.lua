@@ -22,6 +22,9 @@ return require('packer').startup(function(use)
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
 
+    -- automatically change to project root folder
+    use 'ygm2/rooter.nvim'
+
     -- Treesitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'p00f/nvim-ts-rainbow'
