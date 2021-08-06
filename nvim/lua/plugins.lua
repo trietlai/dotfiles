@@ -131,6 +131,13 @@ return require('packer').startup(function(use)
 
     -- Git
     use {
+        'TimUntersberger/neogit',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            require('plugins.neogit')
+        end
+    }
+    use {
         'airblade/vim-gitgutter',
         even = 'BufEnter',
         config = function()
