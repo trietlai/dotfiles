@@ -1,4 +1,4 @@
--- Automatically displays all buffers when there's only one tab open.
-vim.g['airline#extensions#tabline#enabled'] = 1
+-- Disable displaying buffer-line as using akinsho/nvim-bufferline.lua plugin instead
+vim.g['airline#extensions#tabline#enabled'] = 0
 vim.g.airline_theme = 'molokai'
 

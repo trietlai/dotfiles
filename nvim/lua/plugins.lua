@@ -119,8 +119,6 @@ return require('packer').startup(function(use)
     use { 'chr4/nginx.vim', ft = { 'conf' } }
     use { 'zigford/vim-powershell', ft = { 'ps1' } }
 
-    use 'gcmt/taboo.vim'
-
     -- Tim Pope
     use { 'tpope/vim-fugitive', cmd = { 'Git' } }
     use 'tpope/vim-repeat'
@@ -134,14 +132,14 @@ return require('packer').startup(function(use)
         'TimUntersberger/neogit',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
-            require('plugins.neogit')
+            require 'plugins.neogit'
         end
     }
     use {
         'airblade/vim-gitgutter',
         even = 'BufEnter',
         config = function()
-            require('plugins.gitgutter')
+            require 'plugins.gitgutter'
         end
     }
     use { 'junegunn/gv.vim', cmd = 'GV' }
@@ -203,7 +201,7 @@ return require('packer').startup(function(use)
     use {
         'ojroques/vim-oscyank',
         config = function()
-            require('plugins.oscyank')
+            require 'plugins.oscyank'
         end
     }
 
@@ -211,7 +209,7 @@ return require('packer').startup(function(use)
     use {
         'numtostr/FTerm.nvim',
         config = function()
-            require('plugins.fterm')
+            require 'plugins.fterm'
         end
     }
 
@@ -251,12 +249,20 @@ return require('packer').startup(function(use)
 
     -- Status Line and Bufferline
     --use 'famiu/feline.nvim' -- TODO
+    --use 'glepnir/galaxyline.nvim' -- status line
     --use 'romgrk/barbar.nvim' -- TODO
     use {
         'vim-airline/vim-airline',
         requires = { 'vim-airline/vim-airline-themes' },
         config = function()
-            require('plugins.vim-airline')
+            require 'plugins.vim-airline'
+        end
+    }
+    use {
+        'akinsho/nvim-bufferline.lua',
+        requires = {'kyazdani42/nvim-web-devicons', 'famiu/bufdelete.nvim'},
+        config = function()
+            require 'plugins.bufferline'
         end
     }
 
