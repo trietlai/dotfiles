@@ -266,5 +266,10 @@ return require('packer').startup(function(use)
         end
     }
 
+    use {
+        'RishabhRD/nvim-cheat.sh',
+        requires = 'RishabhRD/popfix'
+    }
+
 end)
 
