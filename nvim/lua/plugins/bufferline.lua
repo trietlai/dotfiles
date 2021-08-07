@@ -39,5 +39,11 @@ require('bufferline').setup {
             guifg = "#87FF00",
             gui = "bold,italic"
         },
+        close_button_visible = {
+            guifg = '#7AA2F7',
+        },
+        close_button_selected = {
+            guifg = "#87FF00",
+        },
     }
 }

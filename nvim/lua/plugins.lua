@@ -15,56 +15,86 @@ vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when th
 require('packer').init({display = {auto_clean = false}})
 
 return require('packer').startup(function(use)
-    -- Packer can manage itself as an optional plugin
-    use { 'wbthomason/packer.nvim', event = 'VimEnter' }
+    use {
+        'wbthomason/packer.nvim',
+    }
 
     -- LSP
-    use { 'kabouzeid/nvim-lspinstall', event = 'BufEnter' }
     use {
         'neovim/nvim-lspconfig',
-        after = 'nvim-lspinstall',
         config = function()
-            require 'plugins.lspconfig'
+            require 'plugins/lspconfig'
         end
     }
+
+    -- add symbols for LSP kinds e.g. method, class, etc.
     use {
         'onsails/lspkind-nvim',
         config = function()
-            require 'plugins.lspkind'
+            require 'plugins/lspkind'
+        end
+    }
+
+    -- LSP for rust
+    use {
+        'simrat39/rust-tools.nvim',
+        after = 'nvim-lspconfig',
+        requires = {
+            'neovim/nvim-lspconfig',
+            'nvim-lua/popup.nvim',
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope.nvim',
+            'mfussenegger/nvim-dap'
+        },
+        config = function()
+            require 'plugins/rust-tools'
         end
     }
 
     -- automatically change to project root folder
     use { 'ygm2/rooter.nvim', event = 'BufEnter' }
 
-    -- Treesitter
+    -- tree-sitter parser
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
         config = function()
-            require 'plugins.treesitter'
+            require 'plugins/treesitter'
         end
     }
 
+    -- Rainbow parentheses for neovim using tree-sitter
     use {
         'p00f/nvim-ts-rainbow',
+        requires = 'nvim-treesitter/nvim-treesitter',
         event = 'BufRead',
         config = function()
-            require 'plugins.nvim-ts-rainbow'
+            require 'plugins/nvim-ts-rainbow'
         end
     }
-    use 'JoosepAlviste/nvim-ts-context-commentstring'
-    use 'romgrk/nvim-treesitter-context'
+
+    -- changes the commentstring setting
+    use {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        requires = 'nvim-treesitter/nvim-treesitter',
+    }
+
+    -- shows the context (e.g. function name) of the currently visible buffer contents
+    use {
+        'romgrk/nvim-treesitter-context',
+        requires = 'nvim-treesitter/nvim-treesitter',
+    }
 
     -- Autocomplete
     use {
         'hrsh7th/nvim-compe',
         event = 'InsertEnter',
         config = function()
-            require 'plugins.compe'
+            require 'plugins/compe'
         end,
     }
 
+    -- extends vim's % key to language-specific words
     use {
         'andymass/vim-matchup',
         event = 'CursorMoved'
@@ -80,12 +110,12 @@ return require('packer').startup(function(use)
             'PhilRunninger/nerdtree-visual-selection'
         }
     }
-    -- alternative 
+    -- alternative
     use {
         'kyazdani42/nvim-tree.lua',
         cmd = 'NvimTreeToggle',
         config = function()
-            require 'plugins.nvimtree'
+            require 'plugins/nvimtree'
         end
     }
     use {
@@ -96,7 +126,6 @@ return require('packer').startup(function(use)
     -- key mapping
     use {
         'folke/which-key.nvim',
-        --keys = { 'n', '<Space>' }
     }
 
     -- FZF
@@ -120,7 +149,6 @@ return require('packer').startup(function(use)
     use { 'zigford/vim-powershell', ft = { 'ps1' } }
 
     -- Tim Pope
-    use { 'tpope/vim-fugitive', cmd = { 'Git' } }
     use 'tpope/vim-repeat'
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-endwise'
@@ -128,88 +156,99 @@ return require('packer').startup(function(use)
     use 'tpope/vim-commentary'
 
     -- Git
-    use {
-        'TimUntersberger/neogit',
-        requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            require 'plugins.neogit'
-        end
-    }
+    use { 'tpope/vim-fugitive', cmd = { 'Git' } }
     use {
         'airblade/vim-gitgutter',
         even = 'BufEnter',
         config = function()
-            require 'plugins.gitgutter'
+            require 'plugins/gitgutter'
         end
     }
+    -- similar to magit
+    -- use {
+    --     'TimUntersberger/neogit',
+    --     requires = 'nvim-lua/plenary.nvim',
+    --     config = function()
+    --         require 'plugins/neogit'
+    --     end
+    -- }
+
+    -- git commit log browser
     use { 'junegunn/gv.vim', cmd = 'GV' }
+
     use {
         'sindrets/diffview.nvim',
-        --cmd = 'DiffviewOpen',
+        cmd = 'DiffviewOpen',
         config = function()
-            require 'plugins.diffview'
+            require 'plugins/diffview'
         end
     }
 
-    -- use 'jreybert/vimagit'
     -- use 'lambdalisue/gina.vim'
-
-    -- Registers: fzf.vim has this functionality
-    -- use 'tversteeg/registers.nvim'
 
     -- indent & align
     use {
         'lukas-reineke/indent-blankline.nvim',
         event = 'BufRead',
         config = function()
-            require 'plugins.indent-blankline'
+            require 'plugins/indent-blankline'
         end
     }
     use 'junegunn/vim-easy-align'
 
     -- Move & Search & replace
+    -- search & highlight
     use {
         'kevinhwang91/nvim-hlslens',
         event = 'BufEnter',
         config = function()
-            require 'plugins.hlslens'
+            require 'plugins/hlslens'
         end
     }
 
+    -- motion/jump plugin
     use {
         'ggandor/lightspeed.nvim',
         config = function()
-            require 'plugins.lightspeed'
+            require 'plugins/lightspeed'
         end
     }
+    -- alternatives motion/jump plugins
+    -- use 'easymotion/vim-easymotion'
+    -- use 'rhysd/clever-f.vim'
 
+    -- Smooth scrolling for window movement commands
     use {
         'karb94/neoscroll.nvim',
         config = function()
-            require 'plugins.neoscroll'
+            require 'plugins/neoscroll'
         end
     }
 
+    -- displays interactive scrollbars
     use 'dstein64/nvim-scrollview'
-    use 'easymotion/vim-easymotion'
+
+    -- Press + to expand the visual selection and _ to shrink it.
     use 'terryma/vim-expand-region'
+
     use 'chaoren/vim-wordmotion'
-    use 'rhysd/clever-f.vim'
 
     -- copy & paste
     use 'machakann/vim-highlightedyank'
+
+    -- copy to system clipboard
     use {
         'ojroques/vim-oscyank',
         config = function()
-            require 'plugins.oscyank'
+            require 'plugins/oscyank'
         end
     }
 
-    -- misc
+    -- terminal
     use {
         'numtostr/FTerm.nvim',
         config = function()
-            require 'plugins.fterm'
+            require 'plugins/fterm'
         end
     }
 
@@ -217,19 +256,19 @@ return require('packer').startup(function(use)
     use 'kyazdani42/nvim-web-devicons'
     use 'ryanoasis/vim-devicons'
 
-    -- Color
+    -- RGB color highlighter
     use {
         'norcalli/nvim-colorizer.lua',
         ft = { 'html', 'css', 'yml' },
         config = function()
-            require 'plugins.colorizer'
+            require 'plugins/colorizer'
         end
     }
 
     use {
         'glepnir/dashboard-nvim',
         config = function()
-            require 'plugins.dashboard'
+            require 'plugins/dashboard'
         end
     }
 
@@ -255,20 +294,21 @@ return require('packer').startup(function(use)
         'vim-airline/vim-airline',
         requires = { 'vim-airline/vim-airline-themes' },
         config = function()
-            require 'plugins.vim-airline'
+            require 'plugins/vim-airline'
         end
     }
     use {
         'akinsho/nvim-bufferline.lua',
         requires = {'kyazdani42/nvim-web-devicons', 'famiu/bufdelete.nvim'},
         config = function()
-            require 'plugins.bufferline'
+            require 'plugins/bufferline'
         end
     }
 
     use {
         'RishabhRD/nvim-cheat.sh',
-        requires = 'RishabhRD/popfix'
+        requires = 'RishabhRD/popfix',
+        cmd = {'Cheat', 'CheatList', 'CheatWithoutComments', 'CheatListWithoutComments'}
     }
 
 end)
