@@ -1,5 +1,20 @@
 -- Global
 
+-- Disable some unused built-in Neovim plugins
+vim.g.loaded_man = false
+vim.g.loaded_gzip = false
+vim.g.loaded_netrwPlugin = false
+vim.g.loaded_tarPlugin = false
+vim.g.loaded_zipPlugin = false
+vim.g.loaded_2html_plugin = false
+vim.g.loaded_remote_plugins = false
+
+-- font for neovide
+--vim.opt.guifont = "JetBrainsMono Nerd Font Mono:h12"
+--vim.opt.guifont = "DaddyTimeMono NF:h12"
+--vim.opt.guifont = "VictorMono Nerd Font Mono:h12"
+vim.opt.guifont = "FiraCode Nerd Font Mono:h12"
+
 vim.opt.hidden = true -- Required to keep multiple buffers open multiple buffers
 vim.opt.wrap = false -- Display long lines as just one line
 vim.opt.ruler = true -- Show the cursor position all the time
