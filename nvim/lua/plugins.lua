@@ -272,6 +272,20 @@ return require('packer').startup(function(use)
         end
     }
 
+    use {
+        'RishabhRD/nvim-cheat.sh',
+        requires = 'RishabhRD/popfix',
+        cmd = {'Cheat', 'CheatList', 'CheatWithoutComments', 'CheatListWithoutComments'}
+    }
+
+    -- better quickfix
+    use {
+        'kevinhwang91/nvim-bqf',
+        config = function()
+            require 'plugins/bqf'
+        end
+    }
+
     -- colorscheme
     use {
         'sainnhe/gruvbox-material',
@@ -304,12 +318,5 @@ return require('packer').startup(function(use)
             require 'plugins/bufferline'
         end
     }
-
-    use {
-        'RishabhRD/nvim-cheat.sh',
-        requires = 'RishabhRD/popfix',
-        cmd = {'Cheat', 'CheatList', 'CheatWithoutComments', 'CheatListWithoutComments'}
-    }
-
 end)
 
