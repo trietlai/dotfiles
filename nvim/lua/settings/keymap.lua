@@ -13,42 +13,6 @@ vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true })
 vim.api.nvim_set_keymap('n', 'n', 'nzz', { noremap = true })
 vim.api.nvim_set_keymap('n', 'N', 'Nzz', { noremap = true })
 
--- some vim functions
-vim.cmd([[
-function! MyZoom()
-    if winnr('$') > 1
-        tab split
-    elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
-                \ 'index(v:val, '.bufnr('').') >= 0')) > 1
-        tabclose
-    endif
-endfunction
-
-function! MyTmuxSend(content, dest) range
-    let dest = empty(a:dest) ? input('To which pane? ') : a:dest
-    let tempfile = tempname()
-    call writefile(split(a:content, "\n", 1), tempfile, 'b')
-    call system(printf('tmux load-buffer -b vim-tmux %s \; paste-buffer -d -b vim-tmux -t %s',
-                \ shellescape(tempfile), shellescape(dest)))
-    call delete(tempfile)
-endfunction
-
-function! MyTmuxMap(key, dest)
-    execute printf('nnoremap <silent> %s "tyy:call MyTmuxSend(@t, "%s")<cr>', a:key, a:dest)
-    execute printf('xnoremap <silent> %s "ty:call MyTmuxSend(@t, "%s")<cr>gv', a:key, a:dest)
-endfunction
-
-call MyTmuxMap('<leader>Tt', '')
-call MyTmuxMap('<leader>Th', '.left')
-call MyTmuxMap('<leader>Tj', '.bottom')
-call MyTmuxMap('<leader>Tk', '.top')
-call MyTmuxMap('<leader>Tl', '.right')
-call MyTmuxMap('<leader>Ty', '.top-left')
-call MyTmuxMap('<leader>To', '.top-right')
-call MyTmuxMap('<leader>Tn', '.bottom-left')
-call MyTmuxMap('<leader>T.', '.bottom-right')
-]])
-
 local wk = require("which-key")
 wk.setup {
     key_labels = {
@@ -203,7 +167,6 @@ wk.register({
     w = {"<cmd>:Windows<CR>", "find windows"},
     x = {'"_x', "delete char to black-hole register"},
     y = {'"yy', "copy to 'y' register"},
-    z = {"<cmd>:call MyZoom()<CR>", "zoom: window <-> tab"},
 
     ["1"] = "goto buffer 1",
     ["2"] = "goto buffer 2",
@@ -364,18 +327,6 @@ wk.register({
         z     = {"<cmd>:FZF<CR>", "FZF"},
         ["/"] = {"<cmd>:History/<CR>", "history"},
         [";"] = {"<cmd>:Commands<CR>", "commands"},
-    },
-    T = { -- description only
-        name  = "Tmux",
-        h     = "send to left pane",
-        j     = "send to bottom pane",
-        k     = "send to top pane",
-        l     = "send to right pane",
-        n     = "send to bottom-left pane",
-        o     = "send to top-right pane",
-        t     = "send to pane?",
-        y     = "send to top-left pane",
-        ["."] = "send to bottom-right pane",
     },
     W = {
         name  = "Windows" ,
