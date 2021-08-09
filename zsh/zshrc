@@ -129,7 +129,10 @@ export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-if [ -x "$(command -v exa)" ]; then
+if [ -x "$(command -v lsd)" ]; then
+    alias ls="lsd"
+    alias la="lsd -lah"
+elif [ -x "$(command -v exa)" ]; then
     alias ls="exa"
     alias la="exa --long --all --group"
 fi
