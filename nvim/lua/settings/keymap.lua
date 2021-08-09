@@ -90,6 +90,7 @@ wk.register({
         A    = "last file",
         b    = { "<cmd>:BufferLineCycleNext<CR>", "next buffer"},
         B    = "last buffer",
+        c    = "Git next hunk",
         d    = {"<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Move to the next diagnostic"},
         l    = "next location-list",
         L    = "last location-list",
@@ -104,6 +105,7 @@ wk.register({
         A    = "first file",
         b    = { "<cmd>:BufferLineCyclePrev<CR>", "previous buffer"},
         B    = "first buffer",
+        c    = "Git previous hunk",
         d    = {"<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", "Move to the previous diagnostic"},
         l    = "previous location-list",
         L    = "first location-list",
@@ -192,12 +194,13 @@ wk.register({
     b = {"<cmd>:Buffers<CR>", "list buffers"},
     c = {"<cmd>:cclose<BAR>lclose<CR>", "close quickfix/location window"},
     d = {'"_d', "delete to black-hole register"},
-    f = {"<cmd>:Files<CR>", "search files"},
-    H = {"<cmd>:History<CR>", "search history"}, -- 'h' conflicts with gitgutter
-    m = {"<cmd>:Maps<CR>", "search mapping"},
+    g = {"<cmd>:Git<CR>", "Git status"},
+    H = {"<cmd>:History<CR>", "search history"},
+    m = {"<cmd>:Maps<CR>", "show keybindings"},
     p = {'"yp', "paste from 'y' register"},
     P = {'"yP', "paste from 'y' register"},
-    r = {"<cmd>:RnvimrToggle<CR>", "toggle Ranger Vim"},
+    r = {"<cmd>:Files<CR>", "recent files"},
+    w = {"<cmd>:Windows<CR>", "find windows"},
     x = {'"_x', "delete char to black-hole register"},
     y = {'"yy', "copy to 'y' register"},
     z = {"<cmd>:call MyZoom()<CR>", "zoom: window <-> tab"},
@@ -217,7 +220,9 @@ wk.register({
 
     ["<Tab>"]   = {"<cmd>:bnext<CR>", "next buffer"},
     ["<S-Tab>"] = {"<cmd>:bprevious<CR>", "previous buffer"},
-    ["?"]       = {"<cmd>:Maps<CR>", "show keybindings"},
+    ["?"]       = {"<cmd>:Helptags<CR>", "help tags"},
+    [":"]       = {"<cmd>:History:<CR>", "command history"},
+    ["`"]       = {"<cmd>:Marks<CR>", "marks"},
 }, { prefix = "<leader>" })
 
 wk.register({
@@ -236,9 +241,10 @@ wk.register({
         c     = {"<cmd>:tabclose<CR>", "close current tab"},
         o     = {"<cmd>:tabonly<CR>", "close all except current tab"},
     },
-    h = {
+    h = { -- TODO: remap to 'H'
         name = "git-gutter",
         p    = "preview hunk",
+        q    = {"<cmd>Gqf<CR>", "show hunks in quickfix"},
         s    = "stage hunk",
         u    = "undo hunk",
     },
@@ -246,7 +252,6 @@ wk.register({
         name  = "Buffer",
         b     = {"<cmd>:bfirst<CR>", "first buffer"},
         B     = {"<cmd>:blast<CR>", "last buffer"},
-        c     = {"<cmd>BufferClose!<CR>", "Close Buffer"},
         d     = {"<cmd>:bdelete<CR>", "delete buffer"},
         D     = {"<cmd>BufferOrderByDirectory<cr>", "sort BufferLines automatically by directory"},
         h     = {"<cmd>BufferCloseBuffersLeft<cr>", "close all buffers to the left"},

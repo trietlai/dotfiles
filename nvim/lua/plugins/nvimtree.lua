@@ -1,4 +1,4 @@
-vim.g.nvim_tree_width = 40
+vim.g.nvim_tree_width = 30
 vim.g.nvim_tree_hijack_cursor = 0
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_auto_close = 1
