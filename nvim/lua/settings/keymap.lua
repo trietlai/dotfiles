@@ -110,41 +110,41 @@ wk.register({
 
 -- insert mode
 wk.register({
-	["<C-u>"]     = {"<Esc>viwUi", "uppercase word"},
+    ["<C-u>"]     = {"<Esc>viwUi", "uppercase word"},
 
-	["<C-]>"]     = {"<C-x><C-]>", "complete using tags"},
-	["<C-space>"] = {"<C-x><C-o>", "language aware omni-completion"},
-	["<C-b>"]     = {"<C-x><C-p>", "keyword completion from the current buffer"},
-	["<C-d>"]     = {"<C-x><C-k>", "dictionary completion"},
-	["<C-f>"]     = {"<C-x><C-f>", "file path completion"},
-	["<C-l>"]     = {"<C-x><C-l>", "whole-of-line completion"},
+    ["<C-]>"]     = {"<C-x><C-]>", "complete using tags"},
+    ["<C-space>"] = {"<C-x><C-o>", "language aware omni-completion"},
+    ["<C-b>"]     = {"<C-x><C-p>", "keyword completion from the current buffer"},
+    ["<C-d>"]     = {"<C-x><C-k>", "dictionary completion"},
+    ["<C-f>"]     = {"<C-x><C-f>", "file path completion"},
+    ["<C-l>"]     = {"<C-x><C-l>", "whole-of-line completion"},
 
-	["<C-^>"]     = {"<C-o><C-^>", "last buffer"},
+    ["<C-^>"]     = {"<C-o><C-^>", "last buffer"},
 
-	-- Readline-style mappings for insert mode
-	["<C-a>"]     = {"<C-o>^",    "begin of line"},
-	["<C-e>"]     = {"<C-o>$",    "end of line"},
-	["<A-b>"]     = {"<C-Left>",  "back to begin of word"},
-	["<A-f>"]     = {"<C-Right>", "forward to begin of word"},
-	["<A-BS>"]    = {"<C-w>",     "delete to begin of word"},
-	["<A-d>"]     = {"<C-o>dw",   "delete to end of word"},
+    -- Readline-style mappings for insert mode
+    ["<C-a>"]     = {"<C-o>^",    "begin of line"},
+    ["<C-e>"]     = {"<C-o>$",    "end of line"},
+    ["<A-b>"]     = {"<C-Left>",  "back to begin of word"},
+    ["<A-f>"]     = {"<C-Right>", "forward to begin of word"},
+    ["<A-BS>"]    = {"<C-w>",     "delete to begin of word"},
+    ["<A-d>"]     = {"<C-o>dw",   "delete to end of word"},
 }, { mode = "i" })
 
 -- command mode
 wk.register({
-	-- Readline-style mappings for command mode
-	["<C-a>"]  = {"<Home>",         "begin of line"},
-	["<C-b>"]  = {"<Left>",         "left one character"},
-	["<C-e>"]  = {"<End>",          "end of line"},
-	["<A-b>"]  = {"<C-Left>",       "back to begin of word"},
-	["<A-f>"]  = {"<C-Right>",      "forward to begin of word"},
-	["<A-BS>"] = {"<C-w>",          "delete to begin of word"},
-	["<A-d>"]  = {"<C-Right><C-w>", "delete to end of word"},
+    -- Readline-style mappings for command mode
+    ["<C-a>"]  = {"<Home>",         "begin of line"},
+    ["<C-b>"]  = {"<Left>",         "left one character"},
+    ["<C-e>"]  = {"<End>",          "end of line"},
+    ["<A-b>"]  = {"<C-Left>",       "back to begin of word"},
+    ["<A-f>"]  = {"<C-Right>",      "forward to begin of word"},
+    ["<A-BS>"] = {"<C-w>",          "delete to begin of word"},
+    ["<A-d>"]  = {"<C-Right><C-w>", "delete to end of word"},
 }, { mode = "c" })
 
 -- visual mode
 wk.register({
-	ga = {"<Plug>(EasyAlign)", "Easy align"},
+    ga = {"<Plug>(EasyAlign)", "Easy align"},
 }, { mode = "x" })
 
 -- visual mode
@@ -159,7 +159,7 @@ wk.register({
     c = {"<cmd>:cclose<BAR>lclose<CR>", "close quickfix/location window"},
     d = {'"_d', "delete to black-hole register"},
     g = {"<cmd>:Git<CR>", "Git status"},
-    H = {"<cmd>:History<CR>", "search history"},
+    h = {"<cmd>:History<CR>", "search history"},
     m = {"<cmd>:Maps<CR>", "show keybindings"},
     p = {'"yp', "paste from 'y' register"},
     P = {'"yP', "paste from 'y' register"},
@@ -189,7 +189,7 @@ wk.register({
 }, { prefix = "<leader>" })
 
 wk.register({
-	ga          = {"<Plug>(LiveEasyAlign)", "live easy align"},
+    ga          = {"<Plug>(LiveEasyAlign)", "live easy align"},
 }, { prefix = "<leader>", mode = "x" })
 
 -- group
@@ -204,7 +204,7 @@ wk.register({
         c     = {"<cmd>:tabclose<CR>", "close current tab"},
         o     = {"<cmd>:tabonly<CR>", "close all except current tab"},
     },
-    h = { -- TODO: remap to 'H'
+    H = {
         name = "git-gutter",
         p    = "preview hunk",
         q    = {"<cmd>Gqf<CR>", "show hunks in quickfix"},

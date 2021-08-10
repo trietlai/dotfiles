@@ -1,6 +1,8 @@
 -- Disable displaying buffer-line as using akinsho/nvim-bufferline.lua plugin instead
 vim.g['airline#extensions#tabline#enabled'] = 0
 vim.g['airline#extensions#branch#enabled'] = 1
+vim.g['airline#extensions#hunks#enabled'] = 1
+vim.g['airline#extensions#fugitiveline#enabled'] = 1
 vim.g.airline_enabled = 1
 vim.g.airline_powerline_fonts = 1
 vim.g.airline_theme = 'badwolf'

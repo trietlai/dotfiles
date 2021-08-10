@@ -34,6 +34,22 @@ return require('packer').startup(function(use)
             require 'plugins/lspkind'
         end
     }
+    use {
+        'ojroques/nvim-lspfuzzy',
+        requires = {
+            {'junegunn/fzf'},
+            {'junegunn/fzf.vim'},
+        },
+        config = function()
+            require 'plugins/lspfuzzy'
+        end
+    }
+    use {
+        'kosayoda/nvim-lightbulb',
+        config = function()
+            require 'plugins/lightbulb'
+        end
+    }
 
     -- LSP for rust
     use {
@@ -157,13 +173,25 @@ return require('packer').startup(function(use)
 
     -- Git
     use { 'tpope/vim-fugitive', cmd = { 'Git' } }
+
+    -- use {
+    --     'airblade/vim-gitgutter',
+    --     even = 'BufEnter',
+    --     config = function()
+    --         require 'plugins/gitgutter'
+    --     end
+    -- }
+
     use {
-        'airblade/vim-gitgutter',
-        even = 'BufEnter',
+        'lewis6991/gitsigns.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        },
         config = function()
-            require 'plugins/gitgutter'
+            require 'plugins/gitsigns'
         end
     }
+
     -- similar to magit
     -- use {
     --     'TimUntersberger/neogit',
@@ -301,16 +329,31 @@ return require('packer').startup(function(use)
     use { 'kaicataldo/material.vim', branch = 'main' }
 
     -- Status Line and Bufferline
-    --use 'famiu/feline.nvim' -- TODO
-    --use 'glepnir/galaxyline.nvim' -- status line
-    --use 'romgrk/barbar.nvim' -- TODO
+    -- use {
+    --     'vim-airline/vim-airline',
+    --     requires = { 'vim-airline/vim-airline-themes' },
+    --     config = function()
+    --         require 'plugins/vim-airline'
+    --     end
+    -- }
+
+    -- use {
+    --     'glepnir/galaxyline.nvim',
+    --     branch = 'main',
+    --     requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    --     config = function()
+    --         require'plugins/galaxy-statusline'
+    --     end
+    -- }
+
     use {
-        'vim-airline/vim-airline',
-        requires = { 'vim-airline/vim-airline-themes' },
+        'famiu/feline.nvim',
+        requires = { 'lewis6991/gitsigns.nvim' },
         config = function()
-            require 'plugins/vim-airline'
+            require 'plugins/feline'
         end
     }
+
     use {
         'akinsho/nvim-bufferline.lua',
         requires = {'kyazdani42/nvim-web-devicons', 'famiu/bufdelete.nvim'},
