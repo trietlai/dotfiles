@@ -18,6 +18,7 @@ local map = vim.api.nvim_set_keymap
 
 map('n', ';', '<cmd>lua repeat_ft(false)<cr>', {noremap = true, silent = true})
 map('x', ';', '<cmd>lua repeat_ft(false)<cr>', {noremap = true, silent = true})
-map('n', ',', '<cmd>lua repeat_ft(true)<cr>', {noremap = true, silent = true})
-map('x', ',', '<cmd>lua repeat_ft(true)<cr>', {noremap = true, silent = true})
+-- ',' is not used very often so leave it for other bindings
+-- map('n', ',', '<cmd>lua repeat_ft(true)<cr>', {noremap = true, silent = true})
+-- map('x', ',', '<cmd>lua repeat_ft(true)<cr>', {noremap = true, silent = true})
 

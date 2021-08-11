@@ -50,6 +50,12 @@ return require('packer').startup(function(use)
             require 'plugins/lightbulb'
         end
     }
+    use {
+        'simrat39/symbols-outline.nvim',
+        config = function()
+            require 'plugins/symbols-outline.lua'
+        end
+    }
 
     -- LSP for rust
     use {

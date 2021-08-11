@@ -90,6 +90,7 @@ wk.register({
 
     ["<F4>"]    = {"<cmd>:NvimTreeToggle<CR>", "toggle NvimTree"},
     -- ["<F5>"]    = {"<cmd>:NERDTreeToggle<CR>", "toggle NerdTree"},
+    ["<F5>"]    = {"<cmd>:SymbolsOutline<CR>", "toggle symbols-outline"},
     ["<F12>"]   = {"<cmd>:lua require('FTerm').toggle()<CR>", "toggle terminal"},
 
     -- Easier split navigations
@@ -215,7 +216,7 @@ wk.register({
         name  = "Buffer",
         b     = {"<cmd>:bfirst<CR>", "first buffer"},
         B     = {"<cmd>:blast<CR>", "last buffer"},
-        d     = {"<cmd>:bdelete<CR>", "delete buffer"},
+        d     = {"<cmd>:Bdelete<CR>", "delete buffer"},
         D     = {"<cmd>BufferOrderByDirectory<cr>", "sort BufferLines automatically by directory"},
         h     = {"<cmd>BufferCloseBuffersLeft<cr>", "close all buffers to the left"},
         j     = {"<cmd>BufferPick<cr>", "jump to buffer" },
@@ -260,6 +261,7 @@ wk.register({
         c     = {"<cmd>:Gcommit<CR>", "commit"},
         C     = {"<cmd>:Gcommit -n<CR>", "commit but ignore hooks"},
         d     = {"<cmd>:Gvdiff<CR>", "diff"},
+        D     = {"<cmd>:DiffviewOpen<CR>", "diff view"},
         f     = {"<cmd>:Gfetch<CR>", "fetch"},
         FP    = {"<cmd>:Gpush --force-with-lease<CR>", "push but force with lease"},
         l     = {"<cmd>:GV!<CR>", "log for current file"},

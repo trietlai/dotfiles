@@ -67,17 +67,17 @@ local vi_mode_text = {
 
 local vi_mode_icons = {
     NORMAL        = '🅝 ',
-    OP            = '<|',
+    OP            = '🅞 ',
     INSERT        = '🅘 ',
     VISUAL        = '🅥 ',
-    BLOCK         = '🅥 ',
+    BLOCK         = '🅑 ',
     REPLACE       = '🅡 ',
-    ['V-REPLACE'] = '🅡 ',
-    ENTER         = '|>',
-    MORE          = '🅡 ',
+    ['V-REPLACE'] = '🆁 ',
+    ENTER         = '🅔 ',
+    MORE          = '🅜 ',
     SELECT        = '🅢 ',
     COMMAND       = '🅒 ',
-    SHELL         = '🅢 ',
+    SHELL         = '🆂 ',
     TERM          = '🅣 ',
     NONE          = '<>',
 }
