@@ -169,6 +169,15 @@ return require('packer').startup(function(use)
             'stsewd/fzf-checkout.vim'
         }
     }
+    -- Fzf alternative and many other plugins depend on it
+    -- TODO: config & mappings
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = { {'nvim-lua/plenary.nvim'} },
+        config = function()
+            require 'plugins/telescope'
+        end
+    }
 
     -- Syntax
     use { 'habamax/vim-asciidoctor', ft = { 'adoc' } }
