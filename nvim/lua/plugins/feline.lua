@@ -19,16 +19,16 @@ local colors = {
     bg        = '#282828',
     black     = '#282828',
     yellow    = '#d8a657',
-    cyan      = '#89b482',
+    cyan      = '#00f9fd',
     oceanblue = '#45707a',
-    green     = '#a9b665',
+    green     = '#87ff00',
     orange    = '#e78a4e',
-    violet    = '#d3869b',
-    magenta   = '#c14a4a',
+    violet    = '#b237b6',
+    magenta   = '#d8697c',
     white     = '#a89984',
     fg        = '#a89984',
-    skyblue   = '#7daea3',
-    red       = '#ea6962',
+    skyblue   = '#00afff',
+    red       = '#FF6059',
 }
 
 local vi_mode_colors = {
@@ -48,38 +48,26 @@ local vi_mode_colors = {
     NONE          = 'yellow'
 }
 
-local vi_mode_text = {
-    NORMAL        = '<|',
-    OP            = '<|',
-    INSERT        = '|>',
-    VISUAL        = '<>',
-    BLOCK         = '<>',
-    REPLACE       = '<>',
-    ['V-REPLACE'] = '<>',
-    ENTER         = '<>',
-    MORE          = '<>',
-    SELECT        = '<>',
-    COMMAND       = '<|',
-    SHELL         = '<|',
-    TERM          = '<|',
-    NONE          = '<>'
+local vi_mode_indicators = {
+    NORMAL        = '🅝 NORMAL',
+    OP            = '🅞 OP',
+    INSERT        = '🅘 INSERT',
+    VISUAL        = '🅥 VISUAL',
+    BLOCK         = '🅑 BLOCK',
+    REPLACE       = '🅡 REPLACE',
+    ['V-REPLACE'] = '🆁 V-REPLACE',
+    ENTER         = '🅔 ENTER',
+    MORE          = '🅜 MORE',
+    SELECT        = '🅢 SELECT',
+    COMMAND       = '🅒 COMMAND',
+    SHELL         = '🆂 SHELL',
+    TERM          = '🅣 TERM',
+    NONE          = 'NONE',
 }
 
-local vi_mode_icons = {
-    NORMAL        = '🅝 ',
-    OP            = '🅞 ',
-    INSERT        = '🅘 ',
-    VISUAL        = '🅥 ',
-    BLOCK         = '🅑 ',
-    REPLACE       = '🅡 ',
-    ['V-REPLACE'] = '🆁 ',
-    ENTER         = '🅔 ',
-    MORE          = '🅜 ',
-    SELECT        = '🅢 ',
-    COMMAND       = '🅒 ',
-    SHELL         = '🆂 ',
-    TERM          = '🅣 ',
-    NONE          = '<>',
+local sep_icons = {
+    right = "",
+    left = ""
 }
 
 properties.force_inactive.filetypes = {
@@ -100,7 +88,7 @@ properties.force_inactive.buftypes = {
 -- vi-mode
 components.left.active[1] = {
     provider = function()
-        return vi_mode_icons[vi_mode_utils.get_vim_mode()]
+        return vi_mode_indicators[vi_mode_utils.get_vim_mode()]
     end,
     hl = function()
         local val = {}
@@ -109,24 +97,10 @@ components.left.active[1] = {
         val.style = 'bold'
         return val
     end,
-    right_sep = ' '
-}
--- vi-symbol
-components.left.active[2] = {
-    provider = function()
-        return vi_mode_text[vi_mode_utils.get_vim_mode()]
-    end,
-    hl = function()
-        local val = {}
-        val.fg    = vi_mode_utils.get_mode_color()
-        val.bg    = 'bg'
-        val.style = 'bold'
-        return val
-    end,
-    right_sep = ' '
+    right_sep = sep_icons.left .. ' '
 }
 -- filename
-components.left.active[3] = {
+components.left.active[2] = {
     provider = function()
         return vim.fn.expand("%:F")
     end,
@@ -138,7 +112,7 @@ components.left.active[3] = {
     right_sep = ''
 }
 -- gitBranch
-components.left.active[4] = {
+components.left.active[3] = {
     provider = 'git_branch',
     hl = {
         fg    = 'yellow',
@@ -147,7 +121,7 @@ components.left.active[4] = {
     }
 }
 -- diffAdd
-components.left.active[5] = {
+components.left.active[4] = {
     provider = 'git_diff_added',
     hl = {
         fg    = 'green',
@@ -156,7 +130,7 @@ components.left.active[5] = {
     }
 }
 -- diffModfified
-components.left.active[6] = {
+components.left.active[5] = {
     provider = 'git_diff_changed',
     hl = {
         fg    = 'orange',
@@ -165,7 +139,7 @@ components.left.active[6] = {
     }
 }
 -- diffRemove
-components.left.active[7] = {
+components.left.active[6] = {
     provider = 'git_diff_removed',
     hl = {
         fg    = 'red',

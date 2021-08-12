@@ -52,9 +52,19 @@ return require('packer').startup(function(use)
     }
     use {
         'simrat39/symbols-outline.nvim',
-        config = function()
-            require 'plugins/symbols-outline.lua'
-        end
+        -- 'require' sometimes causing loading error
+        -- config = function()
+        --     require 'plugins/symbols-outline.lua'
+        -- end
+        config = [[vim.g.symbols_outline = {
+            symbols = {
+                Module = {icon = "", hl = "TSNamespace"},
+                Namespace = {icon = "∷", hl = "TSNamespace"},
+                Key = {icon = "", hl = "TSType"},
+                Operator = {icon = "⊕", hl = "TSOperator"},
+                Null = {icon = "ﳠ", hl = "TSType"},
+            }
+        }]]
     }
 
     -- LSP for rust
@@ -293,7 +303,7 @@ return require('packer').startup(function(use)
     -- RGB color highlighter
     use {
         'norcalli/nvim-colorizer.lua',
-        ft = { 'html', 'css', 'yml' },
+        ft = { 'html', 'css', 'yml', 'lua' },
         config = function()
             require 'plugins/colorizer'
         end
