@@ -326,6 +326,14 @@ return require('packer').startup(function(use)
     }
 
     use {
+        'sudormrfbin/cheatsheet.nvim',
+        requires = {
+            {'nvim-telescope/telescope.nvim'},
+            {'nvim-lua/popup.nvim'},
+            {'nvim-lua/plenary.nvim'},
+        }
+    }
+    use {
         'RishabhRD/nvim-cheat.sh',
         requires = 'RishabhRD/popfix',
         cmd = {'Cheat', 'CheatList', 'CheatWithoutComments', 'CheatListWithoutComments'}

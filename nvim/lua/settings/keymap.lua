@@ -27,19 +27,28 @@ wk.setup {
 wk.register({
     -- start with 'g'
     g = {
-        a     = {"<Plug>(EasyAlign)",    "Easy align"},
-        b     = {"<cmd>BufferLinePick<CR>", "pick buffer"},
-        c     = {"<Plug>Commentary",     "Commentary"},
-        cc    = {"<Plug>CommentaryLine", "Commentary line"},
-        d     = {"<Cmd>lua vim.lsp.buf.definition()<CR>",       "goto definition"},
-        D     = {"<Cmd>lua vim.lsp.buf.declaration()<CR>",      "goto declaration"},
-        i     = {"<cmd>lua vim.lsp.buf.implementation()<CR>",   "goto implementation"},
-        k     = {"<cmd>lua vim.lsp.buf.signature_help()<CR>",   "signature help"},
-        r     = {"<cmd>lua vim.lsp.buf.references()<CR>",       "display references"},
-        T     = {"<cmd>lua vim.lsp.buf.type_definition()<CR>",  "type definition"},
+        a     = {"<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>", "list code actions"},
+        c     = {"<Plug>Commentary", "Commentary"},
+        d     = {"<cmd>lua require('telescope.builtin').lsp_definitions<CR>", "goto definition"},
+        D     = {"<Cmd>lua vim.lsp.buf.declaration()<CR>", "goto declaration"},
+        i     = {"<cmd>lua require('telescope.builtin').lsp_implementations()<CR>", "goto implementation"},
+        k     = {"<cmd>lua vim.lsp.buf.signature_help()<CR>", "signature help"},
+        p     = {"<cmd>lua require('telescope').extensions.project.project{}<CR>", "list projects"},
+        r     = {"<cmd>lua require('telescope.builtin').lsp_references()<CR>", "display references"},
+        s     = {"<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", "list document symbols"},
+        S     = {"<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", "list workspace symbols"},
+        T     = {"<cmd>lua vim.lsp.buf.type_definition()<CR>", "type definition"},
         U     = {"viwU<Esc>", "uppercase word"},
+        x     = {"<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>", "list diagnostics"},
+        X     = {"<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>", "list workspace diagnostics"},
+
         ["."] = {"<cmd>:normal! `[v`]<CR><LEFT>", "Last inserted text"},
     },
+    -- start with ','
+    [","] = {
+        a = {"<Plug>(EasyAlign)", "Easy align"},
+    },
+
 
     K = {"<Cmd>lua vim.lsp.buf.hover()<CR>", "display info of symbol under cursor"},
     s = "jump to next occurrence (lightspeed)",
@@ -91,7 +100,7 @@ wk.register({
     ["<F4>"]    = {"<cmd>:NvimTreeToggle<CR>", "toggle NvimTree"},
     -- ["<F5>"]    = {"<cmd>:NERDTreeToggle<CR>", "toggle NerdTree"},
     ["<F5>"]    = {"<cmd>:SymbolsOutline<CR>", "toggle symbols-outline"},
-    ["<F12>"]   = {"<cmd>:lua require('FTerm').toggle()<CR>", "toggle terminal"},
+    ["<F12>"]   = {"<cmd>lua require('FTerm').toggle()<CR>", "toggle terminal"},
 
     -- Easier split navigations
     ["<C-j>"]   = {"<C-w><C-j>", "move to window below (horizontal split)"},
@@ -150,24 +159,25 @@ wk.register({
 
 -- visual mode
 wk.register({
-    ["<F12>"]   = {"<cmd>:lua require('FTerm').toggle()<CR>", "toggle terminal"},
+    ["<F12>"]   = {"<cmd>lua require('FTerm').toggle()<CR>", "toggle terminal"},
 }, { mode = "t" })
 
 -- leader
 -- single
 wk.register({
-    b = {"<cmd>:Buffers<CR>", "list buffers"},
-    c = {"<cmd>:cclose<BAR>lclose<CR>", "close quickfix/location window"},
-    d = {'"_d', "delete to black-hole register"},
-    g = {"<cmd>:Git<CR>", "Git status"},
-    h = {"<cmd>:History<CR>", "search history"},
-    m = {"<cmd>:Maps<CR>", "show keybindings"},
-    p = {'"yp', "paste from 'y' register"},
-    P = {'"yP', "paste from 'y' register"},
-    r = {"<cmd>:Files<CR>", "recent files"},
+    -- b = {"<cmd>:Buffers<CR>", "list buffers"},
+    b = {"<cmd>lua require('telescope.builtin').buffers()<CR>", "list buffers"},
+    c = {"<cmd>cclose<BAR>lclose<CR>", "close quickfix/location window"},
+    g = {"<cmd>lua require('telescope.builtin').git_status()<CR>", "Git status"},
+    f = {"<cmd>lua require('telescope.builtin').file_browser()<CR>", "file browser"},
+    h = {"<cmd>lua require('telescope.builtin').search_history()<CR>", "search history"},
+    l = {"<cmd>lua require('telescope.builtin').loclist()<CR>", "quickfix list"},
+    m = {"<cmd>lua require('telescope.builtin').keymaps()<CR>", "show keymaps"},
+    p = {"<cmd>lua require('extensions.telescope-dotfile').project_files()<CR>", "search project files"},
+    q = {"<cmd>lua require('telescope.builtin').quickfix()<CR>", "quickfix list"},
+    r = {"<cmd>lua require('telescope.builtin').oldfiles()<CR>", "recent files"},
+    t = {"<cmd>lua require('telescope.builtin').tags()<CR>", "tags"},
     w = {"<cmd>:Windows<CR>", "find windows"},
-    x = {'"_x', "delete char to black-hole register"},
-    y = {'"yy', "copy to 'y' register"},
 
     ["1"] = "goto buffer 1",
     ["2"] = "goto buffer 2",
@@ -180,13 +190,15 @@ wk.register({
     ["9"] = "goto buffer 9",
     ["-"] = {"<C-w>s", "split window below"},
     ["|"] = {"<C-w>v", "split window right"},
-    ["/"] = {"<cmd>:Rg<CR>", "search text with Rg"},
+    ["/"] = {"<cmd>lua require('telescope.builtin').live_grep()<CR>", "search text"},
 
     ["<Tab>"]   = {"<cmd>:bnext<CR>", "next buffer"},
     ["<S-Tab>"] = {"<cmd>:bprevious<CR>", "previous buffer"},
-    ["?"]       = {"<cmd>:Helptags<CR>", "help tags"},
-    [":"]       = {"<cmd>:History:<CR>", "command history"},
-    ["`"]       = {"<cmd>:Marks<CR>", "marks"},
+    [":"]       = {"<cmd>lua require('telescope.builtin').command_history()<CR>", "command history"},
+    ["`"]       = {"<cmd>lua require('telescope.builtin').marks()<CR>", "marks"},
+    ['"']       = {"<cmd>lua require('telescope.builtin').registers()<CR>", "registers"},
+    ["="]       = {"<cmd>lua require('telescope.builtin').spell_suggest()<CR>", "spell suggest"},
+    ["."]       = {"<cmd>lua require('extensions.telescope-dotfile').search_dotfiles()<CR>", "search dotfiles"},
 }, { prefix = "<leader>" })
 
 wk.register({
@@ -204,6 +216,13 @@ wk.register({
         ["5"] = {"<cmd>5gt<CR>", "goto fifth tab"},
         c     = {"<cmd>:tabclose<CR>", "close current tab"},
         o     = {"<cmd>:tabonly<CR>", "close all except current tab"},
+    },
+    ["?"] = {
+        name  = "Help",
+        b = {"<cmd>:CheatList<CR>", "browse cheatsheet.ch"},
+        c = {"<cmd>:Cheatsheet<CR>", "open local cheatsheet"},
+        t = {"<cmd>lua require('telescope.builtin').help_tags()<CR>", "help tags"},
+        ["/"] = {"<cmd>:Cheat<CR>", "search cheatsheet.ch"},
     },
     H = {
         name = "git-gutter",
@@ -257,9 +276,9 @@ wk.register({
     },
     G = {
         name  = "Git",
-        b     = {"<cmd>:Gblame<CR>", "blame"},
-        c     = {"<cmd>:Gcommit<CR>", "commit"},
-        C     = {"<cmd>:Gcommit -n<CR>", "commit but ignore hooks"},
+        b     = {"<cmd>lua require('telescope.builtin').git_branch()<CR>", "list branches"},
+        B     = {"<cmd>:Gblame<CR>", "blame"},
+        c     = {"<cmd>lua require('telescope.builtin').git_commits()<CR>", "list commits"},
         d     = {"<cmd>:Gvdiff<CR>", "diff"},
         D     = {"<cmd>:DiffviewOpen<CR>", "diff view"},
         f     = {"<cmd>:Gfetch<CR>", "fetch"},
@@ -271,7 +290,8 @@ wk.register({
         p     = {"<cmd>:Gpull<CR>", "pull"},
         P     = {"<cmd>:Gpush<CR>", "push"},
         r     = {"<cmd>:Grebase -i master<CR>", "rebase -i master"},
-        s     = {"<cmd>:Gstatus<CR>", "status"},
+        s     = {"<cmd>lua require('telescope.builtin').git_status()<CR>", "list changes"},
+        S     = {"<cmd>lua require('telescope.builtin').git_stash()<CR>", "list stashes"},
         ["-"] = {"<cmd>:Git checkout -<CR>", "checkout -"},
     },
     L = {
