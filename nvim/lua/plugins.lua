@@ -195,13 +195,14 @@ return require('packer').startup(function(use)
     use { 'chr4/nginx.vim', ft = { 'conf' } }
     use { 'zigford/vim-powershell', ft = { 'ps1' } }
 
-    -- use {
-    --     'kristijanhusak/orgmode.nvim',
-    --     config = function()
-    --         require('orgmode').setup{}
-    --     end
-    -- }
-    use { 'jceb/vim-orgmode', ft = { 'org' } }
+    use {
+        'kristijanhusak/orgmode.nvim',
+        ft = {'org'},
+        config = function()
+            require('orgmode').setup{}
+        end
+    }
+    --use { 'jceb/vim-orgmode', ft = { 'org' } }
 
     -- Tim Pope
     use 'tpope/vim-repeat'
