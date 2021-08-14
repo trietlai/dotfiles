@@ -1,5 +1,9 @@
 --Remap space as leader key
-vim.api.nvim_set_keymap('', '<space>', '<Nop>', { noremap = true, silent = true })
+local map = vim.api.nvim_set_keymap
+local map_opts = { noremap = true, silent = true }
+local map_expr_opts = { expr = true, noremap = true, silent = true }
+
+map('', '<space>', '<Nop>', map_opts)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -7,12 +11,24 @@ vim.g.maplocalleader = ' '
 vim.pastetoggle = '<F3>'
 
 -- Escaping
-vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true })
+map('i', 'jj', '<Esc>', { noremap = true })
 
 -- Center next Vim search matches
-vim.api.nvim_set_keymap('n', 'n', 'nzz', { noremap = true })
-vim.api.nvim_set_keymap('n', 'N', 'Nzz', { noremap = true })
+map('n', 'n', 'nzz', map_opts)
+map('n', 'N', 'Nzz', map_opts)
 
+-- autocomplete with Tab
+map('i', '<Tab>', [[<cmd>lua require("plugins/compe").tab_complete()<CR>]], map_expr_opts)
+map('s', '<Tab>', [[<cmd>lua require("plugins/compe").tab_complete()<CR>]], map_expr_opts)
+map('i', '<S-Tab>', [[<cmd>lua require("plugins/compe").s_tab_complete()<CR>]], map_expr_opts)
+map('s', '<S-Tab>', [[<cmd>lua require("plugins/compe").s_tab_complete()<CR>]], map_expr_opts)
+map('i', '<c-space>', 'compe#complete()', map_expr_opts)
+
+-- autopairs
+-- map('i' , '<CR>',[[<cmd>lua require("plugins/nvim-autopairs").completion_confirm()<CR>]],
+--     map_expr_opts)
+
+-- which-key configurations
 local wk = require("which-key")
 wk.setup {
     key_labels = {
@@ -22,26 +38,94 @@ wk.setup {
         ["<S-Tab>"] = "S-TAB",
     },
 }
+
+local M = {}
+
+-- NOTE: LSP keybindings should be buffer local mappings.
+-- Using the following register function should be called in 'on_attach' of lspconfig.
+M.register_lsp_keymap = function(bufnr)
+    require("which-key").register({
+        -- start with 'g'
+        g = {
+            a = {"<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>", "list code actions"},
+            -- broken
+            --d = {"<cmd>lua require('telescope.builtin').lsp_definitions<CR>", "goto definition"},
+            d = {"<cmd>lua vim.lsp.buf.definition()<CR>", "goto definition"},
+            D = {"<Cmd>lua vim.lsp.buf.declaration()<CR>", "goto declaration"},
+            i = {"<cmd>lua require('telescope.builtin').lsp_implementations()<CR>", "goto implementation"},
+            k = {"<cmd>lua vim.lsp.buf.signature_help()<CR>", "signature help"},
+            r = {"<cmd>lua require('telescope.builtin').lsp_references()<CR>", "display references"},
+            s = {"<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", "list document symbols"},
+            S = {"<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", "list workspace symbols"},
+            T = {"<cmd>lua vim.lsp.buf.type_definition()<CR>", "type definition"},
+            x = {"<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>", "list diagnostics"},
+            X = {"<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>", "list workspace diagnostics"},
+        },
+        ["]"] = {
+            d = {"<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Move to the next diagnostic"},
+        },
+        ["["] = {
+            d = {"<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", "Move to the previous diagnostic"},
+        },
+
+        K = {"<Cmd>lua vim.lsp.buf.hover()<CR>", "display info of symbol under cursor"},
+    }, {
+        mode    = "n", -- NORMAL mode
+        buffer  = bufnr, -- buffer local normal mode
+        prefix  = "",
+        silent  = true, -- use `silent` when creating keymaps
+        noremap = true, -- use `noremap` when creating keymaps
+        nowait  = false, -- use `nowait` when creating keymaps
+    })
+
+    require("which-key").register({
+        L = {
+            name = "Language",
+            a = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
+            --d = {"<cmd>lua require('telescope.builtin').lsp_definitions<CR>", "goto definition"},
+            d = {"<cmd>lua vim.lsp.buf.definition()<CR>", "goto definition"},
+            D = {"<Cmd>lua vim.lsp.buf.declaration()<CR>", "goto declaration"},
+            e = {"<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", "show line diagnostics"},
+            f = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format"},
+            i = {"<cmd>lua require('telescope.builtin').lsp_implementations()<CR>", "goto implementation"},
+            I = {"<cmd>LspInfo<cr>", "LSP info"},
+            j = {"<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = lvim.lsp.popup_border}})<cr>", "Next Diagnostic"},
+            k = {"<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = lvim.lsp.popup_border}})<cr>", "Prev Diagnostic"},
+            K = {"<cmd>lua vim.lsp.buf.signature_help()<CR>", "signature help"},
+            q = {"<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "set location-list"},
+            r = {"<cmd>lua require('telescope.builtin').lsp_references()<CR>", "display references"},
+            R = {"<cmd>lua vim.lsp.buf.rename()<CR>", "rename"},
+            s = {"<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", "list document symbols"},
+            S = {"<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", "list workspace symbols"},
+            t = {"<cmd>lua vim.lsp.buf.type_definition()<CR>", "type definition"},
+            w = {
+                name  = "workspace",
+                d = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
+                a = {"<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", "add workspace folder"},
+                r = {"<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", "remove workspace folder"},
+                l = {"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", "list workspace folders"},
+            },
+            x = {"<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>", "list diagnostics"},
+            X = {"<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>", "list workspace diagnostics"},
+        }
+    }, {
+        mode    = "n", -- NORMAL mode
+        buffer  = bufnr, -- buffer local normal mode
+        prefix  = "<leader>",
+        silent  = true, -- use `silent` when creating keymaps
+        noremap = true, -- use `noremap` when creating keymaps
+        nowait  = false, -- use `nowait` when creating keymaps
+    })
+end
+
 -- basic mappings
--- normal mode
+-- global normal mode
 wk.register({
     -- start with 'g'
     g = {
-        a     = {"<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>", "list code actions"},
         c     = {"<Plug>Commentary", "Commentary"},
-        d     = {"<cmd>lua require('telescope.builtin').lsp_definitions<CR>", "goto definition"},
-        D     = {"<Cmd>lua vim.lsp.buf.declaration()<CR>", "goto declaration"},
-        i     = {"<cmd>lua require('telescope.builtin').lsp_implementations()<CR>", "goto implementation"},
-        k     = {"<cmd>lua vim.lsp.buf.signature_help()<CR>", "signature help"},
         p     = {"<cmd>lua require('telescope').extensions.project.project{}<CR>", "list projects"},
-        r     = {"<cmd>lua require('telescope.builtin').lsp_references()<CR>", "display references"},
-        s     = {"<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", "list document symbols"},
-        S     = {"<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", "list workspace symbols"},
-        T     = {"<cmd>lua vim.lsp.buf.type_definition()<CR>", "type definition"},
         U     = {"viwU<Esc>", "uppercase word"},
-        x     = {"<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>", "list diagnostics"},
-        X     = {"<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>", "list workspace diagnostics"},
-
         ["."] = {"<cmd>:normal! `[v`]<CR><LEFT>", "Last inserted text"},
     },
     -- start with ','
@@ -49,8 +133,7 @@ wk.register({
         a = {"<Plug>(EasyAlign)", "Easy align"},
     },
 
-
-    K = {"<Cmd>lua vim.lsp.buf.hover()<CR>", "display info of symbol under cursor"},
+    --K = {"<Cmd>lua vim.lsp.buf.hover()<CR>", "display info of symbol under cursor"},
     s = "jump to next occurrence (lightspeed)",
     S = "jump to previous occurrence (lightspeed)",
     U = {"<C-r>", "redo"},
@@ -64,7 +147,6 @@ wk.register({
         b    = { "<cmd>:BufferLineCycleNext<CR>", "next buffer"},
         B    = "last buffer",
         c    = "Git next hunk",
-        d    = {"<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Move to the next diagnostic"},
         l    = "next location-list",
         L    = "last location-list",
         q    = "next quickfix",
@@ -79,7 +161,6 @@ wk.register({
         b    = { "<cmd>:BufferLineCyclePrev<CR>", "previous buffer"},
         B    = "first buffer",
         c    = "Git previous hunk",
-        d    = {"<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", "Move to the previous diagnostic"},
         l    = "previous location-list",
         L    = "first location-list",
         q    = "previous quickfix",
@@ -90,8 +171,6 @@ wk.register({
 
     ["+"] = "expand region",
     ["_"] = "shrink region",
-
-    -- LSP
 
     -- <tab> / <s-tab> | Circular windows navigation
     ["<Tab>"]   = {"<C-w>w", "next window"},
@@ -117,6 +196,7 @@ wk.register({
 
     ["<Esc>"] = {":noh<CR>", "no highlight"},
 })
+
 
 -- insert mode
 wk.register({
@@ -246,7 +326,6 @@ wk.register({
         p     = {"<cmd>:bprevious<CR>", "previous buffer"},
         x     = {"<cmd>BufferWipeout<cr>", "wipeout buffer" },
         ["/"] = {"<cmd>:Buffers<CR>", "search buffer (fzf)"},
-
     },
     F = {
         name      = "FZF",
@@ -293,35 +372,6 @@ wk.register({
         s     = {"<cmd>lua require('telescope.builtin').git_status()<CR>", "list changes"},
         S     = {"<cmd>lua require('telescope.builtin').git_stash()<CR>", "list stashes"},
         ["-"] = {"<cmd>:Git checkout -<CR>", "checkout -"},
-    },
-    L = {
-        name = "Language",
-        -- LSP
-        a    = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
-        d    = {"<cmd>lua vim.lsp.buf.type_definition()<CR>", "type definition"},
-        D    = {"<cmd>Telescope lsp_document_diagnostics<cr>", "Document Diagnostics"},
-        e    = {"<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", "show line diagnostics"},
-        f    = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format"},
-        i    = {"<cmd>LspInfo<cr>", "LSP info"},
-        j    = {"<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = lvim.lsp.popup_border}})<cr>", "Next Diagnostic"},
-        k    = {"<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = lvim.lsp.popup_border}})<cr>", "Prev Diagnostic"},
-        p    = {
-            name = "Peek",
-            d    = {"<cmd>lua require('lsp.peek').Peek('definition')<cr>", "Definition"},
-            t    = {"<cmd>lua require('lsp.peek').Peek('typeDefinition')<cr>", "Type Definition"},
-            i    = {"<cmd>lua require('lsp.peek').Peek('implementation')<cr>", "Implementation"},
-        },
-        q    = {"<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "set location-list"},
-        r    = {"<cmd>lua vim.lsp.buf.rename()<CR>", "rename"},
-        s    = {"<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-        S    = {"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols"},
-        w    = {
-            name  = "workspace",
-            d     = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
-            a     = {"<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", "add workspace folder"},
-            r     = {"<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", "remove workspace folder"},
-            l     = {"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", "list workspace folders"},
-        },
     },
     S = {
         name  = "Search",
@@ -373,4 +423,6 @@ wk.register({
 }, { prefix = "<leader>" })
 
 -- vim.cmd 'highlight default link WhichKeyGroup Type'
+
+return M
 

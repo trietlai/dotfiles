@@ -115,6 +115,12 @@ return require('packer').startup(function(use)
     use {
         'romgrk/nvim-treesitter-context',
         requires = 'nvim-treesitter/nvim-treesitter',
+        config = function()
+            require'treesitter-context'.setup{
+                enable = true,
+                throttle = true, -- Throttles plugin updates (may improve performance)
+            }
+        end
     }
 
     -- Autocomplete
@@ -188,6 +194,14 @@ return require('packer').startup(function(use)
 
     use { 'chr4/nginx.vim', ft = { 'conf' } }
     use { 'zigford/vim-powershell', ft = { 'ps1' } }
+
+    -- use {
+    --     'kristijanhusak/orgmode.nvim',
+    --     config = function()
+    --         require('orgmode').setup{}
+    --     end
+    -- }
+    use { 'jceb/vim-orgmode', ft = { 'org' } }
 
     -- Tim Pope
     use 'tpope/vim-repeat'

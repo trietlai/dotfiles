@@ -1,4 +1,5 @@
 -- Global
+_G.MyUtils = {}
 
 -- Disable some unused built-in Neovim plugins
 vim.g.loaded_man            = false
@@ -63,7 +64,7 @@ vim.opt.lazyredraw   = true
 vim.opt.encoding     = 'UTF-8' --  the encoding displayed
 vim.opt.showbreak    = "↪\\"
 vim.opt.fileencoding = 'UTF-8' --  the encoding written to file
-vim.opt.completeopt  = { 'menu', 'menuone', 'noselect' }
+vim.opt.completeopt  = 'menuone,noselect'
 vim.opt.listchars    = { tab = "→\\ ", trail = "·", precedes = "←", extends = "→",eol = "↲", nbsp = "␣" }
 -- Buffer
 vim.opt.fileformat  = 'unix'
@@ -85,13 +86,13 @@ vim.opt.relativenumber = true
 vim.opt.foldenable     = true  --  auto fold code
 vim.opt.cursorline     = true  --  Highlight the Current Line
 
-vim.cmd[[autocmd BufReadPost * lua goto_last_pos()]]
-function goto_last_pos()
-  local last_pos = vim.fn.line("'\"")
-  if last_pos > 0 and last_pos <= vim.fn.line("$") then
-    vim.api.nvim_win_set_cursor(0, {last_pos, 0})
-  end
+function MyUtils.goto_last_pos()
+    local last_pos = vim.fn.line("'\"")
+    if last_pos > 0 and last_pos <= vim.fn.line("$") then
+        vim.api.nvim_win_set_cursor(0, {last_pos, 0})
+    end
 end
+vim.cmd[[autocmd BufReadPost * lua MyUtils.goto_last_pos()]]
 
 vim.cmd 'au TextYankPost * silent! lua vim.highlight.on_yank()'
 

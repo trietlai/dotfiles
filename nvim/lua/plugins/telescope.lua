@@ -18,6 +18,7 @@ telescope.setup{
             },
         },
         file_ignore_patterns = { "node_modules", ".git" },
+        selection_strategy = "row",
     },
     pickers = {
         buffers = {
