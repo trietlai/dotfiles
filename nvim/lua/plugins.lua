@@ -150,7 +150,7 @@ return require('packer').startup(function(use)
     use {
         'kyazdani42/nvim-tree.lua',
         requires = 'kyazdani42/nvim-web-devicons',
-        --cmd = 'NvimTreeToggle',
+        cmd = 'NvimTreeToggle',
         setup = function()
             require 'plugins/nvimtree-setup'
         end,
@@ -213,7 +213,7 @@ return require('packer').startup(function(use)
     use 'tpope/vim-commentary'
 
     -- Git
-    use { 'tpope/vim-fugitive', cmd = { 'Git' } }
+    use { 'tpope/vim-fugitive' }
 
     -- use {
     --     'airblade/vim-gitgutter',
