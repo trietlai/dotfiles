@@ -52,19 +52,17 @@ return require('packer').startup(function(use)
     }
     use {
         'simrat39/symbols-outline.nvim',
-        -- 'require' sometimes causing loading error
-        -- config = function()
-        --     require 'plugins/symbols-outline.lua'
-        -- end
-        config = [[vim.g.symbols_outline = {
-            symbols = {
-                Module = {icon = "", hl = "TSNamespace"},
-                Namespace = {icon = "∷", hl = "TSNamespace"},
-                Key = {icon = "", hl = "TSType"},
-                Operator = {icon = "⊕", hl = "TSOperator"},
-                Null = {icon = "ﳠ", hl = "TSType"},
+        setup = function()
+            vim.g.symbols_outline = {
+                symbols = {
+                    Module = {icon = "", hl = "TSNamespace"},
+                    Namespace = {icon = "∷", hl = "TSNamespace"},
+                    Key = {icon = "", hl = "TSType"},
+                    Operator = {icon = "⊕", hl = "TSOperator"},
+                    Null = {icon = "ﳠ", hl = "TSType"},
+                }
             }
-        }]]
+        end
     }
 
     -- LSP for rust
@@ -151,9 +149,13 @@ return require('packer').startup(function(use)
     -- alternative
     use {
         'kyazdani42/nvim-tree.lua',
-        cmd = 'NvimTreeToggle',
+        requires = 'kyazdani42/nvim-web-devicons',
+        --cmd = 'NvimTreeToggle',
+        setup = function()
+            require 'plugins/nvimtree-setup'
+        end,
         config = function()
-            require 'plugins/nvimtree'
+            require 'plugins/nvimtree-config'
         end
     }
     use {
@@ -176,7 +178,6 @@ return require('packer').startup(function(use)
         }
     }
     -- Fzf alternative and many other plugins depend on it
-    -- TODO: config & mappings
     use {
         'nvim-telescope/telescope.nvim',
         requires = { {'nvim-lua/plenary.nvim'} },
@@ -258,7 +259,7 @@ return require('packer').startup(function(use)
     use {
         'lukas-reineke/indent-blankline.nvim',
         event = 'BufRead',
-        config = function()
+        setup = function()
             require 'plugins/indent-blankline'
         end
     }
@@ -380,7 +381,7 @@ return require('packer').startup(function(use)
     -- use {
     --     'vim-airline/vim-airline',
     --     requires = { 'vim-airline/vim-airline-themes' },
-    --     config = function()
+    --     setup = function()
     --         require 'plugins/vim-airline'
     --     end
     -- }
