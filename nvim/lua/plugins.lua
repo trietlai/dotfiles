@@ -186,6 +186,14 @@ return require('packer').startup(function(use)
         end
     }
 
+    use {
+        'nvim-telescope/telescope-project.nvim',
+        requires = { 'nvim-telescope/telescope.nvim' },
+        config = function()
+            require'telescope'.load_extension('project')
+        end
+    }
+
     -- Syntax
     use { 'habamax/vim-asciidoctor', ft = { 'adoc' } }
 
@@ -250,6 +258,13 @@ return require('packer').startup(function(use)
         cmd = 'DiffviewOpen',
         config = function()
             require 'plugins/diffview'
+        end
+    }
+
+    use {
+        'samoshkin/vim-mergetool',
+        config = function()
+            require 'plugins/mergetool'
         end
     }
 
