@@ -1,7 +1,7 @@
 require('bufferline').setup {
     options = {
-        numbers = "both",
-        number_style = "superscript",
+        numbers = "ordinal",
+        number_style = "none",
         mappings = true,
         close_command = function(bufnum)
             require('bufdelete').bufdelete(bufnum, true)
@@ -32,6 +32,39 @@ require('bufferline').setup {
         always_show_bufferline = true
     },
     highlights = {
+        fill = {
+            guifg = '#d8a657',
+        },
+        tab = {
+            guifg = '#d8a657',
+        },
+        background = {
+            guifg = '#d8a657',
+        },
+        info = {
+            guifg = '#00f9fd',
+        },
+        info_visible = {
+            guifg = '#00f9fd',
+        },
+        warning = {
+            guifg = '#b237b6',
+        },
+        warning_visible = {
+            guifg = '#b237b6',
+        },
+        error = {
+            guifg = '#FF6059',
+        },
+        error_visible = {
+            guifg = '#FF6059',
+        },
+        tab_close = {
+            guifg = "#87FF00",
+        },
+        close_button = {
+            guifg = "#87FF00",
+        },
         buffer_visible = {
             guifg = '#7AA2F7',
         },

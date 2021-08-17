@@ -35,6 +35,7 @@ _G.set_color_theme = function(pkg, color, bg)
         end
         vim.cmd('set background=' .. bg)
         vim.cmd('colorscheme ' .. color)
+        require('feline').reset_highlights()
     end
 end
 
@@ -386,9 +387,10 @@ wk.register({
     M = {
         name       = "merge-tool",
         ["1"]      = {"<cmd>:MergetoolToggleLayout mr<CR>", "layout mr: MERGED-REMOTE"},
-        ["2"]      = {"<cmd>:MergetoolToggleLayout LmR<CR>", "layout LmR: LOCAL-MERGED-REMOTE"},
-        ["3"]      = {"<cmd>:MergetoolToggleLayout mr,b<CR>", "layout mr,b: MERGED-REMOTE/BASE"},
-        ["4"]      = {"<cmd>:MergetoolToggleLayout LBR<CR>", "layout LBR: LOCAL-BASE-REMOTE"},
+        ["2"]      = {"<cmd>:MergetoolToggleLayout ml<CR>", "layout ml: MERGED-LOCAL"},
+        ["3"]      = {"<cmd>:MergetoolToggleLayout LmR<CR>", "layout LmR: LOCAL-MERGED-REMOTE"},
+        ["4"]      = {"<cmd>:MergetoolToggleLayout mr,b<CR>", "layout mr,b: MERGED-REMOTE/BASE"},
+        ["5"]      = {"<cmd>:MergetoolToggleLayout LBR<CR>", "layout LBR: LOCAL-BASE-REMOTE"},
         l          = {"<cmd>:MergetoolDiffExchangeLeft<CR>", "get/put from/to RIGHT"},
         h          = {"<cmd>:MergetoolDiffExchangeRight<CR>", "get/put from/to LEFT"},
         k          = {"<cmd>:MergetoolDiffExchangeDown<CR>", "get/put from/to UP"},
@@ -428,77 +430,113 @@ wk.register({
     },
     T = {
         name = "Theme",
-        ["a"] = {
+        a = {
             function()
                 set_color_theme('material.vim', 'material', 'dark')
             end,
             "material dark"
         },
-        ["A"] = {
-            function()
-                set_color_theme('material.vim', 'material', 'light')
-            end,
-            "material light"
-        },
-        ["b"] = {
+        b = {
             function()
                 set_color_theme('papercolor-theme', 'PaperColor', 'dark')
             end,
             "PaperColor dark"
         },
-        ["B"] = {
+        B = {
             function()
                 set_color_theme('papercolor-theme', 'PaperColor', 'light')
             end,
             "PaperColor light"
         },
-        ["c"] = {
+        c = {
             function()
                 set_color_theme('ayu-vim', 'ayu', 'dark')
             end,
             "ayu dark"
         },
-        ["C"] = {
+        C = {
             function()
                 set_color_theme('ayu-vim', 'ayu', 'light')
             end,
             "ayu light"
         },
-        ["d"] = {
+        d = {
             function()
                 set_color_theme('gruvbox-material', 'gruvbox-material', 'dark')
             end,
             "gruvbox-material dark"
         },
-        ["D"] = {
+        D = {
             function()
                 set_color_theme('gruvbox-material', 'gruvbox-material', 'light')
             end,
             "gruvbox-material light"
         },
-        ["e"] = {
+        e = {
             function()
                 set_color_theme('gruvbox', 'gruvbox', 'dark')
             end,
             "gruvbox dark"
         },
-        ["E"] = {
+        E = {
             function()
                 set_color_theme('gruvbox', 'gruvbox', 'light')
             end,
             "gruvbox light"
         },
-        ["f"] = {
+        f = {
             function()
                 set_color_theme('sonokai', 'sonokai', 'dark')
             end,
             "sonokai dark"
         },
-        ["F"] = {
+        g = {
             function()
-                set_color_theme('sonokai', 'sonokai', 'light')
+                set_color_theme('tokyonight.nvim', 'tokyonight', 'dark')
             end,
-            "sonokai light"
+            "tokyonight dark"
+        },
+        G = {
+            function()
+                set_color_theme('tokyonight.nvim', 'tokyonight', 'light')
+            end,
+            "tokyonight light"
+        },
+        h = {
+            function()
+                set_color_theme('edge', 'edge', 'dark')
+            end,
+            "edge dark"
+        },
+        H = {
+            function()
+                set_color_theme('edge', 'edge', 'light')
+            end,
+            "edge light"
+        },
+        i = {
+            function()
+                set_color_theme('space-nvim', 'space-nvim', 'dark')
+            end,
+            "space-nvim dark"
+        },
+        I = {
+            function()
+                set_color_theme('space-nvim', 'space-nvim', 'light')
+            end,
+            "space-nvim light"
+        },
+        j = {
+            function()
+                set_color_theme('everforest', 'everforest', 'dark')
+            end,
+            "everforest dark"
+        },
+        J = {
+            function()
+                set_color_theme('everforest', 'everforest', 'light')
+            end,
+            "everforest light"
         },
     },
     W = {

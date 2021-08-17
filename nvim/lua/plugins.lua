@@ -379,28 +379,47 @@ return require('packer').startup(function(use)
     }
 
     -- colorscheme
-    use {
-        'sainnhe/gruvbox-material',
-        cmd = 'colorscheme'
-    }
-    use {
-        'sainnhe/sonokai',
-        cmd = 'colorscheme'
-    }
-    use {
-        'Luxed/ayu-vim',
-        cmd = 'colorscheme'
-    }
-    use {
-        'morhetz/gruvbox',
-        cmd = 'colorscheme'
-    }
-    use {
-        'NLKNguyen/papercolor-theme',
-        cmd = 'colorscheme'
-    }
     -- main colorscheme
-    use { 'kaicataldo/material.vim', branch = 'main' }
+    use { 'kaicataldo/material.vim', branch = 'main' } -- dark
+
+    use {
+        'NLKNguyen/papercolor-theme', -- dark & light
+        cmd = 'colorscheme'
+    }
+    use {
+        'Luxed/ayu-vim', -- dark & light
+        cmd = 'colorscheme'
+    }
+    use {
+        'sainnhe/gruvbox-material', -- dark & light
+        cmd = 'colorscheme'
+    }
+    use {
+        'morhetz/gruvbox', -- dark & light
+        cmd = 'colorscheme'
+    }
+    use {
+        'sainnhe/sonokai', -- dark
+        cmd = 'colorscheme'
+    }
+    use {
+        'folke/tokyonight.nvim', -- dark & light
+        cmd = 'colorscheme'
+    }
+
+    use {
+        'sainnhe/edge', -- dark & light
+        cmd = 'colorscheme'
+    }
+    use {
+        'Th3Whit3Wolf/space-nvim', -- dark & light
+        cmd = 'colorscheme'
+    }
+    use {
+        'sainnhe/everforest', -- dark & light
+        cmd = 'colorscheme'
+    }
+
 
     -- Status Line and Bufferline
     -- use {

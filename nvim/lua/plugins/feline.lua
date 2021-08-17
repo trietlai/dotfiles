@@ -333,6 +333,18 @@ components.left.inactive[1] = {
         ' '
     }
 }
+-- filename
+components.left.inactive[2] = {
+    provider = function()
+        return vim.fn.expand("%:F")
+    end,
+    hl = {
+        fg    = 'white',
+        bg    = 'bg',
+        style = 'bold'
+    },
+    right_sep = ''
+}
 
 require('feline').setup({
     colors         = colors,
