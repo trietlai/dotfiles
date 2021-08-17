@@ -387,9 +387,19 @@ return require('packer').startup(function(use)
         'sainnhe/sonokai',
         cmd = 'colorscheme'
     }
-    -- use 'Luxed/ayu-vim'
-    -- use 'morhetz/gruvbox'
-    -- use 'NLKNguyen/papercolor-theme'
+    use {
+        'Luxed/ayu-vim',
+        cmd = 'colorscheme'
+    }
+    use {
+        'morhetz/gruvbox',
+        cmd = 'colorscheme'
+    }
+    use {
+        'NLKNguyen/papercolor-theme',
+        cmd = 'colorscheme'
+    }
+    -- main colorscheme
     use { 'kaicataldo/material.vim', branch = 'main' }
 
     -- Status Line and Bufferline

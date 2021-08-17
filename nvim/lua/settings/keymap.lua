@@ -28,6 +28,16 @@ map('i', '<c-space>', 'compe#complete()', map_expr_opts)
 -- map('i' , '<CR>',[[<cmd>lua require("plugins/nvim-autopairs").completion_confirm()<CR>]],
 --     map_expr_opts)
 
+_G.set_color_theme = function(pkg, color, bg)
+    if _G.packer_plugins ~= nil and  _G.packer_plugins[pkg] then
+        if not _G.packer_plugins[pkg].loaded then
+            require('packer').loader(pkg)
+        end
+        vim.cmd('set background=' .. bg)
+        vim.cmd('colorscheme ' .. color)
+    end
+end
+
 -- which-key configurations
 local wk = require("which-key")
 wk.setup {
@@ -415,6 +425,81 @@ wk.register({
         z     = {"<cmd>:FZF<CR>", "FZF"},
         ["/"] = {"<cmd>:History/<CR>", "history"},
         [";"] = {"<cmd>:Commands<CR>", "commands"},
+    },
+    T = {
+        name = "Theme",
+        ["a"] = {
+            function()
+                set_color_theme('material.vim', 'material', 'dark')
+            end,
+            "material dark"
+        },
+        ["A"] = {
+            function()
+                set_color_theme('material.vim', 'material', 'light')
+            end,
+            "material light"
+        },
+        ["b"] = {
+            function()
+                set_color_theme('papercolor-theme', 'PaperColor', 'dark')
+            end,
+            "PaperColor dark"
+        },
+        ["B"] = {
+            function()
+                set_color_theme('papercolor-theme', 'PaperColor', 'light')
+            end,
+            "PaperColor light"
+        },
+        ["c"] = {
+            function()
+                set_color_theme('ayu-vim', 'ayu', 'dark')
+            end,
+            "ayu dark"
+        },
+        ["C"] = {
+            function()
+                set_color_theme('ayu-vim', 'ayu', 'light')
+            end,
+            "ayu light"
+        },
+        ["d"] = {
+            function()
+                set_color_theme('gruvbox-material', 'gruvbox-material', 'dark')
+            end,
+            "gruvbox-material dark"
+        },
+        ["D"] = {
+            function()
+                set_color_theme('gruvbox-material', 'gruvbox-material', 'light')
+            end,
+            "gruvbox-material light"
+        },
+        ["e"] = {
+            function()
+                set_color_theme('gruvbox', 'gruvbox', 'dark')
+            end,
+            "gruvbox dark"
+        },
+        ["E"] = {
+            function()
+                set_color_theme('gruvbox', 'gruvbox', 'light')
+            end,
+            "gruvbox light"
+        },
+        ["f"] = {
+            function()
+                set_color_theme('sonokai', 'sonokai', 'dark')
+            end,
+            "sonokai dark"
+        },
+        ["F"] = {
+            function()
+                set_color_theme('sonokai', 'sonokai', 'light')
+            end,
+            "sonokai light"
+        },
     },
     W = {
         name  = "Windows" ,
