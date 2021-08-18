@@ -18,17 +18,16 @@ map('n', 'n', 'nzz', map_opts)
 map('n', 'N', 'Nzz', map_opts)
 
 -- autocomplete with Tab
---map('i', '<Tab>', '<cmd>lua tab_complete()', map_expr_opts)
-map('i', '<Tab>',
-    'pumvisible() ? "<C-n>" : v:lua.check_backspace() ? "<Tab>" : "<C-r>=compe#complete()<CR>"',
-    map_expr_opts)
+-- map('i', '<Tab>',
+--     'pumvisible() ? "<C-n>" : v:lua.check_backspace() ? "<Tab>" : "<C-r>=compe#complete()<CR>"',
+--     map_expr_opts)
 
-map('s', '<Tab>',
-    'pumvisible() ? "<C-n>" : v:lua.check_backspace() ? "<Tab>" : "<C-r>=compe#complete()<CR>"',
-    map_expr_opts)
+-- map('s', '<Tab>',
+--     'pumvisible() ? "<C-n>" : v:lua.check_backspace() ? "<Tab>" : "<C-r>=compe#complete()<CR>"',
+--     map_expr_opts)
 
-map('i', '<S-Tab>', 'pumvisible() ? "<C-p>" : "<S-Tab>"', map_expr_opts)
-map('s', '<S-Tab>', 'pumvisible() ? "<C-p>" : "<S-Tab>"', map_expr_opts)
+-- map('i', '<S-Tab>', 'pumvisible() ? "<C-p>" : "<S-Tab>"', map_expr_opts)
+-- map('s', '<S-Tab>', 'pumvisible() ? "<C-p>" : "<S-Tab>"', map_expr_opts)
 
 map('i', '<c-space>', 'compe#complete()', map_expr_opts)
 
