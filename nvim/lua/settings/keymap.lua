@@ -5,7 +5,7 @@ local map_expr_opts = { expr = true, noremap = true, silent = true }
 
 map('', '<space>', '<Nop>', map_opts)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ','
 
 -- Needed when paste from clipboard to avoid formating
 vim.pastetoggle = '<F3>'
