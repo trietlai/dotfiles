@@ -452,11 +452,18 @@ return require('packer').startup(function(use)
         end
     }
 
+    -- use {
+    --     'akinsho/nvim-bufferline.lua',
+    --     requires = {'kyazdani42/nvim-web-devicons', 'famiu/bufdelete.nvim'},
+    --     config = function()
+    --         require 'plugins/bufferline'
+    --     end
+    -- }
     use {
-        'akinsho/nvim-bufferline.lua',
-        requires = {'kyazdani42/nvim-web-devicons', 'famiu/bufdelete.nvim'},
+        'romgrk/barbar.nvim',
+        requires = {'kyazdani42/nvim-web-devicons'},
         config = function()
-            require 'plugins/bufferline'
+            require 'plugins/barbar'
         end
     }
 end)
