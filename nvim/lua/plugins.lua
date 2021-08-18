@@ -195,7 +195,13 @@ return require('packer').startup(function(use)
     }
 
     -- Syntax
-    use { 'habamax/vim-asciidoctor', ft = { 'adoc' } }
+    use {
+        'habamax/vim-asciidoctor',
+        ft = { 'asciidoctor' },
+        config = function()
+            require 'plugins/asciidoctor'
+        end
+    }
 
     use { 'honza/dockerfile.vim', ft = { 'dockerfile' } }
 
