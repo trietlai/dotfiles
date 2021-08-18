@@ -426,7 +426,6 @@ return require('packer').startup(function(use)
         cmd = 'colorscheme'
     }
 
-
     -- Status Line and Bufferline
     -- use {
     --     'vim-airline/vim-airline',
