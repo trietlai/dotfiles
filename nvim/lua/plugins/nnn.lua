@@ -5,7 +5,8 @@ require("nnn").setup({
     layout = {
         window = {
             width = 0.9,
-            height = 0.6,
+            height = 0.8,
+            yoffset = 0.2,
             highlight = 'Debug'
         }
     },
