@@ -177,6 +177,13 @@ return require('packer').startup(function(use)
         'kevinhwang91/rnvimr',
         cmd = 'RnvimrToggle'
     }
+    use {
+        'mcchrish/nnn.vim',
+        cmd = 'NnnPicker',
+        config = function()
+            require 'plugins/nnn'
+        end
+    }
 
     -- key mapping
     use {

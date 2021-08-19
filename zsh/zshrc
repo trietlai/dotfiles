@@ -89,6 +89,8 @@ source $ZSH/oh-my-zsh.sh
 export MC_SKIN=gotar
 #export MC_SKIN=modarin256-defbg
 test -s /usr/lib/mc/mc.sh && . /usr/lib/mc/mc.sh || true
+
+# LESS
 export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-4'
 
 # Set colors for less. Borrowed from https://wiki.archlinux.org/index.php/Color_output_in_console#less
@@ -99,6 +101,8 @@ export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
 export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+export PAGER='less -R'
 
 # Setup location for NPM global packages
 NPM_PACKAGES="${HOME}/.npm-packages"
@@ -152,6 +156,9 @@ MY_FORGIT_PLUGIN_FILE=$HOME/src/shell/forgit/forgit.plugin.zsh
 
 MY_FORMARKS_PLUGIN_FILE=$HOME/src/shell/formarks/formarks.plugin.zsh
 [[ -f $MY_FORMARKS_PLUGIN_FILE ]] && source $MY_FORMARKS_PLUGIN_FILE
+
+MY_NNN_COMPLETION_FILE=$HOME/src/c/nnn/misc/auto-completion/zsh/_nnn
+[[ -f $MY_NNN_COMPLETION_FILE ]] && source $MY_NNN_COMPLETION_FILE
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
