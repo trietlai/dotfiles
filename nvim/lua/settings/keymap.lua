@@ -17,19 +17,21 @@ map('i', 'jj', '<Esc>', { noremap = true })
 map('n', 'n', 'nzz', map_opts)
 map('n', 'N', 'Nzz', map_opts)
 
--- autocomplete with Tab
--- map('i', '<Tab>',
---     'pumvisible() ? "<C-n>" : v:lua.check_backspace() ? "<Tab>" : "<C-r>=compe#complete()<CR>"',
---     map_expr_opts)
+-- auto-completion using compe
+map('i', '<C-Space', "compe#complete()", map_expr_opts)
+map('i', '<CR>', "compe#confirm('<CR>')", map_expr_opts)
+map('i', '<C-e>', "compe#close('<C-e>')", map_expr_opts)
+map('i', '<C-f>', "compe#scroll({ 'delta': +4 })", map_expr_opts)
+map('i', '<C-d>', "compe#scroll({ 'delta': -4 })", map_expr_opts)
+-- auto-completion with TAB: `tab_complete()` and `s_tab_complete()` take `luasnip`
+-- completion into account.
+map("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+map("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
--- map('s', '<Tab>',
---     'pumvisible() ? "<C-n>" : v:lua.check_backspace() ? "<Tab>" : "<C-r>=compe#complete()<CR>"',
---     map_expr_opts)
-
--- map('i', '<S-Tab>', 'pumvisible() ? "<C-p>" : "<S-Tab>"', map_expr_opts)
--- map('s', '<S-Tab>', 'pumvisible() ? "<C-p>" : "<S-Tab>"', map_expr_opts)
-
-map('i', '<c-space>', 'compe#complete()', map_expr_opts)
+--map("i", "<C-E>", "<Plug>luasnip-next-choice", {})
+--map("s", "<C-E>", "<Plug>luasnip-next-choice", {})
 
 -- autopairs
 -- map('i' , '<CR>',[[<cmd>lua require("plugins/nvim-autopairs").completion_confirm()<CR>]],
@@ -354,12 +356,7 @@ wk.register({
     },
     F = {
         name      = "FZF",
-        a         = {
-            name  = "Ag search",
-            ["g"] = {"<cmd>:Ag <C-R><C-W><CR>", "Ag search word at point"},
-            ["G"] = {"<cmd>:Ag <C-R><C-A><CR>", "Ag search line at point"},
-            ['"'] = {'<cmd>:Ag <C-R>"<CR>', "Ag search from register"},
-        },
+        a         = {"<cmd>:Ag<CR>", "Ag search"},
         b         = {"<cmd>:Buffers<CR>", "find buffers"},
         c         = {"<cmd>:Commits<CR>", "find Git commits"},
         C         = {"<cmd>:Colors<CR>", "find colors"},
@@ -375,7 +372,7 @@ wk.register({
         l         = {"<cmd>:Lines<CR>", "find lines"},
         w         = {"<cmd>:Windows<CR>", "find windows"},
         x         = {"<cmd>:Commands<CR>", "find commands"},
-        ["/"]     = {"<cmd>:Rg <C-R><C-W><CR>", "Rg search word at point"},
+        ["/"]     = {"<cmd>:Rg<CR>", "Rg search"},
         ["`"]     = {"<cmd>:Marks<CR>", "fuzzy finder marks"},
     },
     G = {

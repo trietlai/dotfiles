@@ -237,7 +237,7 @@ return require('packer').startup(function(use)
     -- Tim Pope
     use 'tpope/vim-repeat'
     use 'tpope/vim-unimpaired'
-    use 'tpope/vim-endwise'
+    --use 'tpope/vim-endwise' -- conflict with 'compe'
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
 
