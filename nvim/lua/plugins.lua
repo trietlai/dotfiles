@@ -152,15 +152,15 @@ return require('packer').startup(function(use)
     }
 
     -- Files/directories tree
-    use {
-        'preservim/NERDTree',
-        cmd = 'NERDTreeToggle',
-        requires = {
-            'Xuyuanp/nerdtree-git-plugin',
-            'tiagofumo/vim-nerdtree-syntax-highlight',
-            'PhilRunninger/nerdtree-visual-selection'
-        }
-    }
+    -- use {
+    --     'preservim/NERDTree',
+    --     cmd = 'NERDTreeToggle',
+    --     requires = {
+    --         'Xuyuanp/nerdtree-git-plugin',
+    --         'tiagofumo/vim-nerdtree-syntax-highlight',
+    --         'PhilRunninger/nerdtree-visual-selection'
+    --     }
+    -- }
     -- alternative
     use {
         'kyazdani42/nvim-tree.lua',
@@ -173,10 +173,10 @@ return require('packer').startup(function(use)
             require 'plugins/nvimtree-config'
         end
     }
-    use {
-        'kevinhwang91/rnvimr',
-        cmd = 'RnvimrToggle'
-    }
+    -- use {
+    --     'kevinhwang91/rnvimr',
+    --     cmd = 'RnvimrToggle'
+    -- }
     use {
         'mcchrish/nnn.vim',
         cmd = 'NnnPicker',
