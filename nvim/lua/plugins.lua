@@ -193,12 +193,25 @@ return require('packer').startup(function(use)
     -- FZF
     use {
         'junegunn/fzf',
+        run = './install --bin',
         event = 'VimEnter',
         requires = {
             'junegunn/fzf.vim',
             'stsewd/fzf-checkout.vim'
         }
     }
+    -- fzf lua
+    use {
+        'ibhagwan/fzf-lua',
+        requires = {
+            'vijaymarupudi/nvim-fzf',
+            'kyazdani42/nvim-web-devicons'
+        },
+        config = function()
+            require 'plugins/fzf-lua-config'
+        end
+    }
+
     -- Fzf alternative and many other plugins depend on it
     use {
         'nvim-telescope/telescope.nvim',
