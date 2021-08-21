@@ -8,21 +8,25 @@ telescope.load_extension('project')
 telescope.setup{
     defaults = {
         set_env = { ["COLORTERM"] = "truecolor" },
-        path_display = { "shorten", "absolute" },
+        path_display = { shorten = 3, "absolute" },
         mappings = {
             n = {
                 ["q"] = actions.close
             },
             i = {
+                ["jj"] = { "<esc>", type = "command" },
                 ["<esc>"] = actions.close,
             },
         },
         file_ignore_patterns = { "node_modules", ".git" },
         selection_strategy = "row",
+        selection_caret = ' ',
+        dynamic_preview_title = true,
     },
     pickers = {
         buffers = {
             sort_lastused = true,
+            sort_mru = true,
             theme = "dropdown",
             previewer = false,
             mappings = {
