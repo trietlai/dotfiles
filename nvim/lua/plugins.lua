@@ -52,6 +52,7 @@ return require('packer').startup(function(use)
     }
     use {
         'simrat39/symbols-outline.nvim',
+        cmd = 'SymbolsOutline',
         setup = function()
             vim.g.symbols_outline = {
                 symbols = {
@@ -82,7 +83,16 @@ return require('packer').startup(function(use)
     }
 
     -- automatically change to project root folder
-    use { 'ygm2/rooter.nvim', event = 'BufEnter' }
+    use {
+        'ygm2/rooter.nvim', event = 'BufEnter',
+        config = function()
+            vim.g.rooter_pattern = {
+                '.git', 'Makefile', 'node_modules', 'CMakeLists.txt', 'pom.xml', 'build.gradle',
+                'Cargo.toml', 'go.mod', '.gitignore'
+            }
+            vim.g.outermost_root = true
+        end
+    }
 
     -- tree-sitter parser
     use {
