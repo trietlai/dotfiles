@@ -210,17 +210,17 @@ return require('packer').startup(function(use)
             'stsewd/fzf-checkout.vim'
         }
     }
-    -- fzf lua
-    use {
-        'ibhagwan/fzf-lua',
-        requires = {
-            'vijaymarupudi/nvim-fzf',
-            'kyazdani42/nvim-web-devicons'
-        },
-        config = function()
-            require 'plugins/fzf-lua-config'
-        end
-    }
+    -- fzf lua: conflict with feline
+    -- use {
+    --     'ibhagwan/fzf-lua',
+    --     requires = {
+    --         'vijaymarupudi/nvim-fzf',
+    --         'kyazdani42/nvim-web-devicons'
+    --     },
+    --     config = function()
+    --         require 'plugins/fzf-lua-config'
+    --     end
+    -- }
 
     -- Fzf alternative and many other plugins depend on it
     use {
