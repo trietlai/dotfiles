@@ -1,0 +1,174 @@
+= Useful Command-line Utilities
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Common Command-line Utilities
+:keywords: command-line, utilities, rust
+:source-highlighter:
+:experimental:
+:icons: font
+:docdate:
+:title-page:
+
+== bat
+
+https://github.com/sharkdp/bat
+
+`bat` is a modern replacement for `cat` written in Rust. Unlike `cat`, this tool supports syntax highlighting for many programming languages out of the box.
+
+[source,shell]
+----
+cargo install bat
+----
+
+== exa
+
+https://github.com/ogham/exa
+
+`exa` is a modern alternative for `ls`. It is written in Rust.
+
+[source,shell]
+----
+cargo install exa
+----
+
+== dust
+https://github.com/bootandy/dust
+
+`dust` is an alternative for `du`, and it is written in Rust.
+
+[source,shell]
+----
+cargo install du-dust
+----
+
+== duf
+
+https://github.com/muesli/duf
+
+`duf` is a replacement for the `df` utility. It's written in Go.
+
+[source,shell]
+----
+go get github.com/muesli/duf
+----
+
+== fd
+
+https://github.com/sharkdp/fd
+
+`fd` is an alternative for the `find` utility. It is written in Rust.
+
+[source,shell]
+----
+cargo install fd-find
+----
+
+== lsd
+
+[source,shell]
+----
+cargo install lsd
+----
+
+== ripgrep
+
+https://github.com/BurntSushi/ripgrep
+
+`ripgrep` is a replacement for `grep` alternative written in Rust.
+
+[source,shell]
+----
+cargo install ripgrep
+----
+
+== procs
+
+https://github.com/dalance/procs
+
+`procs` is a modern alternative for `ps`. It is written in Rust.
+
+[source,shell]
+----
+cargo install procs
+----
+
+== zoxide
+
+https://github.com/ajeetdsouza/zoxide
+
+`zoxide` is a fast replacement for the `cd` command. It is written in Rust.
+
+[source,shell]
+----
+cargo install zoxide
+----
+
+
+[source,shell]
+.file `~/.bashrc`
+----
+eval "$(zoxide init bash)"
+----
+
+[source,shell]
+.file `~/.zshrc`
+----
+eval "$(zoxide init zsh)"
+----
+
+== skim
+
+https://github.com/lotabout/skim
+
+`skim` is an alternative for `fzf` and it is written in Rust.
+
+[source,shell]
+----
+cargo install skim
+----
+
+== fselect
+
+https://github.com/jhspetersson/fselect
+
+`fselect` is an alternative for `find` and `ls`, but it can find files with SQL-like queries.
+
+[source,shell]
+----
+cargo install fselect
+----
+
+== sd
+
+https://github.com/chmln/sd
+
+`sd` is an intuitive find & replace command-line tool, it is an alternative to `sed`.
+
+[source,shell]
+----
+cargo install sd
+----
+
+== hyperfine
+
+https://github.com/sharkdp/hyperfine
+
+hyperfine is a command-line benchmarking tool
+
+[source,shell]
+----
+cargo install hyperfine
+----
+
+== tealdeer
+
+https://github.com/dbrgn/tealdeer
+
+`tealdeer` is alternative of `tldr`, a program for displaying simplified, example based and community-driven man pages.
+
+[source,shell]
+----
+cargo install tealdeer
+----
+

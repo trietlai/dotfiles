@@ -12,6 +12,7 @@ require'fzf-lua'.setup {
             vim.cmd("set winhl=Normal:Normal")  -- popup bg match normal windows
         end,
     },
+    fzf_bin             = 'sk',           -- use skim instead of fzf?
     fzf_layout          = 'reverse',      -- fzf '--layout='
     fzf_args            = '',             -- adv: fzf extra args, empty unless adv
     fzf_binds           = {               -- fzf '--bind=' options
