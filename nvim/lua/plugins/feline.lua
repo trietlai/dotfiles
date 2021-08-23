@@ -76,11 +76,15 @@ properties.force_inactive.filetypes = {
     'packer',
     'startify',
     'fugitive',
-    'fugitiveblame'
+    'fugitiveblame',
+    'fzf',
 }
 
 properties.force_inactive.buftypes = {
-    'terminal'
+    'terminal',
+    'nowrite',
+    'nofile',
+    'prompt',
 }
 
 -- LEFT
@@ -333,18 +337,18 @@ components.left.inactive[1] = {
         ' '
     }
 }
--- filename
-components.left.inactive[2] = {
-    provider = function()
-        return vim.fn.expand("%:F")
-    end,
-    hl = {
-        fg    = 'white',
-        bg    = 'bg',
-        style = 'bold'
-    },
-    right_sep = ''
-}
+-- filename : commented out due to a conflict with fzf-lua plugin
+-- components.left.inactive[2] = {
+--     provider = function()
+--         return vim.fn.expand("%:F")
+--     end,
+--     hl = {
+--         fg    = 'white',
+--         bg    = 'bg',
+--         style = 'bold'
+--     },
+--     right_sep = ''
+-- }
 
 require('feline').setup({
     colors         = colors,

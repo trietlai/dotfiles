@@ -3,7 +3,7 @@ require'fzf-lua'.setup {
     winopts = {
         -- split         = "new",           -- open in a split instead?
         win_height       = 0.85,            -- window height
-        win_width        = 0.80,            -- window width
+        win_width        = 0.95,            -- window width
         win_row          = 0.30,            -- window row position (0=top, 1=bottom)
         win_col          = 0.50,            -- window col position (0=left, 1=right)
         -- win_border    = false,           -- window border? or borderchars?
@@ -50,7 +50,7 @@ require'fzf-lua'.setup {
         bat = {
             cmd             = "bat",
             args            = "--style=numbers,changes --color always",
-            theme           = 'Coldark-Dark', -- bat preview theme (bat --list-themes)
+            theme           = 'Dracula',      -- bat preview theme (bat --list-themes)
             config          = nil,            -- nil uses $BAT_CONFIG_PATH
         },
         head = {
@@ -120,13 +120,13 @@ require'fzf-lua'.setup {
             },
         },
         icons = {
-            ["M"]           = { icon = "M", color = "yellow" },
-            ["D"]           = { icon = "D", color = "red" },
-            ["A"]           = { icon = "A", color = "green" },
-            ["?"]           = { icon = "?", color = "magenta" },
-            -- ["M"]          = { icon = "★", color = "red" },
-            -- ["D"]          = { icon = "✗", color = "red" },
-            -- ["A"]          = { icon = "+", color = "green" },
+            -- ["M"]           = { icon = "M", color = "yellow" },
+            -- ["D"]           = { icon = "D", color = "red" },
+            -- ["A"]           = { icon = "A", color = "green" },
+            ["?"]          = { icon = "?", color = "magenta" },
+            ["M"]          = { icon = "★", color = "yellow" },
+            ["D"]          = { icon = "✗", color = "red" },
+            ["A"]          = { icon = "+", color = "green" },
         },
     },
     grep = {

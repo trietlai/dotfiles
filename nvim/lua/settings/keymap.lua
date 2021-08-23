@@ -2,7 +2,8 @@
 local map = vim.api.nvim_set_keymap
 local map_opts = { noremap = true, silent = true }
 local map_expr_opts = { expr = true, noremap = true, silent = true }
-local tbuiltin = require('telescope.builtin');
+local tbuiltin = require('telescope.builtin')
+local fzf = require('fzf-lua')
 
 map('', '<space>', '<Nop>', map_opts)
 vim.g.mapleader = ' '
@@ -347,6 +348,61 @@ wk.register({
         c = { "<cmd>:Cheatsheet<CR>", "open local cheatsheet" },
         t = { function() tbuiltin.help_tags() end, "help tags" },
         ["/"] = {"<cmd>:Cheat<CR>", "search cheatsheet.ch" },
+    },
+    A = { -- TODO: temporary mappings for testing purpose
+        name = "FzfLua",
+        -- LSP
+        a = { -- code analysis
+            name = "LSP",
+            a = { function() fzf.lsp_code_actions() end, "code actions" },
+            i = { function() fzf.lsp_implementations() end, "implementations" },
+            d = { function() fzf.lsp_definitions() end, "definitions" },
+            D = { function() fzf.lsp_declarations() end, "declarations" },
+            r = { function() fzf.lsp_references() end, "references" },
+            s = { function() fzf.lsp_document_symbols() end, "document symbols" },
+            S = { function() fzf.lsp_workspace_symbols() end, "workspace symbols" },
+            t = { function() fzf.lsp_typedefs() end, "type definitions" },
+            w = { function() fzf.lsp_document_diagnostics() end, "document diagnostics" },
+            W = { function() fzf.lsp_workspace_diagnostics() end, "workspace diagnostics" },
+        },
+        -- Buffers & Files
+        b = { function() fzf.buffers() end, "buffers" },
+        f = { function() fzf.files() end, "files" },
+        r = { function() fzf.oldfiles() end, "recent files" },
+        q = { function() fzf.quickfix() end, "quickfix list" },
+        l = { function() fzf.loclist() end, "location list" },
+        -- Git
+        g = {
+            name = "git",
+            b = { function() fzf.git_branches() end, "git branches" },
+            c = { function() fzf.git_commits() end, "git commit log (project)" },
+            C = { function() fzf.git_bcommits() end, "git commit log (buffer)" },
+            f = { function() fzf.git_files() end, "git files" },
+            s = { function() fzf.git_status() end, "git status" },
+        },
+        -- Misc
+        k     = { function() fzf.keymaps() end, "key mappings" },
+        m     = { function() fzf.man_pages() end, "man pages" },
+        s     = { function() fzf.search_history() end, "search history" },
+        t     = { function() fzf.btags() end, "buffer tags" },
+        T     = { function() fzf.tags() end, "project tags" },
+        x     = { function() fzf.commands() end, "neovim commands" },
+        ["?"] = { function() fzf.help_tags() end, "help tags" },
+        [":"] = { function() fzf.command_history() end, "command history" },
+        ["`"] = { function() fzf.marks() end, "marks" },
+        ['"'] = { function() fzf.registers() end, "registers" },
+        ['='] = { function() fzf.spell_suggest() end, "spelling suggestions" },
+        -- Search
+        ["/"] = {
+            name = "search",
+            b = { function() fzf.grep_curbuf() end, "live grep current buffer" },
+            g = { function() fzf.grep() end, "search pattern" },
+            l = { function() fzf.grep_last() end, "search last pattern" },
+            p = { function() fzf.live_grep() end, "live grep current project" },
+            v = { function() fzf.grep_visual() end, "search visual selection" },
+            w = { function() fzf.grep_cword() end, "search word under cursor" },
+            W = { function() fzf.grep_cWORD() end, "search WORD under cursor" },
+        },
     },
     B = {
         name  = "Buffer",
