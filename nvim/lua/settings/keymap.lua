@@ -69,19 +69,17 @@ M.register_lsp_keymap = function(bufnr)
     require("which-key").register({
         -- start with 'g'
         g = {
-            a = { function() tbuiltin.lsp_code_actions() end, "list code actions" },
-            -- broken
-            --d = { function() tbuiltin.lsp_definitions() end, "goto definition"},
-            d = { function() vim.lsp.buf.definition() end, "goto definition" },
-            D = { function() vim.lsp.buf.declaration() end, "goto declaration" },
-            i = { function() tbuiltin.lsp_implementations() end, "goto implementation" },
+            a = { function() fzf.lsp_code_actions() end, "list code actions" },
+            d = { function() fzf.lsp_definitions() end, "goto definition"},
+            D = { function() fzf.lsp_declarations() end, "goto declaration" },
+            i = { function() fzf.lsp_implementations() end, "goto implementation" },
             k = { function() vim.lsp.buf.signature_help() end, "signature help" },
-            r = { function() tbuiltin.lsp_references() end, "display references" },
-            s = { function() tbuiltin.lsp_document_symbols() end, "list document symbols" },
-            S = { function() tbuiltin.lsp_workspace_symbols() end, "list workspace symbols" },
-            T = { function() vim.lsp.buf.type_definition() end, "type definition" },
-            x = { function() tbuiltin.lsp_document_diagnostics() end, "list diagnostics" },
-            X = { function() tbuiltin.lsp_workspace_diagnostics() end, "list workspace diagnostics" },
+            r = { function() fzf.lsp_references() end, "display references" },
+            s = { function() fzf.lsp_document_symbols() end, "list document symbols" },
+            S = { function() fzf.lsp_workspace_symbols() end, "list workspace symbols" },
+            T = { function() fzf.lsp_typedefs() end, "type definition" },
+            x = { function() fzf.lsp_document_diagnostics() end, "list diagnostics" },
+            X = { function() fzf.lsp_workspace_diagnostics() end, "list workspace diagnostics" },
         },
         ["]"] = {
             d = { function() vim.lsp.diagnostic.goto_next() end, "Move to the next diagnostic" },
@@ -103,13 +101,12 @@ M.register_lsp_keymap = function(bufnr)
     require("which-key").register({
         L = {
             name = "Language",
-            a = { function() vim.lsp.buf.code_action() end, "Code Action" },
-            --d = { function() tbuiltin.lsp_definitions end, "goto definition" },
-            d = { function() vim.lsp.buf.definition() end, "goto definition" },
-            D = { function() vim.lsp.buf.declaration() end, "goto declaration" },
+            a = { function() fzf.lsp_code_action() end, "Code Action" },
+            d = { function() fzf.lsp_definitions() end, "goto definition" },
+            D = { function() fzf.lsp_declaration() end, "goto declaration" },
             e = { function() vim.lsp.diagnostic.show_line_diagnostics() end, "show line diagnostics" },
             f = { function() vim.lsp.buf.formatting() end, "Format" },
-            i = { function() tbuiltin.lsp_implementations() end, "goto implementation" },
+            i = { function() fzf.lsp_implementations() end, "goto implementation" },
             I = {"<cmd>LspInfo<CR>", "LSP info"},
             j = {
                 function()
@@ -125,11 +122,11 @@ M.register_lsp_keymap = function(bufnr)
                 end, "Prev Diagnostic" },
             K = { function() vim.lsp.buf.signature_help() end, "signature help" },
             q = { function() vim.lsp.diagnostic.set_loclist() end, "set location-list" },
-            r = { function() tbuiltin.lsp_references() end, "display references" },
+            r = { function() fzf.lsp_references() end, "display references" },
             R = { function() vim.lsp.buf.rename() end, "rename" },
-            s = { function() tbuiltin.lsp_document_symbols() end, "list document symbols" },
-            S = { function() tbuiltin.lsp_workspace_symbols() end, "list workspace symbols" },
-            t = { function() vim.lsp.buf.type_definition() end, "type definition" },
+            s = { function() fzf.lsp_document_symbols() end, "list document symbols" },
+            S = { function() fzf.lsp_workspace_symbols() end, "list workspace symbols" },
+            t = { function() fzf.lsp_typedefs() end, "type definition" },
             w = {
                 name  = "workspace",
                 d = { "<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
@@ -140,8 +137,8 @@ M.register_lsp_keymap = function(bufnr)
                         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
                     end, "list workspace folders" },
             },
-            x = { function() tbuiltin.lsp_document_diagnostics() end, "list diagnostics" },
-            X = { function() tbuiltin.lsp_workspace_diagnostics() end, "list workspace diagnostics" },
+            x = { function() fzf.lsp_document_diagnostics() end, "list diagnostics" },
+            X = { function() fzf.lsp_workspace_diagnostics() end, "list workspace diagnostics" },
         }
     }, {
         mode    = "n", -- NORMAL mode
@@ -281,22 +278,22 @@ wk.register({
 -- single
 wk.register({
     -- b = {"<cmd>:Buffers<CR>", "list buffers" },
-    b = { function() tbuiltin.buffers() end, "list buffers" },
+    b = { function() fzf.buffers() end, "list buffers" },
     c = { "<cmd>cclose<BAR>lclose<CR>", "close quickfix/location window" },
     --f = { function() tbuiltin.file_browser() end, "file browser" },
     f = { "<cmd>:NnnPicker %:p:h<CR>", "file browser" },
-    g = { function() tbuiltin.git_status() end, "Git status" },
-    h = { function() tbuiltin.search_history() end, "search history" },
+    g = { function() fzf.git_status() end, "Git status" },
+    h = { function() fzf.search_history() end, "search history" },
     j = { function() tbuiltin.jumplist() end, "jump list" },
-    l = { function() tbuiltin.loclist() end, "location list" },
-    m = { function() tbuiltin.keymaps() end, "show keymaps" },
+    l = { function() fzf.loclist() end, "location list" },
+    m = { function() fzf.keymaps() end, "show keymaps" },
     p = {
         function() require('extensions.telescope-dotfile').project_files() end,
         "search project files"
     },
-    q = { function() tbuiltin.quickfix() end, "quickfix list" },
-    r = { function() tbuiltin.oldfiles() end, "recent files" },
-    t = { function() tbuiltin.tags() end, "tags" },
+    q = { function() fzf.quickfix() end, "quickfix list" },
+    r = { function() fzf.oldfiles() end, "recent files" },
+    t = { function() fzf.tags() end, "tags" },
     w = { "<cmd>:Windows<CR>", "find windows" },
 
     ["1"] = "goto buffer 1",
@@ -310,15 +307,15 @@ wk.register({
     ["9"] = "goto buffer 9",
     ["-"] = { "<C-w>s", "split window below" },
     ["|"] = { "<C-w>v", "split window right" },
-    --["/"] = { function() tbuiltin.live_grep() end, "search text" },
-    ["/"] = {"<cmd>:Rg<CR>", "search text"},
+    ["/"] = { function() fzf.live_grep() end, "search text" },
+    --["/"] = {"<cmd>:Rg<CR>", "search text"},
 
     ["<Tab>"]   = { "<cmd>:bnext<CR>", "next buffer" },
     ["<S-Tab>"] = { "<cmd>:bprevious<CR>", "previous buffer" },
-    [":"]       = { function() tbuiltin.command_history() end, "command history" },
-    ["`"]       = { function() tbuiltin.marks() end, "marks" },
-    ['"']       = { function() tbuiltin.registers() end, "registers" },
-    ["="]       = { function() tbuiltin.spell_suggest() end, "spell suggest" },
+    [":"]       = { function() fzf.command_history() end, "command history" },
+    ["`"]       = { function() fzf.marks() end, "marks" },
+    ['"']       = { function() fzf.registers() end, "registers" },
+    ["="]       = { function() fzf.spell_suggest() end, "spell suggest" },
     ["."]       = {
         function()
             require('extensions.telescope-dotfile').search_dotfiles()
@@ -346,7 +343,7 @@ wk.register({
         name  = "Help",
         b = { "<cmd>:CheatList<CR>", "browse cheatsheet.ch" },
         c = { "<cmd>:Cheatsheet<CR>", "open local cheatsheet" },
-        t = { function() tbuiltin.help_tags() end, "help tags" },
+        t = { function() fzf.help_tags() end, "help tags" },
         ["/"] = {"<cmd>:Cheat<CR>", "search cheatsheet.ch" },
     },
     A = { -- TODO: temporary mappings for testing purpose
@@ -457,9 +454,9 @@ wk.register({
     },
     G = {
         name  = "Git",
-        b     = { function() tbuiltin.git_branch() end, "list branches" },
+        b     = { function() fzf.git_branch() end, "list branches" },
         B     = { "<cmd>:Gblame<CR>", "blame" },
-        c     = { function() tbuiltin.git_commits() end, "list commits" },
+        c     = { function() fzf.git_commits() end, "list commits" },
         d     = { "<cmd>:Gvdiff<CR>", "diff" },
         D     = { "<cmd>:DiffviewOpen<CR>", "diff view" },
         f     = { "<cmd>:Gfetch<CR>", "fetch" },
@@ -471,7 +468,7 @@ wk.register({
         p     = { "<cmd>:Gpull<CR>", "pull" },
         P     = { "<cmd>:Gpush<CR>", "push" },
         r     = { "<cmd>:Grebase -i master<CR>", "rebase -i master" },
-        s     = { function() tbuiltin.git_status() end, "list changes" },
+        s     = { function() fzf.git_status() end, "list changes" },
         S     = { function() tbuiltin.git_stash() end, "list stashes" },
         ["-"] = { "<cmd>:Git checkout -<CR>", "checkout -" },
     },
