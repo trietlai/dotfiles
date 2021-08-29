@@ -8,9 +8,6 @@ require'fzf-lua'.setup {
         win_col          = 0.50,            -- window col position (0=left, 1=right)
         -- win_border    = false,           -- window border? or borderchars?
         win_border       = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-        window_on_create = function()         -- nvim window options override
-            vim.cmd("set winhl=Normal:Normal")  -- popup bg match normal windows
-        end,
     },
     fzf_bin             = 'sk',           -- use skim instead of fzf?
     fzf_layout          = 'reverse',      -- fzf '--layout='
