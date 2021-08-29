@@ -1,26 +1,47 @@
 eval "$(zoxide init zsh)"
 
 MY_LESS_CONFIG_FILE=$HOME/.config/less/less.sh
-[[ -f $MY_LESS_CONFIG_FILE ]] && source $MY_LESS_CONFIG_FILE
+if [[ -f $MY_LESS_CONFIG_FILE ]]; then
+    source $MY_LESS_CONFIG_FILE
+else
+    echo "$MY_LESS_CONFIG_FILE not found" > ~/.zsh-errors
+fi
 
 # FZF
 MY_FZF_COMPLETION_FILE=$HOME/src/vim/fzf/shell/completion.zsh
-[[ -f $MY_FZF_COMPLETION_FILE ]] && source $MY_FZF_COMPLETION_FILE
-
-MY_FZF_KEYBINDING_FILE=$HOME/src/vim/fzf/shell/key-bindings.zsh
-[[ -f $MY_FZF_KEYBINDING_FILE ]] && source $MY_FZF_KEYBINDING_FILE
+if [[ -f $MY_FZF_COMPLETION_FILE ]]; then
+    source $MY_FZF_COMPLETION_FILE
+else
+    echo "$MY_FZF_COMPLETION_FILE not found" >> ~/.zsh-errors
+fi
 
 MY_FORGIT_PLUGIN_FILE=$HOME/src/shell/forgit/forgit.plugin.zsh
-[[ -f $MY_FORGIT_PLUGIN_FILE ]] && source $MY_FORGIT_PLUGIN_FILE
+if [[ -f $MY_FORGIT_PLUGIN_FILE ]]; then
+    source $MY_FORGIT_PLUGIN_FILE
+else
+    echo "$MY_FORGIT_PLUGIN_FILE not found" >> ~/.zsh-errors
+fi
 
 MY_FORMARKS_PLUGIN_FILE=$HOME/src/shell/formarks/formarks.plugin.zsh
-[[ -f $MY_FORMARKS_PLUGIN_FILE ]] && source $MY_FORMARKS_PLUGIN_FILE
+if [[ -f $MY_FORMARKS_PLUGIN_FILE ]]; then
+    source $MY_FORMARKS_PLUGIN_FILE
+else
+    echo "$MY_FORMARKS_PLUGIN_FILE not found" >> ~/.zsh-errors
+fi
 
 MY_NNN_CONFIG_FILE=$HOME/.config/nnn/nnn.sh
-[[ -f $MY_NNN_CONFIG_FILE ]] && source $MY_NNN_CONFIG_FILE
+if [[ -f $MY_NNN_CONFIG_FILE ]]; then
+    source $MY_NNN_CONFIG_FILE
+else
+    echo "$MY_NNN_CONFIG_FILE not found" >> ~/.zsh-errors
+fi
 
 MY_NNN_COMPLETION_FILE=$HOME/src/c/nnn/misc/auto-completion/zsh/_nnn
-#[[ -f $MY_NNN_COMPLETION_FILE ]] && source $MY_NNN_COMPLETION_FILE
+if [[ -f $MY_NNN_COMPLETION_FILE ]]; then
+    source $MY_NNN_COMPLETION_FILE
+else
+    echo "$MY_NNN_COMPLETION_FILE not found" >> ~/.zsh-errors
+fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -159,3 +180,9 @@ alias nvdev="XDG_CONFIG_HOME=$HOME/projects/nvim-config XDG_DATA_HOME=$HOME/proj
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+MY_FZF_KEYBINDING_FILE=$HOME/src/vim/fzf/shell/key-bindings.zsh
+if [[ -f $MY_FZF_KEYBINDING_FILE ]]; then
+    source $MY_FZF_KEYBINDING_FILE
+else
+    echo "$MY_FZF_KEYBINDING_FILE not found" >> ~/.zsh-errors
+fi
