@@ -9,7 +9,7 @@ require'fzf-lua'.setup {
         -- win_border    = false,           -- window border? or borderchars?
         win_border       = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
-    fzf_bin             = 'sk',           -- use skim instead of fzf?
+    --fzf_bin             = 'sk',           -- use skim instead of fzf?
     fzf_layout          = 'reverse',      -- fzf '--layout='
     fzf_args            = '',             -- adv: fzf extra args, empty unless adv
     fzf_binds           = {               -- fzf '--bind=' options
