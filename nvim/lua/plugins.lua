@@ -90,7 +90,7 @@ return require('packer').startup(function(use)
                 '.git', 'Makefile', 'node_modules', 'CMakeLists.txt', 'pom.xml', 'build.gradle',
                 'Cargo.toml', 'go.mod', '.gitignore'
             }
-            vim.g.outermost_root = true
+            vim.g.outermost_root = false
         end
     }
 
