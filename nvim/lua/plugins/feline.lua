@@ -1,19 +1,24 @@
 local lsp = require('feline.providers.lsp')
 local vi_mode_utils = require('feline.providers.vi_mode')
 
-local properties = {
-    force_inactive = {
-        filetypes = {},
-        buftypes  = {},
-        bufnames  = {}
-    }
+local force_inactive = {
+    filetypes = {},
+    buftypes  = {},
+    bufnames  = {}
 }
 
 local components = {
-    left  = {active = {}, inactive = {}},
-    mid   = {active = {}, inactive = {}},
-    right = {active = {}, inactive = {}}
+    active = {},
+    inactive = {}
 }
+-- Insert three sections (left, mid and right) for the active statusline
+table.insert(components.active, {})
+table.insert(components.active, {})
+table.insert(components.active, {})
+
+-- Insert two sections (left and right) for the inactive statusline
+table.insert(components.inactive, {})
+table.insert(components.inactive, {})
 
 local colors = {
     bg        = '#282828',
@@ -70,7 +75,7 @@ local sep_icons = {
     left = ""
 }
 
-properties.force_inactive.filetypes = {
+force_inactive.filetypes = {
     'NvimTree',
     'dbui',
     'packer',
@@ -80,17 +85,17 @@ properties.force_inactive.filetypes = {
     'fzf',
 }
 
-properties.force_inactive.buftypes = {
+force_inactive.buftypes = {
     'terminal',
     'nowrite',
     'nofile',
     'prompt',
 }
 
--- LEFT
+-- ACITVE LEFT
 
 -- vi-mode
-components.left.active[1] = {
+components.active[1][1] = {
     provider = function()
         return vi_mode_indicators[vi_mode_utils.get_vim_mode()]
     end,
@@ -104,7 +109,7 @@ components.left.active[1] = {
     right_sep = sep_icons.left .. ' '
 }
 -- filename
-components.left.active[2] = {
+components.active[1][2] = {
     provider = function()
         return vim.fn.expand("%:F")
     end,
@@ -116,7 +121,7 @@ components.left.active[2] = {
     right_sep = ''
 }
 -- gitBranch
-components.left.active[3] = {
+components.active[1][3] = {
     provider = 'git_branch',
     hl = {
         fg    = 'yellow',
@@ -125,7 +130,7 @@ components.left.active[3] = {
     }
 }
 -- diffAdd
-components.left.active[4] = {
+components.active[1][4] = {
     provider = 'git_diff_added',
     hl = {
         fg    = 'green',
@@ -134,7 +139,7 @@ components.left.active[4] = {
     }
 }
 -- diffModfified
-components.left.active[5] = {
+components.active[1][5] = {
     provider = 'git_diff_changed',
     hl = {
         fg    = 'orange',
@@ -143,7 +148,7 @@ components.left.active[5] = {
     }
 }
 -- diffRemove
-components.left.active[6] = {
+components.active[1][6] = {
     provider = 'git_diff_removed',
     hl = {
         fg    = 'red',
@@ -152,10 +157,10 @@ components.left.active[6] = {
     }
 }
 
--- MID
+-- ACTIVE MID
 
 -- LspName
-components.mid.active[1] = {
+components.active[2][1] = {
     provider = 'lsp_client_names',
     hl = {
         fg    = 'yellow',
@@ -165,7 +170,7 @@ components.mid.active[1] = {
     right_sep = ' '
 }
 -- diagnosticErrors
-components.mid.active[2] = {
+components.active[2][2] = {
     provider = 'diagnostic_errors',
     enabled = function() return lsp.diagnostics_exist('Error') end,
     hl = {
@@ -174,7 +179,7 @@ components.mid.active[2] = {
     }
 }
 -- diagnosticWarn
-components.mid.active[3] = {
+components.active[2][3] = {
     provider = 'diagnostic_warnings',
     enabled = function() return lsp.diagnostics_exist('Warning') end,
     hl = {
@@ -183,7 +188,7 @@ components.mid.active[3] = {
     }
 }
 -- diagnosticHint
-components.mid.active[4] = {
+components.active[2][4] = {
     provider = 'diagnostic_hints',
     enabled = function() return lsp.diagnostics_exist('Hint') end,
     hl = {
@@ -192,7 +197,7 @@ components.mid.active[4] = {
     }
 }
 -- diagnosticInfo
-components.mid.active[5] = {
+components.active[2][5] = {
     provider = 'diagnostic_info',
     enabled = function() return lsp.diagnostics_exist('Information') end,
     hl = {
@@ -201,10 +206,10 @@ components.mid.active[5] = {
     }
 }
 
--- RIGHT
+-- ACTIVE RIGHT
 
 -- fileIcon
-components.right.active[1] = {
+components.active[3][1] = {
     provider = function()
         local filename  = vim.fn.expand('%:t')
         local extension = vim.fn.expand('%:e')
@@ -231,7 +236,7 @@ components.right.active[1] = {
     right_sep = ' '
 }
 -- fileType
-components.right.active[2] = {
+components.active[3][2] = {
     provider = 'file_type',
     hl = function()
         local val        = {}
@@ -250,7 +255,7 @@ components.right.active[2] = {
     right_sep = ' '
 }
 -- fileSize
-components.right.active[3] = {
+components.active[3][3] = {
     provider = 'file_size',
     enabled = function() return vim.fn.getfsize(vim.fn.expand('%:t')) > 0 end,
     hl = {
@@ -261,7 +266,7 @@ components.right.active[3] = {
     right_sep = ' '
 }
 -- fileFormat
-components.right.active[4] = {
+components.active[3][4] = {
     provider = function() return '' .. vim.bo.fileformat:upper() .. '' end,
     hl = {
         fg    = 'white',
@@ -271,7 +276,7 @@ components.right.active[4] = {
     right_sep = ' '
 }
 -- fileEncode
-components.right.active[5] = {
+components.active[3][5] = {
     provider = 'file_encoding',
     hl = {
         fg    = 'white',
@@ -281,7 +286,7 @@ components.right.active[5] = {
     right_sep = ' '
 }
 -- lineInfo
-components.right.active[6] = {
+components.active[3][6] = {
     provider = 'position',
     hl = {
         fg    = 'white',
@@ -291,7 +296,7 @@ components.right.active[6] = {
     right_sep = ' '
 }
 -- linePercent
-components.right.active[7] = {
+components.active[3][7] = {
     provider = 'line_percentage',
     hl = {
         fg    = 'white',
@@ -301,7 +306,7 @@ components.right.active[7] = {
     right_sep = ' '
 }
 -- scrollBar
-components.right.active[8] = {
+components.active[3][8] = {
     provider = 'scroll_bar',
     hl = {
         fg = 'yellow',
@@ -312,7 +317,7 @@ components.right.active[8] = {
 -- INACTIVE
 
 -- fileType
-components.left.inactive[1] = {
+components.inactive[1][1] = {
     provider = 'file_type',
     hl = {
         fg    = 'black',
@@ -338,7 +343,7 @@ components.left.inactive[1] = {
     }
 }
 -- filename : commented out due to a conflict with fzf-lua plugin
--- components.left.inactive[2] = {
+-- components.inactive[1][2] = {
 --     provider = function()
 --         return vim.fn.expand("%:F")
 --     end,
@@ -352,10 +357,8 @@ components.left.inactive[1] = {
 
 require('feline').setup({
     colors         = colors,
-    default_bg     = colors.bg,
-    default_fg     = colors.fg,
     vi_mode_colors = vi_mode_colors,
     components     = components,
-    properties     = properties,
+    force_inactive = force_inactive,
 })
 

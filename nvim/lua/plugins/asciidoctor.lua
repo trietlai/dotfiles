@@ -30,7 +30,18 @@ func! AsciidoctorHighlight()
     " Highlight asciidoctor syntax with colors you like.
     hi asciidoctorTitle guifg=#ff0000 gui=bold ctermfg=red cterm=bold
     hi asciidoctorOption guifg=#00ff00 ctermfg=green
-    hi link asciidoctorH1 '#f1fa8c'
+    hi link asciidoctorH1Delimiter rainbowcol1 
+    hi link asciidoctorH2Delimiter rainbowcol2
+    hi link asciidoctorH3Delimiter rainbowcol3
+    hi link asciidoctorH4Delimiter rainbowcol4
+    hi link asciidoctorH5Delimiter rainbowcol5
+    hi link asciidoctorH6Delimiter rainbowcol6
+    hi link asciidoctorH1 rainbowcol1
+    hi link asciidoctorH2 rainbowcol2
+    hi link asciidoctorH3 rainbowcol3
+    hi link asciidoctorH4 rainbowcol4
+    hi link asciidoctorH5 rainbowcol5
+    hi link asciidoctorH6 rainbowcol6
     hi link asciidoctorIndented PreProc
 endfunc
 augroup ASCIIDOCTOR_COLORS | au!
