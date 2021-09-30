@@ -208,7 +208,7 @@ wk.register({
     ["<Tab>"]   = {"<C-w>w", "next window"},
     ["<S-Tab>"] = {"<C-w>W", "previous window"},
 
-    ["<F4>"]    = {"<cmd>:NvimTreeToggle<CR>", "toggle NvimTree"},
+    ["<F4>"]    = {"<cmd>lua require'nvim-tree'.toggle()<CR>", "toggle NvimTree"},
     -- ["<F5>"]    = {"<cmd>:NERDTreeToggle<CR>", "toggle NerdTree"},
     ["<F5>"]    = {"<cmd>:SymbolsOutline<CR>", "toggle symbols-outline"},
     ["<F12>"]   = {"<cmd>lua require('FTerm').toggle()<CR>", "toggle terminal"},
