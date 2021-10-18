@@ -54,20 +54,20 @@ local vi_mode_colors = {
 }
 
 local vi_mode_indicators = {
-    NORMAL        = '🅝 NORMAL',
-    OP            = '🅞 OP',
-    INSERT        = '🅘 INSERT',
-    VISUAL        = '🅥 VISUAL',
-    BLOCK         = '🅑 BLOCK',
-    REPLACE       = '🅡 REPLACE',
-    ['V-REPLACE'] = '🆁 V-REPLACE',
-    ENTER         = '🅔 ENTER',
-    MORE          = '🅜 MORE',
-    SELECT        = '🅢 SELECT',
-    COMMAND       = '🅒 COMMAND',
-    SHELL         = '🆂 SHELL',
-    TERM          = '🅣 TERM',
-    NONE          = 'NONE',
+    NORMAL        = '🅝',
+    OP            = '🅞',
+    INSERT        = '🅘',
+    VISUAL        = '🅥',
+    BLOCK         = '🅑',
+    REPLACE       = '🅡',
+    ['V-REPLACE'] = '🆁',
+    ENTER         = '🅔',
+    MORE          = '🅜',
+    SELECT        = '🅢',
+    COMMAND       = '🅒',
+    SHELL         = '🆂',
+    TERM          = '🅣',
+    NONE          = 'N',
 }
 
 local sep_icons = {
@@ -97,7 +97,15 @@ force_inactive.buftypes = {
 -- vi-mode
 components.active[1][1] = {
     provider = function()
-        return vi_mode_indicators[vi_mode_utils.get_vim_mode()]
+        local mode = vi_mode_utils.get_vim_mode()
+        local indicator = vi_mode_indicators[mode]
+		--print('MODE: ' .. mode)
+		--print('INDICATOR: ' .. indicator)
+        if indicator == nil or indicator == '' then
+            return mode
+        else
+            return indicator .. ' ' .. mode
+        end
     end,
     hl = function()
         local val = {}

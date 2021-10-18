@@ -9,21 +9,39 @@ require'fzf-lua'.setup {
         -- win_border    = false,           -- window border? or borderchars?
         win_border       = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
+    keymap = {
+        builtin = {
+          -- neovim `:tmap` mappings for the fzf win
+          ["<F2>"]        = "toggle-fullscreen",
+          -- Only valid with the 'builtin' previewer
+          ["<F3>"]        = "toggle-preview-wrap",
+          ["<F4>"]        = "toggle-preview",
+          -- Rotate preview clockwise/counter-clockwise
+          ["<F5>"]        = "toggle-preview-ccw",
+          ["<F6>"]        = "toggle-preview-cw",
+          ["<S-down>"]    = "preview-page-down",
+          ["<S-up>"]      = "preview-page-up",
+          ["<S-left>"]    = "preview-page-reset",
+        },
+        fzf = {
+          -- fzf '--bind=' options
+          ["ctrl-z"]      = "abort",
+          ["ctrl-u"]      = "unix-line-discard",
+          ["ctrl-f"]      = "half-page-down",
+          ["ctrl-b"]      = "half-page-up",
+          ["ctrl-a"]      = "beginning-of-line",
+          ["ctrl-e"]      = "end-of-line",
+          ["alt-a"]       = "toggle-all",
+          -- Only valid with fzf previewers (bat/cat/git/etc)
+          ["f3"]          = "toggle-preview-wrap",
+          ["f2"]          = "toggle-preview",
+          ["shift-down"]  = "preview-page-down",
+          ["shift-up"]    = "preview-page-up",
+        },
+    },
     --fzf_bin             = 'sk',           -- use skim instead of fzf?
     fzf_layout          = 'reverse',      -- fzf '--layout='
     fzf_args            = '',             -- adv: fzf extra args, empty unless adv
-    fzf_binds           = {               -- fzf '--bind=' options
-        'f2:toggle-preview',
-        'f3:toggle-preview-wrap',
-        'shift-down:preview-page-down',
-        'shift-up:preview-page-up',
-        'ctrl-d:half-page-down',
-        'ctrl-u:half-page-up',
-        'ctrl-f:page-down',
-        'ctrl-b:page-up',
-        'ctrl-a:toggle-all',
-        'ctrl-l:clear-query',
-    },
     preview_border      = 'border',       -- border|noborder
     preview_wrap        = 'nowrap',       -- wrap|nowrap
     preview_opts        = 'nohidden',     -- hidden|nohidden
