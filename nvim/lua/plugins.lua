@@ -472,13 +472,13 @@ return require('packer').startup(function(use)
     }
 
     -- Status Line and Bufferline
-    -- use {
-    --     'vim-airline/vim-airline',
-    --     requires = { 'vim-airline/vim-airline-themes' },
-    --     setup = function()
-    --         require 'plugins/vim-airline'
-    --     end
-    -- }
+    use {
+        'vim-airline/vim-airline',
+        requires = { 'vim-airline/vim-airline-themes' },
+        setup = function()
+            require 'plugins/vim-airline'
+        end
+    }
 
     -- use {
     --     'glepnir/galaxyline.nvim',
@@ -489,13 +489,13 @@ return require('packer').startup(function(use)
     --     end
     -- }
 
-    use {
-        'famiu/feline.nvim',
-        requires = { 'lewis6991/gitsigns.nvim' },
-        config = function()
-            require 'plugins/feline'
-        end
-    }
+    -- use {
+    --     'famiu/feline.nvim',
+    --     requires = { 'lewis6991/gitsigns.nvim' },
+    --     config = function()
+    --         require 'plugins/feline'
+    --     end
+    -- }
 
     -- use {
     --     'akinsho/nvim-bufferline.lua',
