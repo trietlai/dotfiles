@@ -511,5 +511,13 @@ return require('packer').startup(function(use)
             require 'plugins/barbar'
         end
     }
+    use {
+        "cuducos/yaml.nvim",
+        -- ft = {"yaml"}, -- optional
+        requires = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-telescope/telescope.nvim" -- optional
+        },
+    }
 end)
 

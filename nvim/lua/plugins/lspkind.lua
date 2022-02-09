@@ -1,6 +1,10 @@
 -- commented options are defaults
 require('lspkind').init({
-    with_text = true,
+      -- defines how annotations are shown
+    -- default: symbol
+    -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
+    mode = 'symbol_text',
+
     symbol_map = {
         Text        = '',
         Method      = 'ƒ',
