@@ -11,6 +11,7 @@ let maplocalleader = ' '
 " ================================================================
 call plug#begin('~/.vim/plugged')
     Plug 'preservim/NERDTree'
+    Plug 'jistr/vim-nerdtree-tabs'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'ryanoasis/vim-devicons'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -34,7 +35,9 @@ call plug#begin('~/.vim/plugged')
         noremap <expr> <plug>(slash-after) slash#blink(2, 50)
     endif
     Plug 'Yggdroot/indentLine'
-    Plug 'luochen1990/rainbow'
+    " there is a conflict between 'luochen1990/rainbow'
+    " and 'pboettch/vim-cmake-syntax' so comment out 'rainbow'
+    " Plug 'luochen1990/rainbow'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'habamax/vim-asciidoctor'
@@ -49,6 +52,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'jreybert/vimagit'
     Plug 'lambdalisue/gina.vim'
     Plug 'liuchengxu/vim-which-key'
+    Plug 'nanotee/zoxide.vim'
     " Color Scheme
     Plug 'Luxed/ayu-vim'
     Plug 'morhetz/gruvbox'
@@ -61,6 +65,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'chr4/nginx.vim'
     Plug 'zigford/vim-powershell'
     Plug 'gcmt/taboo.vim'
+    Plug 'vhdirk/vim-cmake'
+    Plug 'pboettch/vim-cmake-syntax'
 call plug#end()
 " VIM-PLUG BLOCK }}}
 
@@ -185,7 +191,10 @@ endif
 " ================================================================
 
 " vim-oscyank
-autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg " | endif
+autocmd TextYankPost * 
+    \ if v:event.operator is 'y' && v:event.regname is '+' |
+    \ execute 'OSCYankRegister +' |
+    \ endif
 
 " Git
 function! GitStatus()
@@ -231,6 +240,13 @@ let g:easy_align_delimiters = {
 
 " these settings below override the colorscheme setting
 hi CursorLine cterm=NONE ctermbg=DarkGrey ctermfg=NONE gui=NONE guifg=NONE guibg=grey18
+
+" NerdTree
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" vim-nerdtree-tabs
+let g:nerdtree_tabs_open_on_console_startup=1
 
 " PLUGINS SETTINGS }}}
 

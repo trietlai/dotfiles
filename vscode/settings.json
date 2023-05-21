@@ -1,0 +1,77 @@
+{
+    "vim.leader": "<space>",
+    "vim.easymotion": true,
+    "vim.sneak": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.statusBarColorControl": true,
+    "vim.statusBarColors.normal": "#204A87",
+    "vim.statusBarColors.insert": "#FF1200",
+    "vim.statusBarColors.visual": "#3E7B04",
+    "vim.statusBarColors.visualline": "#0300FF",
+    "vim.statusBarColors.visualblock": "#521462",
+    "vim.statusBarColors.replace": "#D08770",
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [ "j", "j" ],
+            "after": [ "<Esc>" ]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<space>"],
+            "commands": ["vspacecode.space"]
+        },
+        {
+            "before": [","],
+            "commands": [
+                "vspacecode.space",
+                {
+                    "command": "whichkey.triggerKey",
+                    "args": "m"
+                }
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<space>"],
+            "commands": ["vspacecode.space"]
+        },
+        {
+            "before": [","],
+            "commands": [
+                "vspacecode.space",
+                {
+                    "command": "whichkey.triggerKey",
+                    "args": "m"
+                }
+            ]
+        }
+    ],
+    "editor.minimap.enabled": false,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#204A87",
+        "statusBar.noFolderBackground": "#204A87",
+        "statusBar.debuggingBackground": "#204A87"
+    },
+    "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Cascadia Mono PL', 'monospace', monospace, 'Droid Sans Mono' , 'Droid Sans Fallback'",
+    "editor.fontSize": 13,
+    "terminal.integrated.cursorBlinking": true,
+    "python.languageServer": "Pylance",
+    "redhat.telemetry.enabled": false,
+    "editor.wordWrap": "on",
+    "telemetry.telemetryLevel": "off",
+    "go.toolsManagement.autoUpdate": true,
+    "cmake.configureOnOpen": true,
+    "tabnine.experimentalAutoImports": true,
+    "workbench.colorTheme": "monokai-charcoal (gray)",
+    "editor.cursorStyle": "block",
+    "workbench.tree.indent": 16,
+    "gitlens.currentLine.enabled": false,
+}

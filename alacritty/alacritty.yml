@@ -122,8 +122,9 @@ font:
     #family: JetBrainsMono Nerd Font Mono
     family: FiraCode Nerd Font Mono
     # The `style` can be specified to pick a specific face.
-    style: Regular
     #style: Medium
+    #style: Regular
+    style: Retina
 
   # Bold font face
   #bold:
@@ -298,8 +299,7 @@ cursor:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-shell:
-   program: /home/thlai/bin/mytmux
+#shell:
 #   args:
 #     - -u # force UTF-8 in tmux
 

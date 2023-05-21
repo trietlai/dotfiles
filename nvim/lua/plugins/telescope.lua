@@ -18,7 +18,7 @@ telescope.setup{
                 ["<esc>"] = actions.close,
             },
         },
-        file_ignore_patterns = { "node_modules", ".git" },
+        file_ignore_patterns = { "node_modules", ".git", "build" },
         selection_strategy = "row",
         selection_caret = ' ',
         dynamic_preview_title = true,
@@ -43,9 +43,9 @@ telescope.setup{
         project = {
             base_dirs = {
                 {path = '~/src', max_depth = 4},
-                {path = '~/repo', max_depth = 4},
+                {path = '~/projects', max_depth = 4},
             },
-            hidden_files = true, -- default: false
+            hidden_files = false, -- default: false
         }
     }
 }

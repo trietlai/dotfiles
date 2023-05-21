@@ -1,6 +1,5 @@
-local nvim_lsp = require('lspconfig')
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- check mason-lspconfig for LSP being used
+local lspconfig = require('lspconfig')
 
 require('lspkind').init()
 
@@ -11,91 +10,58 @@ vim.cmd('sign define LspDiagnosticsSignInformation text=')
 vim.cmd('sign define LspDiagnosticsSignHint text=')
 --vim.cmd('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 
-local register_lsp_keymap = require("settings/keymap").register_lsp_keymap
+lspconfig.bashls.setup {}
 
-local on_attach = function(_, bufnr)
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-    vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
-    register_lsp_keymap(bufnr)
-end
+-- clangd may not work properly see the link below:
+-- https://stackoverflow.com/questions/74785927/clangd-doesnt-recognize-standard-headers
+lspconfig.clangd.setup {}
 
--- NOTE: rust-tools does the setup for rust automatically
-local servers = {
-    'bashls',
-    'clangd',
-    'cmake',
-    'dockerls',
-    'gopls',
-    'pyright',
-    'tsserver',
-    'yamlls',
-    'vimls',
-}
+--lspconfig.neocmake.setup {}
+lspconfig.cmake.setup {}
+lspconfig.jsonls.setup {}
+lspconfig.jdtls.setup {}
+lspconfig.lua_ls.setup {}
+lspconfig.marksman.setup {}
+lspconfig.pyright.setup {}
+lspconfig.rust_analyzer.setup {}
+lspconfig.yamlls.setup {}
+lspconfig.vimls.setup {}
 
-for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-    }
-end
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
--- Additional LSP server
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
--- json
-nvim_lsp.jsonls.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
-    commands = {
-        Format = {
-            function()
-                vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
-            end
-        }
-    }
-}
-
--- lua
-local system_name
-if vim.fn.has("mac") == 1 then
-    system_name = "macOS"
-elseif vim.fn.has("unix") == 1 then
-    system_name = "Linux"
-elseif vim.fn.has('win32') == 1 then
-    system_name = "Windows"
-else
-    print("Unsupported system for sumneko")
-end
-local sumneko_root_path = vim.fn.stdpath('data')..'/lspinstall/lua/sumneko-lua/extension/server'
-local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-nvim_lsp.sumneko_lua.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
-    settings = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = runtime_path,
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {'vim'},
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-                enable = false,
-            },
-        },
-    },
-}
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+    -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    -- vim.keymap.set('n', '<space>wl', function()
+    -- 	print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    -- end, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>f', function()
+    	vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
 

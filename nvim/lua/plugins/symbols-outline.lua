@@ -1,4 +1,4 @@
-vim.g.symbols_outline = {
+require('symbols-outline').setup {
     symbols = {
         Module = {icon = "", hl = "TSNamespace"},
         Namespace = {icon = "∷", hl = "TSNamespace"},
@@ -7,3 +7,4 @@ vim.g.symbols_outline = {
         Null = {icon = "ﳠ", hl = "TSType"},
     }
 }
+

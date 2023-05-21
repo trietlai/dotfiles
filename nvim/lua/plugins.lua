@@ -1,29 +1,44 @@
--- vim.cmd [[packadd packer.nvim]]
-local execute = vim.api.nvim_command
-local fn = vim.fn
-
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-if fn.empty(fn.glob(install_path)) > 0 then
-    execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-    execute 'packadd packer.nvim'
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
 end
+local packer_bootstrap = ensure_packer()
 
-vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
-
--- require('packer').init({display = {non_interactive = true}})
-require('packer').init({display = {auto_clean = false}})
-
-return require('packer').startup(function(use)
+return require('packer').startup({function(use)
     use {
-        'wbthomason/packer.nvim',
+        'wbthomason/packer.nvim'
     }
 
+    -- Mason package manager for Neovim
+    use {
+        'williamboman/mason.nvim',
+        run = ':MasonUpdate', -- :MasonUpdate updates registry contents
+        config = function()
+            require 'plugins/mason'
+        end
+    }
     -- LSP
     use {
         'neovim/nvim-lspconfig',
         config = function()
             require 'plugins/lspconfig'
+        end
+    }
+
+    use {
+        'williamboman/mason-lspconfig.nvim',
+        requires = {
+            {'neovim/nvim-lspconfig'},
+            {'williamboman/mason.nvim'},
+        },
+        config = function()
+            require 'plugins/manson-lspconfig'
         end
     }
 
@@ -52,35 +67,31 @@ return require('packer').startup(function(use)
     }
     use {
         'simrat39/symbols-outline.nvim',
-        cmd = 'SymbolsOutline',
-        setup = function()
-            vim.g.symbols_outline = {
-                symbols = {
-                    Module = {icon = "", hl = "TSNamespace"},
-                    Namespace = {icon = "∷", hl = "TSNamespace"},
-                    Key = {icon = "", hl = "TSType"},
-                    Operator = {icon = "⊕", hl = "TSOperator"},
-                    Null = {icon = "ﳠ", hl = "TSType"},
-                }
-            }
-        end
-    }
-
-    -- LSP for rust
-    use {
-        'simrat39/rust-tools.nvim',
-        after = 'nvim-lspconfig',
-        requires = {
-            'neovim/nvim-lspconfig',
-            'nvim-lua/popup.nvim',
-            'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope.nvim',
-            'mfussenegger/nvim-dap'
-        },
         config = function()
-            require 'plugins/rust-tools'
+            require 'plugins/symbols-outline'
         end
     }
+	-- Automatically configures LSP for Neovim config, runtime and plugin directories
+	use {
+		'folke/neodev.nvim'
+	}
+
+	-- Debugging UI
+	-- doesn't work unless disabling Yama
+	-- `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope`
+	-- use {
+	-- 	'mfussenegger/nvim-dap'
+    --  config = function()
+    -- 		require 'plugins/nvim-dap'
+    -- 	end
+	-- }
+	-- use {
+	-- 	'rcarriga/nvim-dap-ui',
+	-- 	requires = { 'mfussenegger/nvim-dap' }
+	-- 	config = function()
+	-- 		require("dapui").setup()
+	-- 	end
+	-- }
 
     -- automatically change to project root folder
     use {
@@ -173,12 +184,10 @@ return require('packer').startup(function(use)
     -- }
     -- alternative
     use {
-        'kyazdani42/nvim-tree.lua',
-        requires = 'kyazdani42/nvim-web-devicons',
-        --cmd = 'NvimTreeToggle',
-        -- setup = function()
-        --     require 'plugins/nvimtree-setup'
-        -- end,
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- optional
+        },
         config = function()
             require 'plugins/nvimtree-config'
         end
@@ -187,13 +196,13 @@ return require('packer').startup(function(use)
     --     'kevinhwang91/rnvimr',
     --     cmd = 'RnvimrToggle'
     -- }
-    use {
-        'mcchrish/nnn.vim',
-        cmd = 'NnnPicker',
-        config = function()
-            require 'plugins/nnn'
-        end
-    }
+    -- use {
+    --     'mcchrish/nnn.vim',
+    --     cmd = 'NnnPicker',
+    --     config = function()
+    --         require 'plugins/nnn'
+    --     end
+    -- }
 
     -- key mapping
     use {
@@ -215,7 +224,7 @@ return require('packer').startup(function(use)
         'ibhagwan/fzf-lua',
         requires = {
             'vijaymarupudi/nvim-fzf',
-            'kyazdani42/nvim-web-devicons'
+            'nvim-tree/nvim-web-devicons', -- optional
         },
         config = function()
             require 'plugins/fzf-lua-config'
@@ -250,10 +259,9 @@ return require('packer').startup(function(use)
 
     use { 'honza/dockerfile.vim', ft = { 'dockerfile' } }
 
-    use { 'martinda/Jenkinsfile-vim-syntax', ft = { 'jenkinsfile' } }
-
-    use { 'chr4/nginx.vim', ft = { 'conf' } }
-    use { 'zigford/vim-powershell', ft = { 'ps1' } }
+    -- use { 'martinda/Jenkinsfile-vim-syntax', ft = { 'jenkinsfile' } }
+    -- use { 'chr4/nginx.vim', ft = { 'conf' } }
+    -- use { 'zigford/vim-powershell', ft = { 'ps1' } }
 
     use {
         'kristijanhusak/orgmode.nvim',
@@ -373,7 +381,7 @@ return require('packer').startup(function(use)
 
     -- copy to system clipboard
     use {
-        'ojroques/vim-oscyank',
+        'ojroques/nvim-osc52',
         config = function()
             require 'plugins/oscyank'
         end
@@ -388,7 +396,7 @@ return require('packer').startup(function(use)
     }
 
     -- Icons
-    use 'kyazdani42/nvim-web-devicons'
+    use 'nvim-tree/nvim-web-devicons'
     use 'ryanoasis/vim-devicons'
 
     -- RGB color highlighter
@@ -402,9 +410,11 @@ return require('packer').startup(function(use)
 
     use {
         'glepnir/dashboard-nvim',
+        event = 'VimEnter',
         config = function()
             require 'plugins/dashboard'
-        end
+        end,
+        requires = {'nvim-tree/nvim-web-devicons'}
     }
 
     use {
@@ -483,7 +493,7 @@ return require('packer').startup(function(use)
     -- use {
     --     'glepnir/galaxyline.nvim',
     --     branch = 'main',
-    --     requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    --     requires = {'nvim-tree/nvim-web-devicons', opt = true},
     --     config = function()
     --         require'plugins/galaxy-statusline'
     --     end
@@ -499,14 +509,14 @@ return require('packer').startup(function(use)
 
     -- use {
     --     'akinsho/nvim-bufferline.lua',
-    --     requires = {'kyazdani42/nvim-web-devicons', 'famiu/bufdelete.nvim'},
+    --     requires = {'nvim-tree/nvim-web-devicons', 'famiu/bufdelete.nvim'},
     --     config = function()
     --         require 'plugins/bufferline'
     --     end
     -- }
     use {
         'romgrk/barbar.nvim',
-        requires = {'kyazdani42/nvim-web-devicons'},
+        requires = {'nvim-tree/nvim-web-devicons'},
         config = function()
             require 'plugins/barbar'
         end
@@ -519,5 +529,12 @@ return require('packer').startup(function(use)
             "nvim-telescope/telescope.nvim" -- optional
         },
     }
-end)
+
+    -- Automatically set up your configuration after cloning packer.nvim
+  	-- Put this at the end after all plugins
+  	if packer_bootstrap then
+    	require('packer').sync()
+  	end
+end
+})
 
