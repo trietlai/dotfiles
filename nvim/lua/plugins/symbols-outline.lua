@@ -8,3 +8,6 @@ require('symbols-outline').setup {
     }
 }
 
+local U = require('settings.util')
+U.keymap("n", "<F5>", ":SymbolsOutline", "toggle symbols-outline")
+

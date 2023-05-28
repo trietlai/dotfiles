@@ -1,5 +1,5 @@
-local tree_cb = require'nvim-tree/config'.nvim_tree_callback
-require'nvim-tree'.setup {
+-- local tree_cb = require('nvim-tree.config').nvim_tree_callback
+require('nvim-tree').setup {
     -- disables netrw completely
     disable_netrw       = true,
     -- hijack netrw window on startup
@@ -27,4 +27,7 @@ require'nvim-tree'.setup {
         -- auto_resize = false,
     }
 }
+
+local U = require('settings.util')
+U.keymap("n", "<F4>", ":NvimTreeToggle", "toggle NvimTree")
 

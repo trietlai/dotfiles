@@ -39,6 +39,11 @@ require('barbar').setup {
     -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
     -- where X is the buffer number. But only a static string is accepted here.
     no_name_title = nil,
+
+    icons = {
+        buffer_index = true,
+        buffer_number = false,
+    }
 }
 
 vim.cmd([[

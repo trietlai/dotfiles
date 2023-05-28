@@ -1,212 +1,52 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
-end
-local packer_bootstrap = ensure_packer()
+local M = {}
 
-return require('packer').startup({function(use)
+local packer = require("packer")
+
+-- Indicate first time installation
+local packer_bootstrap = false
+
+-- packer.nvim configuration
+local packer_opts = {
+    display = {
+        open_fn = function()
+            return require("packer.util").float { border = "rounded" }
+        end,
+    },
+}
+
+-- Check if packer.nvim is installed
+-- Run PackerCompile if there are changes in this file
+local function packer_init()
+    local fn = vim.fn
+    local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+    if fn.empty(fn.glob(install_path)) > 0 then
+        packer_bootstrap = fn.system {
+            "git",
+            "clone",
+            "--depth",
+            "1",
+            "https://github.com/wbthomason/packer.nvim",
+            install_path,
+        }
+        vim.cmd [[packadd packer.nvim]]
+    end
+    vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
+end
+
+local function packer_setup_plugins(use)
+    -- Required packages
     use {
         'wbthomason/packer.nvim'
     }
 
-    -- Mason package manager for Neovim
-    use {
-        'williamboman/mason.nvim',
-        run = ':MasonUpdate', -- :MasonUpdate updates registry contents
-        config = function()
-            require 'plugins/mason'
-        end
-    }
-    -- LSP
-    use {
-        'neovim/nvim-lspconfig',
-        config = function()
-            require 'plugins/lspconfig'
-        end
-    }
-
-    use {
-        'williamboman/mason-lspconfig.nvim',
-        requires = {
-            {'neovim/nvim-lspconfig'},
-            {'williamboman/mason.nvim'},
-        },
-        config = function()
-            require 'plugins/manson-lspconfig'
-        end
-    }
-
-    -- add symbols for LSP kinds e.g. method, class, etc.
-    use {
-        'onsails/lspkind-nvim',
-        config = function()
-            require 'plugins/lspkind'
-        end
-    }
-    use {
-        'ojroques/nvim-lspfuzzy',
-        requires = {
-            {'junegunn/fzf'},
-            {'junegunn/fzf.vim'},
-        },
-        config = function()
-            require 'plugins/lspfuzzy'
-        end
-    }
-    use {
-        'kosayoda/nvim-lightbulb',
-        config = function()
-            require 'plugins/lightbulb'
-        end
-    }
-    use {
-        'simrat39/symbols-outline.nvim',
-        config = function()
-            require 'plugins/symbols-outline'
-        end
-    }
-	-- Automatically configures LSP for Neovim config, runtime and plugin directories
-	use {
-		'folke/neodev.nvim'
-	}
-
-	-- Debugging UI
-	-- doesn't work unless disabling Yama
-	-- `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope`
-	-- use {
-	-- 	'mfussenegger/nvim-dap'
-    --  config = function()
-    -- 		require 'plugins/nvim-dap'
-    -- 	end
-	-- }
-	-- use {
-	-- 	'rcarriga/nvim-dap-ui',
-	-- 	requires = { 'mfussenegger/nvim-dap' }
-	-- 	config = function()
-	-- 		require("dapui").setup()
-	-- 	end
-	-- }
-
-    -- automatically change to project root folder
-    use {
-        'ygm2/rooter.nvim', event = 'BufEnter',
-        config = function()
-            vim.g.rooter_pattern = {
-                '.git', 'Makefile', 'node_modules', 'CMakeLists.txt', 'pom.xml', 'build.gradle',
-                'Cargo.toml', 'go.mod', '.gitignore'
-            }
-            vim.g.outermost_root = false
-        end
-    }
-
-    -- tree-sitter parser
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-        config = function()
-            require 'plugins/treesitter'
-        end
-    }
-
-    -- Rainbow parentheses for neovim using tree-sitter
-    use {
-        'p00f/nvim-ts-rainbow',
-        requires = 'nvim-treesitter/nvim-treesitter',
-        event = 'BufRead',
-        config = function()
-            require 'plugins/nvim-ts-rainbow'
-        end
-    }
-
-    -- changes the commentstring setting
-    use {
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        requires = 'nvim-treesitter/nvim-treesitter',
-    }
-
-    -- shows the context (e.g. function name) of the currently visible buffer contents
-    use {
-        'romgrk/nvim-treesitter-context',
-        requires = 'nvim-treesitter/nvim-treesitter',
-        config = function()
-            require'treesitter-context'.setup{
-                enable = true,
-                throttle = true, -- Throttles plugin updates (may improve performance)
-            }
-        end
-    }
-
-    -- Autocomplete: load when insert mode get started
-    use {
-        "hrsh7th/nvim-compe",
-        event = "InsertEnter",
-        config = function()
-            require "plugins/compe"
-        end,
-        wants = "LuaSnip",
-        requires = {
-            {
-                "L3MON4D3/LuaSnip",
-                wants = "friendly-snippets",
-                event = "InsertCharPre",
-                config = function()
-                    require "plugins/luasnip"
-                end
-            },
-            {
-                "rafamadriz/friendly-snippets",
-                event = "InsertCharPre"
-            }
-        }
-    }
-
-    -- extends vim's % key to language-specific words
-    use {
-        'andymass/vim-matchup',
-        event = 'CursorMoved'
-    }
-
-    -- Files/directories tree
-    -- use {
-    --     'preservim/NERDTree',
-    --     cmd = 'NERDTreeToggle',
-    --     requires = {
-    --         'Xuyuanp/nerdtree-git-plugin',
-    --         'tiagofumo/vim-nerdtree-syntax-highlight',
-    --         'PhilRunninger/nerdtree-visual-selection'
-    --     }
-    -- }
-    -- alternative
-    use {
-        'nvim-tree/nvim-tree.lua',
-        requires = {
-            'nvim-tree/nvim-web-devicons', -- optional
-        },
-        config = function()
-            require 'plugins/nvimtree-config'
-        end
-    }
-    -- use {
-    --     'kevinhwang91/rnvimr',
-    --     cmd = 'RnvimrToggle'
-    -- }
-    -- use {
-    --     'mcchrish/nnn.vim',
-    --     cmd = 'NnnPicker',
-    --     config = function()
-    --         require 'plugins/nnn'
-    --     end
-    -- }
-
     -- key mapping
     use {
         'folke/which-key.nvim',
+        config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 500
+            require('plugins.which-key')
+        end
     }
 
     -- FZF
@@ -227,24 +67,191 @@ return require('packer').startup({function(use)
             'nvim-tree/nvim-web-devicons', -- optional
         },
         config = function()
-            require 'plugins/fzf-lua-config'
+            require('plugins.fzf-lua')
         end
     }
 
     -- Fzf alternative and many other plugins depend on it
     use {
         'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
         requires = { {'nvim-lua/plenary.nvim'} },
         config = function()
-            require 'plugins/telescope'
+            require('plugins.telescope')
         end
     }
 
+    -- TODO: currently has an issue
+    -- use {
+    --     'nvim-telescope/telescope-project.nvim',
+    --     requires = { 'nvim-telescope/telescope.nvim' },
+    --     config = function()
+    --         require('telescope').load_extension('project')
+    --     end
+    -- }
+
+    -- Setup in the following order mason, mason-lspconfig, lspconfig
+    -- auto complete
     use {
-        'nvim-telescope/telescope-project.nvim',
-        requires = { 'nvim-telescope/telescope.nvim' },
+        'williamboman/mason.nvim',
+        run = ':MasonUpdate', -- :MasonUpdate updates registry contents
         config = function()
-            require'telescope'.load_extension('project')
+            require('plugins.mason')
+        end
+    }
+    use {
+        'williamboman/mason-lspconfig.nvim',
+        requires = {
+            {'williamboman/mason.nvim'},
+        },
+        config = function()
+            require('plugins.manson-lspconfig')
+        end
+    }
+    -- LSP
+    use {
+        'neovim/nvim-lspconfig',
+        config = function()
+            require('plugins.lspconfig')
+        end
+    }
+    -- Autocompletion
+    use { 'hrsh7th/nvim-cmp' }
+    use { "hrsh7th/cmp-buffer" }
+    use { "hrsh7th/cmp-nvim-lua" }
+    use { "hrsh7th/cmp-nvim-lsp" }
+    use { "hrsh7th/cmp-nvim-lsp-signature-help" }
+    use { "hrsh7th/cmp-path" }
+    use { "L3MON4D3/LuaSnip" }
+    use { "saadparwaiz1/cmp_luasnip" }
+    use { "rafamadriz/friendly-snippets" }
+
+    -- optional packages
+
+    -- add symbols for LSP kinds e.g. method, class, etc.
+    use {
+        'onsails/lspkind-nvim',
+        config = function()
+            require('plugins.lspkind')
+        end
+    }
+    use {
+        'ojroques/nvim-lspfuzzy',
+        requires = {
+            {'junegunn/fzf'},
+            {'junegunn/fzf.vim'},
+        },
+        config = function()
+            require('plugins.lspfuzzy')
+        end
+    }
+    use {
+        'kosayoda/nvim-lightbulb',
+        config = function()
+            require('plugins.lightbulb')
+        end
+    }
+    use {
+        'simrat39/symbols-outline.nvim',
+        config = function()
+            require('plugins.symbols-outline')
+        end
+    }
+	-- Automatically configures LSP for Neovim config, runtime and plugin directories
+	use {
+		'folke/neodev.nvim'
+	}
+
+	-- Debugging UI
+	-- doesn't work unless disabling Yama
+	-- `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope`
+	-- use {
+	-- 	'mfussenegger/nvim-dap'
+    --  config = function()
+    -- 		require('plugins.nvim-dap')
+    -- 	end
+	-- }
+	-- use {
+	-- 	'rcarriga/nvim-dap-ui',
+	-- 	requires = { 'mfussenegger/nvim-dap' }
+	-- 	config = function()
+	-- 		require("dapui").setup()
+	-- 	end
+	-- }
+
+    -- automatically change to project root folder
+    use {
+        'ygm2/rooter.nvim', event = 'BufEnter',
+        config = function()
+            vim.g.rooter_pattern = {
+                '.git', 'Makefile', 'node_modules', 'CMakeLists.txt', 'pom.xml',
+                'build.gradle', 'Cargo.toml', 'go.mod', '.gitignore',
+            }
+            vim.g.outermost_root = false
+        end
+    }
+
+    -- tree-sitter parser
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        config = function()
+            require('plugins.treesitter')
+        end
+    }
+
+    -- Rainbow parentheses for neovim using tree-sitter
+    use {
+        'p00f/nvim-ts-rainbow',
+        requires = 'nvim-treesitter/nvim-treesitter',
+        event = 'BufRead',
+        config = function()
+            require('plugins.nvim-ts-rainbow')
+        end
+    }
+
+    -- changes the commentstring setting
+    use {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        requires = 'nvim-treesitter/nvim-treesitter',
+    }
+
+    -- shows the context (e.g. function name) of the currently visible buffer contents
+    use {
+        'romgrk/nvim-treesitter-context',
+        requires = 'nvim-treesitter/nvim-treesitter',
+        config = function()
+            require('treesitter-context').setup{
+                enable = true,
+                throttle = true, -- Throttles plugin updates (may improve performance)
+            }
+        end
+    }
+
+    -- extends vim's % key to language-specific words
+    use {
+        'andymass/vim-matchup',
+        event = 'CursorMoved'
+    }
+
+    -- Files/directories tree
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- optional
+        },
+        config = function()
+            require('plugins.nvim-tree')
+        end
+    }
+    -- use {
+    --     'kevinhwang91/rnvimr',
+    --     cmd = 'RnvimrToggle'
+    -- }
+    use {
+        "luukvbaal/nnn.nvim",
+        config = function()
+            require('plugins.nnn')
         end
     }
 
@@ -253,7 +260,7 @@ return require('packer').startup({function(use)
         'habamax/vim-asciidoctor',
         ft = { 'asciidoctor' },
         config = function()
-            require 'plugins/asciidoctor'
+            require('plugins.asciidoctor')
         end
     }
 
@@ -286,7 +293,7 @@ return require('packer').startup({function(use)
     --     'airblade/vim-gitgutter',
     --     even = 'BufEnter',
     --     config = function()
-    --         require 'plugins/gitgutter'
+    --         require('plugins.gitgutter')
     --     end
     -- }
 
@@ -296,7 +303,7 @@ return require('packer').startup({function(use)
             'nvim-lua/plenary.nvim'
         },
         config = function()
-            require 'plugins/gitsigns'
+            require('plugins.gitsigns')
         end
     }
 
@@ -305,7 +312,7 @@ return require('packer').startup({function(use)
     --     'TimUntersberger/neogit',
     --     requires = 'nvim-lua/plenary.nvim',
     --     config = function()
-    --         require 'plugins/neogit'
+    --         require('plugins.neogit')
     --     end
     -- }
 
@@ -316,14 +323,14 @@ return require('packer').startup({function(use)
         'sindrets/diffview.nvim',
         cmd = 'DiffviewOpen',
         config = function()
-            require 'plugins/diffview'
+            require('plugins.diffview')
         end
     }
 
     use {
         'samoshkin/vim-mergetool',
         config = function()
-            require 'plugins/mergetool'
+            require('plugins.mergetool')
         end
     }
 
@@ -334,10 +341,16 @@ return require('packer').startup({function(use)
         'lukas-reineke/indent-blankline.nvim',
         event = 'BufRead',
         setup = function()
-            require 'plugins/indent-blankline'
+            require('plugins.indent-blankline')
         end
     }
-    use 'junegunn/vim-easy-align'
+    use {
+        'junegunn/vim-easy-align',
+        as = 'vim-easy-align',
+        config = function()
+            require('plugins.vim-easy-align')
+        end
+    }
 
     -- Move & Search & replace
     -- search & highlight
@@ -345,7 +358,7 @@ return require('packer').startup({function(use)
         'kevinhwang91/nvim-hlslens',
         event = 'BufEnter',
         config = function()
-            require 'plugins/hlslens'
+            require('plugins.hlslens')
         end
     }
 
@@ -353,7 +366,7 @@ return require('packer').startup({function(use)
     use {
         'ggandor/lightspeed.nvim',
         config = function()
-            require 'plugins/lightspeed'
+            require('plugins.lightspeed')
         end
     }
     -- alternatives motion/jump plugins
@@ -364,7 +377,7 @@ return require('packer').startup({function(use)
     use {
         'karb94/neoscroll.nvim',
         config = function()
-            require 'plugins/neoscroll'
+            require('plugins.neoscroll')
         end
     }
 
@@ -383,7 +396,7 @@ return require('packer').startup({function(use)
     use {
         'ojroques/nvim-osc52',
         config = function()
-            require 'plugins/oscyank'
+            require('plugins.oscyank')
         end
     }
 
@@ -391,7 +404,7 @@ return require('packer').startup({function(use)
     use {
         'numtostr/FTerm.nvim',
         config = function()
-            require 'plugins/fterm'
+            require('plugins.fterm')
         end
     }
 
@@ -404,7 +417,7 @@ return require('packer').startup({function(use)
         'norcalli/nvim-colorizer.lua',
         ft = { 'html', 'css', 'yml', 'lua' },
         config = function()
-            require 'plugins/colorizer'
+            require('plugins.colorizer')
         end
     }
 
@@ -412,7 +425,7 @@ return require('packer').startup({function(use)
         'glepnir/dashboard-nvim',
         event = 'VimEnter',
         config = function()
-            require 'plugins/dashboard'
+            require('plugins.dashboard')
         end,
         requires = {'nvim-tree/nvim-web-devicons'}
     }
@@ -435,7 +448,7 @@ return require('packer').startup({function(use)
     use {
         'kevinhwang91/nvim-bqf',
         config = function()
-            require 'plugins/bqf'
+            require('plugins.bqf')
         end
     }
 
@@ -486,7 +499,7 @@ return require('packer').startup({function(use)
         'vim-airline/vim-airline',
         requires = { 'vim-airline/vim-airline-themes' },
         setup = function()
-            require 'plugins/vim-airline'
+            require('plugins.vim-airline')
         end
     }
 
@@ -495,7 +508,7 @@ return require('packer').startup({function(use)
     --     branch = 'main',
     --     requires = {'nvim-tree/nvim-web-devicons', opt = true},
     --     config = function()
-    --         require'plugins/galaxy-statusline'
+    --         require('plugins.galaxy-statusline')
     --     end
     -- }
 
@@ -503,7 +516,7 @@ return require('packer').startup({function(use)
     --     'famiu/feline.nvim',
     --     requires = { 'lewis6991/gitsigns.nvim' },
     --     config = function()
-    --         require 'plugins/feline'
+    --         require('plugins.feline')
     --     end
     -- }
 
@@ -511,14 +524,14 @@ return require('packer').startup({function(use)
     --     'akinsho/nvim-bufferline.lua',
     --     requires = {'nvim-tree/nvim-web-devicons', 'famiu/bufdelete.nvim'},
     --     config = function()
-    --         require 'plugins/bufferline'
+    --         require('plugins.bufferline')
     --     end
     -- }
     use {
         'romgrk/barbar.nvim',
         requires = {'nvim-tree/nvim-web-devicons'},
         config = function()
-            require 'plugins/barbar'
+            require('plugins.barbar')
         end
     }
     use {
@@ -529,12 +542,30 @@ return require('packer').startup({function(use)
             "nvim-telescope/telescope.nvim" -- optional
         },
     }
+    use {
+        "lukas-reineke/virt-column.nvim",
+        config = function()
+            require("virt-column").setup()
+        end
+    }
 
-    -- Automatically set up your configuration after cloning packer.nvim
-  	-- Put this at the end after all plugins
-  	if packer_bootstrap then
-    	require('packer').sync()
-  	end
+    -- Bootstrap Neovim
+    if packer_bootstrap then
+        print "Restart Neovim required after installation!"
+        packer.sync()
+    end
+  end
+
+function M.setup()
+    -- Plugins
+    -- Init and start packer
+    packer_init()
+    packer.init(packer_opts)
+    packer.startup(packer_setup_plugins)
+
+    -- register keybindings using which-key
+    require('plugins.keymaps').register()
 end
-})
+
+return M
 

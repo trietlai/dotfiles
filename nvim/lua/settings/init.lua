@@ -76,7 +76,7 @@ vim.opt.undofile    = false
 vim.opt.shiftwidth  = 4        --  when indenting with '>', use 4 spaces width
 -- Window
 vim.opt.number         = true  --  show line numbers
-vim.opt.colorcolumn    = "+1"
+vim.opt.colorcolumn    = "80"
 vim.opt.foldmethod     = 'indent'
 vim.opt.foldlevel      = 99
 vim.opt.list           = false

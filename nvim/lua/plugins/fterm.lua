@@ -22,8 +22,11 @@ local gitui = fterm:new({
     border = 'double' -- or 'double'
 })
 
--- Use this to toggle gitui in a floating terminal
-vim.keymap.set('n', '<A-g>', function()
-    gitui:toggle()
-end)
+-- key bindings
+local U = require('settings.util')
+
+U.keymap({"n", "t"}, "<F12>", function() fterm.toggle() end, "toggle terminal")
+
+-- toggle gitui in a floating terminal
+U.keymap("n", "<A-g>", function() gitui:toggle() end, "toggle GitUI")
 

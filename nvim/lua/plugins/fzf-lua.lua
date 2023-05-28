@@ -232,3 +232,4 @@ require'fzf-lua'.setup {
         ["lua"]   = "blue",
     },
 }
+

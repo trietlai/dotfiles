@@ -1,9 +1,10 @@
 
 local telescope = require("telescope")
 local actions = require("telescope.actions")
-telescope.load_extension('project')
 
---require'telescope'.extensions.project.project{}
+-- TODO:
+--telescope.load_extension('project')
+--telescope.extensions.project.project{}
 
 telescope.setup{
     defaults = {
@@ -39,14 +40,21 @@ telescope.setup{
             }
         },
     },
-    extensions = {
-        project = {
-            base_dirs = {
-                {path = '~/src', max_depth = 4},
-                {path = '~/projects', max_depth = 4},
-            },
-            hidden_files = false, -- default: false
-        }
-    }
+    -- extensions = {
+    --     project = {
+    --         base_dirs = {
+    --             {path = '~/src', max_depth = 4},
+    --             {path = '~/projects', max_depth = 4},
+    --         },
+    --         hidden_files = false, -- default: false
+    --     }
+    -- }
 }
+
+-- local U = require('settings.util')
+-- U.keymap("n", "<leader>.",
+--         function()
+--             require('extensions.telescope-dotfile').search_dotfiles()
+--         end, "search dotfiles")
+
 
