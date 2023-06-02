@@ -44,7 +44,24 @@ lspconfig.lua_ls.setup {
 }
 
 lspconfig.marksman.setup {}
-lspconfig.pyright.setup {}
+
+-- lspconfig.pyright.setup {}
+lspconfig.pylsp.setup {
+    settings = {
+        pylsp = {
+            plugins = {
+                jedi = {
+                    auto_import_modules = {"numpy", "pandas", "matplotlib", "tensorflow", "pytorch"},
+                },
+                pycodestyle = {
+                    ignore = {'W391'},
+                    maxLineLength = 120
+                },
+            },
+        },
+    }
+}
+
 lspconfig.rust_analyzer.setup {}
 lspconfig.yamlls.setup {}
 lspconfig.vimls.setup {}

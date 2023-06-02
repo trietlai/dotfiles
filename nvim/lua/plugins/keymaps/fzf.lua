@@ -12,7 +12,6 @@ local function fzf_keymap(lhs, rhs, desc)
 end
 
 function M.register()
-    
     fzf_keymap("b", function() fzf.buffers() end, "list buffers")
     fzf_keymap("g", function() fzf.git_status() end, "Git status")
     fzf_keymap("h", function() fzf.search_history() end, "search history")

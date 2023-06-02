@@ -1,4 +1,5 @@
 # nnn file manager config
+export NNN_OPTS="cEnrx"
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
 export NNN_COLORS='#0a1b2c3d;4444'
 BLK="04"

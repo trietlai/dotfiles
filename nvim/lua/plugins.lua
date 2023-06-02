@@ -308,17 +308,16 @@ local function packer_setup_plugins(use)
     }
 
     -- similar to magit
-    -- use {
-    --     'TimUntersberger/neogit',
-    --     requires = 'nvim-lua/plenary.nvim',
-    --     config = function()
-    --         require('plugins.neogit')
-    --     end
-    -- }
-
-    -- git commit log browser
-    use { 'junegunn/gv.vim', cmd = 'GV' }
-
+    use {
+        'TimUntersberger/neogit',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'sindrets/diffview.nvim',
+        },
+        config = function()
+            require('plugins.neogit')
+        end
+    }
     use {
         'sindrets/diffview.nvim',
         cmd = 'DiffviewOpen',
@@ -326,6 +325,9 @@ local function packer_setup_plugins(use)
             require('plugins.diffview')
         end
     }
+
+    -- git commit log browser
+    use { 'junegunn/gv.vim', cmd = 'GV' }
 
     use {
         'samoshkin/vim-mergetool',
@@ -548,6 +550,13 @@ local function packer_setup_plugins(use)
             require("virt-column").setup()
         end
     }
+    use {
+        'hkupty/iron.nvim',
+        -- tag = "v3.0",
+        config = function()
+            require("plugins.iron")
+        end
+      }
 
     -- Bootstrap Neovim
     if packer_bootstrap then
