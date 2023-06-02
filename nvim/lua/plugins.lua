@@ -201,14 +201,15 @@ local function packer_setup_plugins(use)
     }
 
     -- Rainbow parentheses for neovim using tree-sitter
-    use {
-        'p00f/nvim-ts-rainbow',
-        requires = 'nvim-treesitter/nvim-treesitter',
-        event = 'BufRead',
-        config = function()
-            require('plugins.nvim-ts-rainbow')
-        end
-    }
+    -- no longer maintained and conflicts with other plugins
+    -- use {
+    --     'p00f/nvim-ts-rainbow',
+    --     requires = 'nvim-treesitter/nvim-treesitter',
+    --     event = 'BufRead',
+    --     config = function()
+    --         require('plugins.nvim-ts-rainbow')
+    --     end
+    -- }
 
     -- changes the commentstring setting
     use {
@@ -320,7 +321,6 @@ local function packer_setup_plugins(use)
     }
     use {
         'sindrets/diffview.nvim',
-        cmd = 'DiffviewOpen',
         config = function()
             require('plugins.diffview')
         end
