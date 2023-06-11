@@ -1,15 +1,16 @@
 local iron = require("iron.core")
+local view = require("iron.view")
 iron.setup {
     config = {
         should_map_plug = false,
         scratch_repl = true,
         repl_definition = {
             python = {
-                command = { "ipython" },
+                command = { "ipython3" },
                 format = require("iron.fts.common").bracketed_paste,
             },
         },
-        repl_open_cmd = require('iron.view').bottom(40),
+        repl_open_cmd = view.bottom("30%"),
     },
     keymaps = {
         send_motion = "<leader>is",

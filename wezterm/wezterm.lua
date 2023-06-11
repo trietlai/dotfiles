@@ -64,6 +64,9 @@ return {
   },
   launch_menu = {
       {
+          args = {'bash'},
+      },
+      {
           args = {'mc'},
       },
       {
